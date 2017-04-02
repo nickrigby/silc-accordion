@@ -16,7 +16,7 @@ export default class Accordion
         event.preventDefault();
 
 		// Get parent
-		let parent = <Element>this.element.parentNode;
+		let parent = <Element>event.target.parentNode;
 
 		// Get content
 		let content = parent.nextElementSibling;

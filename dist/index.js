@@ -10,7 +10,7 @@ var Accordion = (function () {
     Accordion.prototype.toggle = function (event) {
         event.preventDefault();
         // Get parent
-        var parent = this.element.parentNode;
+        var parent = event.target.parentNode;
         // Get content
         var content = parent.nextElementSibling;
         // Toggle visible class
