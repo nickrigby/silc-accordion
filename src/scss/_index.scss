@@ -24,11 +24,11 @@
             border: $accordion-content-border;
 			padding: $accordion-content-padding;
 			transition: $accordion-content-transition;
-            opacity: 1;
+            opacity: 0;
 
-			&.is-hidden
+			&.is-visible
 			{
-				opacity: 0;
+				opacity: 1;
 			}
 		}
 	}

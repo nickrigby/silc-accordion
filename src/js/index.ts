@@ -7,14 +7,22 @@ export default class Accordion
         // Save element
         this.element = element;
 
-        // Wrap lsbel with anchor
+        // Wrap label with anchor
         this.element.addEventListener('click', this.toggle);
     }
 
     toggle(event)
     {
         event.preventDefault();
-        window.alert('hello world');
+
+		// Get parent
+		let parent = <Element>this.element.parentNode;
+
+		// Get content
+		let content = parent.nextElementSibling;
+
+		// Toggle visible class
+		content.classList.toggle('is-visible');
     }
 }
 
