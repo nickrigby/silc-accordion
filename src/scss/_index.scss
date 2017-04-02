@@ -1,0 +1,35 @@
+@import "variables";
+
+.silk-accordion
+{
+	.js &
+	{
+		.silk-accordion--header
+		{
+			.silk-accordion--header-label
+			{
+				padding: $accordion-header-label-padding;
+                background: $accordion-header-label-background;
+                display: $accordion-header-label-display;
+                border: $accordion-header-label-border;
+                color: $accordion-header-label-color;
+                text-decoration: $accordion-header-label-text-decoration;
+                text-transform: $accordion-header-label-text-transform;
+                cursor: pointer;
+			}
+		}
+
+		.silk-accordion--content
+		{
+            border: $accordion-content-border;
+			padding: $accordion-content-padding;
+			transition: $accordion-content-transition;
+            opacity: 1;
+
+			&.is-hidden
+			{
+				opacity: 0;
+			}
+		}
+	}
+}

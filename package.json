@@ -1,0 +1,14 @@
+{
+  "name": "silk-accordion",
+  "version": "0.0.1",
+  "description": "Accordion component for the silk framework",
+  "main": "./dist/silk.accordion.js",
+  "scripts": {
+    "build": "tsc --outDir ./dist ./src/js/*.ts"
+  },
+  "author": "idfive.com",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^2.2.2"
+  }
+}
