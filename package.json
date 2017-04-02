@@ -2,7 +2,7 @@
   "name": "silk-accordion",
   "version": "0.0.1",
   "description": "Accordion component for the silk framework",
-  "main": "./dist/silk.accordion.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc --outDir ./dist ./src/js/*.ts"
   },
