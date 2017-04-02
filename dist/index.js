@@ -4,12 +4,17 @@ var Accordion = (function () {
     function Accordion(element) {
         // Save element
         this.element = element;
-        // Wrap lsbel with anchor
+        // Wrap label with anchor
         this.element.addEventListener('click', this.toggle);
     }
     Accordion.prototype.toggle = function (event) {
         event.preventDefault();
-        window.alert('hello world');
+        // Get parent
+        var parent = this.element.parentNode;
+        // Get content
+        var content = parent.nextElementSibling;
+        // Toggle visible class
+        content.classList.toggle('is-visible');
     };
     return Accordion;
 }());
