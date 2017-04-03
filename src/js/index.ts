@@ -7,7 +7,7 @@ export default class Accordion
         // Save element
         this.element = element;
 
-        // Wrap label with anchor
+        // Add Event listener
         this.element.addEventListener('click', this.toggle);
     }
 

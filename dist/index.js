@@ -4,7 +4,7 @@ var Accordion = (function () {
     function Accordion(element) {
         // Save element
         this.element = element;
-        // Wrap label with anchor
+        // Add Event listener
         this.element.addEventListener('click', this.toggle);
     }
     Accordion.prototype.toggle = function (event) {
