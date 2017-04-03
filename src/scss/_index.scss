@@ -7,6 +7,23 @@
 
 	.js &
 	{
+		.silk-accordion--nav
+		{
+			display: none;
+
+			@media (min-width:$accordion-expands)
+			{
+				display: block;
+			}
+		}
+
+		.silk-accordion--nav-list {
+			display: flex;
+			margin: $accordion-nav-list-margin;
+			padding: $accordion-nav-list-padding;
+			list-style: none;
+		}
+
 		.silk-accordion--section-label
 		{
 			padding: $accordion-header-label-padding;
@@ -28,6 +45,39 @@
 			&.is-visible
 			{
 				display: block;
+			}
+		}
+
+		/*
+		 * Expand
+		 *
+		 */
+		&.silk-accordion--expand {
+
+			.is-visible-persist {
+				display: none;
+
+				&.is-visible {
+					display: block;
+				}
+
+				@media (min-width:$accordion-expands) {
+					display: block;
+				}
+			}
+
+			.is-visible {
+				
+				@media (min-width:$accordion-expands) {
+					display: none;
+				}
+			}
+
+			.silk-accordion--section-header {
+				
+				@media (min-width:$accordion-expands) {
+					display: none;
+				}
 			}
 		}
 	}
