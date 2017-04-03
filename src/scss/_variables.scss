@@ -1,11 +1,20 @@
 /*
+ * Core
+ *
+ */
+
+ $accordion-margin: 0 !default;
+ $accordion-padding: 0 !default;
+ 
+
+/*
  * Header
  *
  */
 
 $accordion-header-label-display: block !default;
 $accordion-header-label-border: none !default;
-$accordion-header-label-padding: 10px !default;
+$accordion-header-label-padding: 0 !default;
 $accordion-header-label-background: none !default;
 $accordion-header-label-color: $link-color !default;
 $accordion-header-label-text-decoration: none !default;
@@ -17,5 +26,5 @@ $accordion-header-label-text-transform: none !default;
  *
  */
 
- $accordion-content-padding: 10px !default;
+ $accordion-content-padding: 0 !default;
  $accordion-content-border: none !default;

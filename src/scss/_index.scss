@@ -2,6 +2,9 @@
 
 .silk-accordion
 {
+	padding: $accordion-padding;
+	margin: $accordion-margin;
+
 	.js &
 	{
 		.silk-accordion--section-label
@@ -18,9 +21,9 @@
 
 		.silk-accordion--section-content
 		{
+			display: none;
             border: $accordion-content-border;
-			padding: $accordion-content-padding;
-            display: none;
+			padding: $accordion-content-padding;  
 
 			&.is-visible
 			{
