@@ -2,19 +2,21 @@
 exports.__esModule = true;
 var Accordion = (function () {
     function Accordion(element) {
-        var self = this;
+        var _this = this;
         // Save element
         this.element = element;
         // Get expanded behavior
         this.expand = (this.element.classList.contains('silk-accordion--expand')) ? true : false;
         // Get labels
         var labels = this.element.querySelectorAll('.silk-accordion--section-label');
-        // Attach event listener to labels
-        [].forEach.call(labels, function (label) {
-            label.addEventListener('click', function (event) {
-                self.labelToggle(event);
+        if (labels.length) {
+            // Attach event listener to labels
+            [].forEach.call(labels, function (label) {
+                label.addEventListener('click', function (event) {
+                    _this.toggleLabel(event);
+                });
             });
-        });
+        }
         // Attach event listener to nav
         if (this.expand) {
             // Get tab elements
@@ -24,19 +26,15 @@ var Accordion = (function () {
                 // Attach event listener to tab elements
                 [].forEach.call(tabs, function (tab) {
                     tab.addEventListener('click', function (event) {
-                        self.tabToggle(event, self);
+                        _this.toggleTab(event);
                     });
                 });
                 // Show first tab
-                var targetId = tabs[0].getAttribute('href');
-                // Get content element
-                var content = self.element.querySelector(targetId + ' .silk-accordion--section-content');
-                // 
-                content.classList.add('is-visible-persist');
+                this.element.querySelector(tabs[0].getAttribute('href') + ' .silk-accordion--section-content').classList.add('is-visible-persist');
             }
         }
     }
-    Accordion.prototype.labelToggle = function (event) {
+    Accordion.prototype.toggleLabel = function (event) {
         event.preventDefault();
         // Get parent
         var parent = event.target.parentNode;
@@ -45,19 +43,17 @@ var Accordion = (function () {
         // Toggle visible class
         content.classList.toggle('is-visible');
     };
-    Accordion.prototype.getTargetContent = function (id) {
-    };
-    Accordion.prototype.tabToggle = function (event, self) {
+    Accordion.prototype.toggleTab = function (event) {
         event.preventDefault();
         // Get target id
         var targetId = event.target.getAttribute('href');
         // Get content element
-        var content = self.element.querySelector(targetId + ' .silk-accordion--section-content');
+        var content = this.element.querySelector(targetId + ' .silk-accordion--section-content');
         // Get current visible elements
-        var visible = self.element.querySelectorAll('.is-visible-persist');
+        var visible = this.element.querySelectorAll('.is-visible-persist');
         // Hide all visible elements
-        [].forEach.call(visible, function (el) {
-            el.classList.remove('is-visible-persist');
+        [].forEach.call(visible, function (element) {
+            element.classList.remove('is-visible-persist');
         });
         // Show selected content
         content.classList.toggle('is-visible-persist');

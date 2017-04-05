@@ -5,8 +5,6 @@ export default class Accordion
 
     constructor(element: HTMLElement)
     {
-        let self = this;
-
         // Save element
         this.element = element;
 
@@ -16,12 +14,15 @@ export default class Accordion
         // Get labels
         let labels = this.element.querySelectorAll('.silk-accordion--section-label');
 
-        // Attach event listener to labels
-        [].forEach.call(labels, function(label) {
-            label.addEventListener('click', function(event) {
-                self.labelToggle(event);
+        if(labels.length)
+        {
+            // Attach event listener to labels
+            [].forEach.call(labels, (label) => {
+                label.addEventListener('click', (event) => {
+                    this.toggleLabel(event);
+                });
             });
-        });
+        }
 
         // Attach event listener to nav
         if(this.expand)
@@ -33,25 +34,19 @@ export default class Accordion
             if(tabs.length)
             {
                 // Attach event listener to tab elements
-                [].forEach.call(tabs, function(tab) {
-                    tab.addEventListener('click', function(event) {
-                        self.tabToggle(event, self);
+                [].forEach.call(tabs, (tab) => {
+                    tab.addEventListener('click', (event) => {
+                        this.toggleTab(event);
                     });
                 });
 
                 // Show first tab
-                var targetId = tabs[0].getAttribute('href');
-
-                // Get content element
-                let content = self.element.querySelector(targetId + ' .silk-accordion--section-content');
-
-                // 
-                content.classList.add('is-visible-persist');
+                this.element.querySelector(tabs[0].getAttribute('href') + ' .silk-accordion--section-content').classList.add('is-visible-persist');
             }
         }
     }
 
-    labelToggle(event)
+    toggleLabel(event)
     {
         event.preventDefault();
 
@@ -65,12 +60,7 @@ export default class Accordion
 		content.classList.toggle('is-visible');
     }
 
-    getTargetContent(id)
-    {
-
-    }
-
-    tabToggle(event, self)
+    toggleTab(event)
     {
         event.preventDefault();
 
@@ -78,14 +68,14 @@ export default class Accordion
         let targetId = event.target.getAttribute('href');
 
         // Get content element
-        let content = self.element.querySelector(targetId + ' .silk-accordion--section-content');
+        let content = this.element.querySelector(targetId + ' .silk-accordion--section-content');
 
         // Get current visible elements
-        var visible = self.element.querySelectorAll('.is-visible-persist');
+        var visible = this.element.querySelectorAll('.is-visible-persist');
 
         // Hide all visible elements
-        [].forEach.call(visible, function(el) {
-            el.classList.remove('is-visible-persist');
+        [].forEach.call(visible, (element) => {
+            element.classList.remove('is-visible-persist');
         });
 
         // Show selected content
