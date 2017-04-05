@@ -17,7 +17,8 @@
 			}
 		}
 
-		.silk-accordion--nav-list {
+		.silk-accordion--nav-list
+		{
 			display: flex;
 			margin: $accordion-nav-list-margin;
 			padding: $accordion-nav-list-padding;
@@ -52,30 +53,35 @@
 		 * Expand
 		 *
 		 */
-		&.silk-accordion--expand {
-
-			.is-visible-persist {
+		&.silk-accordion--expand
+		{
+			.is-visible-persist
+			{
 				display: none;
 
-				&.is-visible {
+				&.is-visible
+				{
 					display: block;
 				}
 
-				@media (min-width:$accordion-expands) {
+				@media (min-width:$accordion-expands)
+				{
 					display: block;
 				}
 			}
 
-			.is-visible {
-				
-				@media (min-width:$accordion-expands) {
+			.is-visible
+			{
+				@media (min-width:$accordion-expands)
+				{
 					display: none;
 				}
 			}
 
-			.silk-accordion--section-header {
-				
-				@media (min-width:$accordion-expands) {
+			.silk-accordion--section-header
+			{	
+				@media (min-width:$accordion-expands)
+				{
 					display: none;
 				}
 			}
