@@ -11,7 +11,7 @@
 		{
 			display: none;
 
-			@media (min-width:$accordion-expands)
+			@media (min-width:$accordion-become-tabs)
 			{
 				display: block;
 			}
@@ -50,12 +50,12 @@
 		}
 
 		/*
-		 * Expand
+		 * Become Tabs
 		 *
 		 */
-		&.silk-accordion--expand
+		&.silk-accordion--become-tabs
 		{
-			.is-visible-persist
+			.is-visible--persist
 			{
 				display: none;
 
@@ -64,7 +64,7 @@
 					display: block;
 				}
 
-				@media (min-width:$accordion-expands)
+				@media (min-width:$accordion-become-tabs)
 				{
 					display: block;
 				}
@@ -72,7 +72,7 @@
 
 			.is-visible
 			{
-				@media (min-width:$accordion-expands)
+				@media (min-width:$accordion-become-tabs)
 				{
 					display: none;
 				}
@@ -80,10 +80,32 @@
 
 			.silk-accordion--section-header
 			{	
-				@media (min-width:$accordion-expands)
+				@media (min-width:$accordion-become-tabs)
 				{
 					display: none;
 				}
+			}
+		}
+
+		/*
+		 * Tabs
+		 *
+		 */
+		&.silk-accordion--tabs
+		{
+			.silk-accordion--nav
+			{
+				display: block;
+			}
+
+			.silk-accordion--section-header
+			{
+				display: none;
+			}
+
+			.is-visible--persist
+			{
+				display: block;
 			}
 		}
 	}

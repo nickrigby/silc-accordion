@@ -1,15 +1,18 @@
 export default class Accordion
 {
     element: HTMLElement;
-    expand: boolean;
+    tabs: boolean;
 
     constructor(element: HTMLElement)
     {
         // Save element
         this.element = element;
 
-        // Get expanded behavior
-        this.expand = (this.element.classList.contains('silk-accordion--expand')) ? true : false;
+        // Get tabs behavior
+        this.tabs = (
+            this.element.classList.contains('silk-accordion--become-tabs') ||
+            this.element.classList.contains('silk-accordion--tabs')
+        ) ? true : false;
 
         // Get labels
         let labels = this.element.querySelectorAll('.silk-accordion--section-label');
@@ -25,7 +28,7 @@ export default class Accordion
         }
 
         // Attach event listener to nav
-        if(this.expand)
+        if(this.tabs)
         {
             // Get tab elements
             var tabs = this.element.querySelectorAll('.silk-accordion--nav-list a');
@@ -41,7 +44,7 @@ export default class Accordion
                 });
 
                 // Show first tab
-                this.element.querySelector(tabs[0].getAttribute('href') + ' .silk-accordion--section-content').classList.add('is-visible-persist');
+                this.element.querySelector(tabs[0].getAttribute('href') + ' .silk-accordion--section-content').classList.add('is-visible--persist');
             }
         }
     }
@@ -71,14 +74,14 @@ export default class Accordion
         let content = this.element.querySelector(targetId + ' .silk-accordion--section-content');
 
         // Get current visible elements
-        var visible = this.element.querySelectorAll('.is-visible-persist');
+        var visible = this.element.querySelectorAll('.is-visible--persist');
 
         // Hide all visible elements
         [].forEach.call(visible, (element) => {
-            element.classList.remove('is-visible-persist');
+            element.classList.remove('is-visible--persist');
         });
 
         // Show selected content
-        content.classList.toggle('is-visible-persist');
+        content.classList.toggle('is-visible--persist');
     }
 }
