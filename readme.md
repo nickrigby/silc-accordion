@@ -1,4 +1,5 @@
-<h3>Standard</h3>
+## Accordion
+```html
 <div class="silk-accordion">
     <section class="silk-accordion__section">
         <header class="silk-accordion__header">
@@ -17,8 +18,10 @@
         </div>
     </section>
 </div>
+```
 
-<h3>Become Tabs</h3>
+## Accordion that becomes tabs
+```html
 <div class="silk-accordion silk-accordion--become-tabs">
     <nav class="silk-accordion__nav">
         <ul class="silk-accordion__nav-items">
@@ -43,8 +46,10 @@
         </div>
     </section>
 </div>
+```
 
-<h3>Tabs</h3>
+## Tabs
+```html
 <div class="silk-accordion silk-accordion--tabs">
     <nav class="silk-accordion__nav">
         <ul class="silk-accordion__nav-items">
@@ -69,3 +74,12 @@
         </div>
     </section>
 </div>
+```
+
+## Options
+
+### Open first accordion by default
+Add data attribute `data-silk-accordion-open-first`
+
+### Allow multiple content areas to be open
+Add data attribute `data-silk-accordion-open-multiple`
