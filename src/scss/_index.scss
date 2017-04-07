@@ -6,14 +6,20 @@
 }
 
 .silk-accordion__nav {
-	display: none;
+
+	.js & {
+		display: none;
+	}
 }
 
 .silk-accordion__nav-items {
-	display: $silk-accordion__nav-items-display;
-	margin: $silk-accordion__nav-items-margin;
-	padding: $silk-accordion__nav-items-padding;
-	list-style: none;
+	
+	.js & {
+		display: $silk-accordion__nav-items-display;
+		margin: $silk-accordion__nav-items-margin;
+		padding: $silk-accordion__nav-items-padding;
+		list-style: none;
+	}
 }
 
 .silk-accordion__label {
@@ -25,22 +31,28 @@
 	color: $silk-accordion__label-color;
 	text-decoration: $silk-accordion__label-text-decoration;
 	text-transform: $silk-accordion__label-text-transform;
-	cursor: pointer;
 
 	&:hover {
 		background: $silk-accordion__label--hover-background;
 		color: $silk-accordion__label--hover-color;
 	}
+
+	.js & {
+		cursor: pointer;
+	}
 }
 
 .silk-accordion__content {
-	display: none;
 	border: $silk-accordion__content-border;
 	padding: $silk-accordion__content-padding;  
 	background: $silk-accordion__content-background;
 
-	&--visible {
-		display: block;
+	.js & {
+		display: none;
+
+		&--visible {
+			display: block;
+		}
 	}
 }
 	
@@ -56,7 +68,10 @@
 	}
 
 	.silk-accordion__header {
-		display: none;
+
+		.js & {
+			display: none;
+		}
 	}
 
 	.silk-accordion__content--visible-persist {
@@ -87,7 +102,10 @@
 		}
 
 		.silk-accordion__header {
-			display: none;
+
+			.js & {
+				display: none;
+			}
 		}
 	}
 }
