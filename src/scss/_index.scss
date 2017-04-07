@@ -25,12 +25,18 @@
 	text-decoration: $silk-accordion__label-text-decoration;
 	text-transform: $silk-accordion__label-text-transform;
 	cursor: pointer;
+
+	&:hover {
+		background: $silk-accordion__label--hover-background;
+		color: $silk-accordion__label--hover-color;
+	}
 }
 
 .silk-accordion__content {
 	display: none;
 	border: $silk-accordion__content-border;
 	padding: $silk-accordion__content-padding;  
+	background: $silk-accordion__content-background;
 
 	&--visible {
 		display: block;
