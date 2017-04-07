@@ -31,8 +31,8 @@ $silk-accordion__label-color: $link-color !default;
 $silk-accordion__label-text-decoration: none !default;
 $silk-accordion__label-text-transform: none !default;
 $silk-accordion__label-transform: none !default;
-$silk-accordion__label--hover-color: none !default;
-$silk-accordion__label--hover-background: none !default;
+$silk-accordion__label--hover-color: $silk-accordion__label-color !default;
+$silk-accordion__label--hover-background: $silk-accordion__label-background !default;
 
 
 /*
