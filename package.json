@@ -6,9 +6,17 @@
   "scripts": {
     "build": "tsc --outDir ./dist ./src/js/*.ts"
   },
-  "author": "idfive.com",
+  "author": {
+    "name": "Nick Rigby",
+    "email": "nick.rigby@gmail.com",
+    "url": "https://nickrigby.uk"
+  },
   "license": "ISC",
   "devDependencies": {
     "typescript": "^2.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickrigby/silk-accordion"
   }
 }
