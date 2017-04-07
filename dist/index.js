@@ -61,4 +61,4 @@ var SilkAccordion = (function () {
     };
     return SilkAccordion;
 }());
-exports["default"] = SilkAccordion;
+exports.SilkAccordion = SilkAccordion;

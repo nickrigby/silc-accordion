@@ -1,4 +1,4 @@
-export default class SilkAccordion
+export class SilkAccordion
 {
     element: HTMLElement;
     tabs: boolean;
