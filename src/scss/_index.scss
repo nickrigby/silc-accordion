@@ -1,112 +1,86 @@
 @import "variables";
 
-.silk-accordion
-{
-	padding: $accordion-padding;
-	margin: $accordion-margin;
+.silk-accordion {
+	padding: $silk-accordion-padding;
+	margin: $silk-accordion-margin;
+}
 
-	.js &
-	{
-		.silk-accordion--nav
-		{
+.silk-accordion__nav {
+	display: none;
+}
+
+.silk-accordion__nav-items {
+	display: $silk-accordion__nav-items-display;
+	margin: $silk-accordion__nav-items-margin;
+	padding: $silk-accordion__nav-items-padding;
+	list-style: none;
+}
+
+.silk-accordion__label {
+	display: $silk-accordion__label-display;
+	padding: $silk-accordion__label-padding;
+	border: $silk-accordion__label-border;
+	background: $silk-accordion__label-background;
+	color: $silk-accordion__label-color;
+	text-decoration: $silk-accordion__label-text-decoration;
+	text-transform: $silk-accordion__label-text-transform;
+	cursor: pointer;
+}
+
+.silk-accordion__content {
+	display: none;
+	border: $silk-accordion__content-border;
+	padding: $silk-accordion__content-padding;  
+
+	&--visible {
+		display: block;
+	}
+}
+	
+
+/*
+ * Tabs
+ *
+ */
+.silk-accordion--tabs {
+	
+	.silk-accordion__nav {
+		display: block;
+	}
+
+	.silk-accordion__header {
+		display: none;
+	}
+
+	.silk-accordion__content--visible-persist {
+		display: block;
+	}
+}
+
+
+/*
+ * Become Tabs
+ *
+ */
+
+@media (min-width:$silk-accordion--become-tabs) {
+
+	.silk-accordion--become-tabs {
+
+		.silk-accordion__nav {
+			display: block;
+		}
+
+		.silk-accordion__content--visible-persist {
+			display: block;
+		}
+
+		.silk-accordion__content--visible {
 			display: none;
-
-			@media (min-width:$accordion-become-tabs)
-			{
-				display: block;
-			}
 		}
 
-		.silk-accordion--nav-list
-		{
-			display: flex;
-			margin: $accordion-nav-list-margin;
-			padding: $accordion-nav-list-padding;
-			list-style: none;
-		}
-
-		.silk-accordion--section-label
-		{
-			padding: $accordion-header-label-padding;
-			background: $accordion-header-label-background;
-			display: $accordion-header-label-display;
-			border: $accordion-header-label-border;
-			color: $accordion-header-label-color;
-			text-decoration: $accordion-header-label-text-decoration;
-			text-transform: $accordion-header-label-text-transform;
-			cursor: pointer;
-		}
-
-		.silk-accordion--section-content
-		{
+		.silk-accordion__header {
 			display: none;
-            border: $accordion-content-border;
-			padding: $accordion-content-padding;  
-
-			&.is-visible
-			{
-				display: block;
-			}
-		}
-
-		/*
-		 * Become Tabs
-		 *
-		 */
-		&.silk-accordion--become-tabs
-		{
-			.is-visible--persist
-			{
-				display: none;
-
-				&.is-visible
-				{
-					display: block;
-				}
-
-				@media (min-width:$accordion-become-tabs)
-				{
-					display: block;
-				}
-			}
-
-			.is-visible
-			{
-				@media (min-width:$accordion-become-tabs)
-				{
-					display: none;
-				}
-			}
-
-			.silk-accordion--section-header
-			{	
-				@media (min-width:$accordion-become-tabs)
-				{
-					display: none;
-				}
-			}
-		}
-
-		/*
-		 * Tabs
-		 *
-		 */
-		&.silk-accordion--tabs
-		{
-			.silk-accordion--nav
-			{
-				display: block;
-			}
-
-			.silk-accordion--section-header
-			{
-				display: none;
-			}
-
-			.is-visible--persist
-			{
-				display: block;
-			}
 		}
 	}
 }

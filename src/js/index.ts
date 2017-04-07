@@ -1,4 +1,4 @@
-export default class Accordion
+export default class SilkAccordion
 {
     element: HTMLElement;
     tabs: boolean;
@@ -15,7 +15,7 @@ export default class Accordion
         ) ? true : false;
 
         // Get labels
-        let labels = this.element.querySelectorAll('.silk-accordion--section-label');
+        let labels = this.element.querySelectorAll('.silk-accordion__label');
 
         if(labels.length)
         {
@@ -31,7 +31,7 @@ export default class Accordion
         if(this.tabs)
         {
             // Get tab elements
-            var tabs = this.element.querySelectorAll('.silk-accordion--nav-list a');
+            var tabs = this.element.querySelectorAll('.silk-accordion__nav-items');
 
             // If we have tabs
             if(tabs.length)
@@ -44,7 +44,7 @@ export default class Accordion
                 });
 
                 // Show first tab
-                this.element.querySelector(tabs[0].getAttribute('href') + ' .silk-accordion--section-content').classList.add('is-visible--persist');
+                this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible-persist');
             }
         }
     }
@@ -60,7 +60,7 @@ export default class Accordion
 		let content = parent.nextElementSibling;
 
 		// Toggle visible class
-		content.classList.toggle('is-visible');
+		content.classList.toggle('silk-accordion__content--visible');
     }
 
     toggleTab(event)
@@ -71,17 +71,17 @@ export default class Accordion
         let targetId = event.target.getAttribute('href');
 
         // Get content element
-        let content = this.element.querySelector(targetId + ' .silk-accordion--section-content');
+        let content = this.element.querySelector(targetId + ' .silk-accordion__content');
 
         // Get current visible elements
-        var visible = this.element.querySelectorAll('.is-visible--persist');
+        var visible = this.element.querySelectorAll('.silk-accordion__content--visible-persist');
 
         // Hide all visible elements
         [].forEach.call(visible, (element) => {
-            element.classList.remove('is-visible--persist');
+            element.classList.remove('silk-accordion__content--visible-persist');
         });
 
         // Show selected content
-        content.classList.toggle('is-visible--persist');
+        content.classList.toggle('silk-accordion__content--visible-persist');
     }
 }

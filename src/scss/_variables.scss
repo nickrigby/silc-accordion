@@ -3,9 +3,9 @@
  *
  */
 
- $accordion-margin: 0 !default;
- $accordion-padding: 0 !default;
- $accordion-become-tabs: 800px !default;
+ $silk-accordion-margin: 0 !default;
+ $silk-accordion-padding: 0 !default;
+ $silk-accordion--become-tabs: 800px !default;
 
 
  /*
@@ -13,21 +13,22 @@
  *
  */
  
-$accordion-nav-list-margin: 0 !default;
-$accordion-nav-list-padding: 0 !default;
+$silk-accordion__nav-items-display: flex !default;
+$silk-accordion__nav-items-margin: 0 !default;
+$silk-accordion__nav-items-padding: 0 !default;
 
 /*
  * Header
  *
  */
 
-$accordion-header-label-display: block !default;
-$accordion-header-label-border: none !default;
-$accordion-header-label-padding: 0 !default;
-$accordion-header-label-background: none !default;
-$accordion-header-label-color: $link-color !default;
-$accordion-header-label-text-decoration: none !default;
-$accordion-header-label-text-transform: none !default;
+$silk-accordion__label-display: block !default;
+$silk-accordion__label-border: none !default;
+$silk-accordion__label-padding: 0 !default;
+$silk-accordion__label-background: none !default;
+$silk-accordion__label-color: $link-color !default;
+$silk-accordion__label-text-decoration: none !default;
+$silk-accordion__label-text-transform: none !default;
 
 
 /*
@@ -35,5 +36,5 @@ $accordion-header-label-text-transform: none !default;
  *
  */
 
- $accordion-content-padding: 0 !default;
- $accordion-content-border: none !default;
+ $silk-accordion__content-padding: 0 !default;
+ $silk-accordion__content-border: none !default;
