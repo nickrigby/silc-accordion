@@ -1,3 +1,6 @@
+# Accordion module for silk
+The accordion module is an ultra-leightweight accordion patternm for the silk framework.
+
 ## Accordion
 ```html
 <div class="silk-accordion">
