@@ -82,11 +82,8 @@ The accordion module is an ultra-lightweight web component for the [silk framewo
 ## Options
 The functionality of the accordion can be modified by adding JavaScript data attributes.
 
-### Open first accordion by default
-Add data attribute `data-silk-accordion-open-first`
-
-### Allow multiple content areas to be open
-Add data attribute `data-silk-accordion-open-multiple`
+ - Open first accordion by default: `data-silk-accordion-open-first`
+ - Allow multiple content areas to be open: `data-silk-accordion-open-multiple`
 
 ## Styling
 As with all Silk components, no deliberate style has been added. However, through a SASS fallback system, a number of [SASS variables](src/scss/_variables.scss) are available to easily apply design without having to write your own selectors.
