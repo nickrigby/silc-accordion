@@ -13,6 +13,7 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "silk-core": "nickrigby/silk-core",
     "typescript": "^2.2.2"
   },
   "repository": {
