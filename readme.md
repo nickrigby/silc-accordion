@@ -1,7 +1,7 @@
-# Accordion module for silk
-The accordion module is an ultra-leightweight accordion patternm for the silk framework.
+# Silk Accordion
+The accordion module is an ultra-lightweight web component for the [silk framework](https://github.com/nickrigby/silk). The accordion module is capable of pure accordions, accordions that become tabs, or pure tabs.
 
-## Accordion
+## HTML
 ```html
 <div class="silk-accordion">
     <section class="silk-accordion__section">
@@ -23,7 +23,7 @@ The accordion module is an ultra-leightweight accordion patternm for the silk fr
 </div>
 ```
 
-## Accordion that becomes tabs
+### Accordion that becomes tabs
 ```html
 <div class="silk-accordion silk-accordion--become-tabs">
     <nav class="silk-accordion__nav">
@@ -51,7 +51,7 @@ The accordion module is an ultra-leightweight accordion patternm for the silk fr
 </div>
 ```
 
-## Tabs
+### Tabs
 ```html
 <div class="silk-accordion silk-accordion--tabs">
     <nav class="silk-accordion__nav">
@@ -80,9 +80,13 @@ The accordion module is an ultra-leightweight accordion patternm for the silk fr
 ```
 
 ## Options
+The functionality of the accordion can be modified by adding JavaScript data attributes.
 
 ### Open first accordion by default
 Add data attribute `data-silk-accordion-open-first`
 
 ### Allow multiple content areas to be open
 Add data attribute `data-silk-accordion-open-multiple`
+
+## Styling
+As with all Silk components, no deliberate style has been added. However, through a SASS fallback system, a number of [SASS variables](src/scss/_variables.scss) are available to easily apply design without having to write your own selectors.
