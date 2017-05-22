@@ -1,118 +1,174 @@
-export class SilkAccordion
-{
-    element: HTMLElement;
-    tabs: boolean;
+interface SilkAccordionSettings {
     openMultiple: boolean;
     openFirst: boolean;
-    labels: NodeList;
-    navItems: NodeList;
+    tabs: boolean;
+}
 
-    constructor(element: HTMLElement)
-    {
-        // Save element
+export class SilkAccordion {
+
+    protected element: HTMLElement;
+    protected settings: SilkAccordionSettings;
+    protected labels: NodeList;
+    protected nav: Element;
+
+    /**
+     * Constructor
+     * @param {HTMLElement} element
+     */
+    public constructor(element: HTMLElement) {
+
+        // Set class properties
         this.element = element;
-
-        // Class attributes
-        this.tabs = (
-            this.element.classList.contains('silk-accordion--become-tabs') ||
-            this.element.classList.contains('silk-accordion--tabs')
-        ) ? true : false;
-
-        this.openMultiple = (
-            this.element.dataset.silkAccordionOpenMultiple !== undefined
-        ) ? true : false;
-
-        this.openFirst = (
-            this.element.dataset.silkAccordionOpenFirst !== undefined
-        ) ? true : false;
-
         this.labels = this.element.querySelectorAll('.silk-accordion__label');
-        this.navItems = this.element.querySelectorAll('.silk-accordion__nav-items');
+        this.nav = this.element.querySelector('.silk-accordion__nav-items');
+        this.settings = this.applySettings();
 
         // Label event listener
-        if(this.labels.length)
-        {
-            [].forEach.call(this.labels, (el) => {
-                el.addEventListener('click', (event) => {
-                    this.toggleLabel(event);
-                });
-            });
+        if (this.labels.length) {
+            this.labelEventListener();
         }
 
-        // Nav item event listener
-        if(this.tabs && this.navItems.length)
-        {
-            [].forEach.call(this.navItems, (el) => {
-                el.addEventListener('click', (event) => {
-                    this.toggleTab(event);
-                });
-            });
-
-            // Show first tab
+        // Nav event listener
+        if (this.settings.tabs && this.nav !== undefined) {
+            this.navEventListener();
             this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible-persist');
         }
 
         // Open first element
-        if(this.openFirst) {
+        if (this.settings.openFirst) {
             this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible');
         }
     }
 
-    toggleLabel(event)
-    {
-        event.preventDefault();
+    /**
+     * Apply accordion settings
+     */
+    protected applySettings(): SilkAccordionSettings {
 
-		// Get content element to show
-		let content = <Element>event.target.parentNode.nextElementSibling;
+        // Defaults
+        let settings = <SilkAccordionSettings>{
+            tabs: false,
+            openMultiple: false,
+            openFirst: false
+        };
 
-        // Show the content
-        this.showContent(content);
+        if (this.element.classList.contains('silk-accordion--become-tabs') ||
+            this.element.classList.contains('silk-accordion--tabs')) {
+            settings.tabs = true;
+        }
+
+        if (this.element.dataset.silkAccordionOpenMultiple !== undefined) {
+            settings.openMultiple = true;
+        }
+
+        if (this.element.dataset.silkAccordionOpenFirst !== undefined) {
+            settings.openFirst = true;
+        }
+
+        return settings;
     }
 
-    toggleTab(event)
-    {
-        event.preventDefault();
+    /**
+     * Event listener for accordion labels
+     */
+    protected labelEventListener() {
 
-        // Get target id
-        let targetId = event.target.getAttribute('href');
+        this.element.addEventListener('click', (e) => {
 
-        // Get content element
-        let content = this.element.querySelector(targetId + ' .silk-accordion__content');
+            // Get target from event
+            let target = <HTMLElement>e.target;
 
-        // Hide all persitent visible content
+            // If target contains label class
+            if (target.classList.contains('silk-accordion__label')) {
+
+                e.preventDefault();
+
+                let content = this.getContent(target);
+                this.showContent(content);
+            }
+
+            e.stopPropagation();
+        });
+    }
+
+    /**
+     * Event listener for tabs navigation
+     */
+    protected navEventListener() {
+        this.nav.addEventListener('click', (e) => {
+
+            let target = <HTMLElement>e.target;
+
+            if (target.classList.contains('silk-accordion__nav-link')) {
+                e.preventDefault();
+                this.toggleTab(target);
+            }
+
+            e.stopPropagation();
+        });
+    }
+
+    /**
+     * Gets content element from clicked label
+     * @param {Element} label
+     */
+    protected getContent(label): Element {
+        return <Element>label.parentNode.nextElementSibling;
+    }
+
+    /**
+     * Gets content based on id
+     * @param {String} id - id of content to get
+     */
+    protected getContentById(id: String): Element {
+        return <Element>this.element.querySelector(id + ' .silk-accordion__content');
+    }
+
+    /**
+     * Toggle tab from clicked nav link
+     * @param {Element} link - link element clicked
+     */
+    protected toggleTab(link: Element) {
+
+        let targetId = link.getAttribute('href');
+        let content = this.getContentById(targetId);
+
         this.hideAllPersitentVisible();
-
-        // Show content
         this.showContent(content);
 
-        // Ensures that one tab is always open
+        // Ensure that one tab is always open
         content.classList.add('silk-accordion__content--visible-persist');
     }
 
-    showContent(el) {
+    /**
+     * Show content
+     * @param {Element} el
+     */
+    protected showContent(el: Element) {
 
-        if(!this.openMultiple) {
-
+        if (!this.settings.openMultiple) {
             this.hideAllVisible();
-
             el.classList.add('silk-accordion__content--visible');
-
         } else {
             el.classList.toggle('silk-accordion__content--visible');
         }
-
     }
 
-    hideAllVisible() {
+    /**
+     * Hide all visible content
+     */
+    protected hideAllVisible() {
 
-        // Remove all visible content
         [].forEach.call(this.element.querySelectorAll('.silk-accordion__content--visible'), (el) => {
             el.classList.remove('silk-accordion__content--visible');
         });
-
     }
 
-    hideAllPersitentVisible() {
+    /**
+     * Hide all persistent visible content
+     * Persistent visible class is used for accordions that transform to tabs
+     */
+    protected hideAllPersitentVisible() {
 
         // Hide all persitent visible content
         [].forEach.call(this.element.querySelectorAll('.silk-accordion__content--visible-persist'), (el) => {
