@@ -28,8 +28,8 @@ The accordion module is an ultra-lightweight web component for the [silk framewo
 <div class="silk-accordion silk-accordion--become-tabs">
     <nav class="silk-accordion__nav">
         <ul class="silk-accordion__nav-items">
-            <li class="silk-silk-accordion__nav-item"><a class="silk-silk-accordion__nav-link" href="#silk-accordion-1-1">Tab 1</a></li>
-            <li class="silk-silk-accordion__nav-item"><a class="silk-silk-accordion__nav-link" href="#silk-accordion-1-2">Tab 2</a></li>
+            <li class="silk-accordion__nav-item"><a class="silk-accordion__nav-link" href="#silk-accordion-1-1">Tab 1</a></li>
+            <li class="silk-accordion__nav-item"><a class="silk-accordion__nav-link" href="#silk-accordion-1-2">Tab 2</a></li>
         </ul>
     </nav>
     <section class="silk-accordion__section" id="silk-accordion-1-1">
@@ -56,8 +56,8 @@ The accordion module is an ultra-lightweight web component for the [silk framewo
 <div class="silk-accordion silk-accordion--tabs">
     <nav class="silk-accordion__nav">
         <ul class="silk-accordion__nav-items">
-            <li class="silk-silk-accordion__nav-item"><a class="silk-silk-accordion__nav-link" href="#silk-accordion-2-1">Tab 1</a></li>
-            <li class="silk-silk-accordion__nav-item"><a class="silk-silk-accordion__nav-link" href="#silk-accordion-2-2">Tab 2</a></li>
+            <li class="silk-accordion__nav-item"><a class="silk-accordion__nav-link" href="#silk-accordion-2-1">Tab 1</a></li>
+            <li class="silk-accordion__nav-item"><a class="silk-accordion__nav-link" href="#silk-accordion-2-2">Tab 2</a></li>
         </ul>
     </nav>
     <section class="silk-accordion__section" id="silk-accordion-2-1">
