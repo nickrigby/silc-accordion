@@ -4,7 +4,10 @@
   "description": "Accordion component for the silk framework",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc --outDir ./dist ./src/js/*.ts"
+    "test": "NODE_ENV=test webpack-dev-server",
+    "build": "tsc --outDir ./dist ./src/js/index.ts",
+    "serve": "webpack-dev-server --open",
+    "mocha": "mocha"
   },
   "author": {
     "name": "Nick Rigby",
@@ -13,8 +16,24 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@types/chai": "^3.5.2",
+    "@types/mocha": "^2.2.41",
+    "chai": "^3.5.0",
+    "chromedriver": "^2.29.0",
+    "css-loader": "^0.28.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "mocha": "^3.3.0",
+    "mocha-typescript": "^1.1.2",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.3",
+    "selenium-webdriver": "^3.4.0",
     "silk-core": "nickrigby/silk-core",
-    "typescript": "^2.2.2"
+    "style-loader": "^0.17.0",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.2.2",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5",
+    "webpack-shell-plugin": "^0.5.0"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "removeComments": true
+    "removeComments": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
   }
 }

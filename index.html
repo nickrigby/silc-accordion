@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>testy test 2</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./build/index.css" />
+</head>
+
+<body>
+
+    <h2>Basic</h2>
+    <div class="silk-accordion" id="accordion-0">
+        <section class="silk-accordion__section">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Accordion 1</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                    justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                    lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                    mollis ornare vel eu leo.</p>
+            </div>
+        </section>
+        <section class="silk-accordion__section">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Accordion 2</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                    justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                    lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                    mollis ornare vel eu leo.</p>
+            </div>
+        </section>
+    </div>
+
+    <h2>First item open</h2>
+    <div class="silk-accordion" id="accordion-1" data-silk-accordion-open-first>
+        <section class="silk-accordion__section">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Accordion 1</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                    justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                    lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                    mollis ornare vel eu leo.</p>
+            </div>
+        </section>
+        <section class="silk-accordion__section">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Accordion 2</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                    justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                    lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                    mollis ornare vel eu leo.</p>
+            </div>
+        </section>
+    </div>
+
+    <h2>Open multiple</h2>
+    <div class="silk-accordion" id="accordion-2" data-silk-accordion-open-multiple>
+        <section class="silk-accordion__section">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Accordion 1</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                    justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                    lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                    mollis ornare vel eu leo.</p>
+            </div>
+        </section>
+        <section class="silk-accordion__section">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Accordion 2</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                    justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                    lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                    mollis ornare vel eu leo.</p>
+            </div>
+        </section>
+    </div>
+
+    <h2>Accordion that becomes tabs</h2>
+    <div class="silk-accordion silk-accordion--become-tabs" id="accordion-3">
+        <nav class="silk-accordion__nav">
+            <ul class="silk-accordion__nav-items">
+                <li class="silk-accordion__nav-item"><a class="silk-accordion__nav-link" href="#silk-accordion-3-1">Tab 1</a></li>
+                <li class="silk-accordion__nav-item"><a class="silk-accordion__nav-link" href="#silk-accordion-3-2">Tab 2</a></li>
+            </ul>
+        </nav>
+        <section class="silk-accordion__section" id="silk-accordion-3-1">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Tab 1</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Tab 1 content.</p>
+            </div>
+        </section>
+        <section class="silk-accordion__section" id="silk-accordion-3-2">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Tab 2</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Tab 2 content.</p>
+            </div>
+        </section>
+    </div>
+
+    <h2>Tabs</h2>
+    <div class="silk-accordion silk-accordion--tabs" id="accordion-4">
+        <nav class="silk-accordion__nav">
+            <ul class="silk-accordion__nav-items">
+                <li class="silk-accordion__nav-item"><a class="silk-accordion__nav-link" href="#silk-accordion-4-1">Tab 1</a></li>
+                <li class="silk-accordion__nav-item"><a class="silk-accordion__nav-link" href="#silk-accordion-4-2">Tab 2</a></li>
+            </ul>
+        </nav>
+        <section class="silk-accordion__section" id="silk-accordion-4-1">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Tab 1</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Tab 1 content.</p>
+            </div>
+        </section>
+        <section class="silk-accordion__section" id="silk-accordion-4-2">
+            <header class="silk-accordion__header">
+                <h2 class="silk-accordion__label">Tab 2</h2>
+            </header>
+            <div class="silk-accordion__content">
+                <p>Tab 2 content.</p>
+            </div>
+        </section>
+    </div>
+
+
+    <script src="./build/bundle.js"></script>
+
+</body>
+
+</html>
