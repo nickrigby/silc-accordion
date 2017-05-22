@@ -93,12 +93,12 @@
 			display: block;
 		}
 
-		.silk-accordion__content--visible-persist {
-			display: block;
-		}
-
 		.silk-accordion__content--visible {
 			display: none;
+		}
+
+		.silk-accordion__content--visible-persist {
+			display: block;
 		}
 
 		.silk-accordion__header {
