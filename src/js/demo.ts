@@ -1,11 +1,11 @@
 import "../scss/_variables.scss";
 import "../scss/_index.scss";
 
-import { SilkCore } from "silk-core";
-import { SilkAccordion } from "./index.ts";
+import { SilcCore } from "silc-core";
+import { SilcAccordion } from "./index.ts";
 
-new SilkCore();
+new SilcCore();
 
-[].forEach.call(document.querySelectorAll('.silk-accordion'), (el) => {
-    new SilkAccordion(el);
+[].forEach.call(document.querySelectorAll('.silc-accordion'), (el) => {
+    new SilcAccordion(el);
 });

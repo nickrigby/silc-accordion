@@ -1,7 +1,7 @@
 {
-  "name": "silk-accordion",
+  "name": "silc-accordion",
   "version": "0.5.1",
-  "description": "Accordion component for the silk framework",
+  "description": "Accordion component for the silc framework",
   "main": "./dist/index.js",
   "scripts": {
     "test": "NODE_ENV=test webpack-dev-server",
@@ -27,7 +27,7 @@
     "node-sass": "^4.5.2",
     "sass-loader": "^6.0.3",
     "selenium-webdriver": "^3.4.0",
-    "silk-core": "nickrigby/silk-core",
+    "silc-core": "nickrigby/silc-core",
     "style-loader": "^0.17.0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.2",
@@ -37,6 +37,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nickrigby/silk-accordion"
+    "url": "https://github.com/nickrigby/silc-accordion"
   }
 }

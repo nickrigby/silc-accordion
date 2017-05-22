@@ -1,15 +1,15 @@
 "use strict";
 exports.__esModule = true;
-var SilkAccordion = (function () {
+var SilcAccordion = (function () {
     /**
      * Constructor
      * @param {HTMLElement} element
      */
-    function SilkAccordion(element) {
+    function SilcAccordion(element) {
         // Set class properties
         this.element = element;
-        this.labels = this.element.querySelectorAll('.silk-accordion__label');
-        this.nav = this.element.querySelector('.silk-accordion__nav-items');
+        this.labels = this.element.querySelectorAll('.silc-accordion__label');
+        this.nav = this.element.querySelector('.silc-accordion__nav-items');
         this.settings = this.applySettings();
         // Label event listener
         if (this.labels.length) {
@@ -18,31 +18,31 @@ var SilkAccordion = (function () {
         // Nav event listener
         if (this.settings.tabs && this.nav !== undefined) {
             this.navEventListener();
-            this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible-persist');
+            this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible-persist');
         }
         // Open first element
         if (this.settings.openFirst) {
-            this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible');
+            this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
         }
     }
     /**
      * Apply accordion settings
      */
-    SilkAccordion.prototype.applySettings = function () {
+    SilcAccordion.prototype.applySettings = function () {
         // Defaults
         var settings = {
             tabs: false,
             openMultiple: false,
             openFirst: false
         };
-        if (this.element.classList.contains('silk-accordion--become-tabs') ||
-            this.element.classList.contains('silk-accordion--tabs')) {
+        if (this.element.classList.contains('silc-accordion--become-tabs') ||
+            this.element.classList.contains('silc-accordion--tabs')) {
             settings.tabs = true;
         }
-        if (this.element.dataset.silkAccordionOpenMultiple !== undefined) {
+        if (this.element.dataset.silcAccordionOpenMultiple !== undefined) {
             settings.openMultiple = true;
         }
-        if (this.element.dataset.silkAccordionOpenFirst !== undefined) {
+        if (this.element.dataset.silcAccordionOpenFirst !== undefined) {
             settings.openFirst = true;
         }
         return settings;
@@ -50,13 +50,13 @@ var SilkAccordion = (function () {
     /**
      * Event listener for accordion labels
      */
-    SilkAccordion.prototype.labelEventListener = function () {
+    SilcAccordion.prototype.labelEventListener = function () {
         var _this = this;
         this.element.addEventListener('click', function (e) {
             // Get target from event
             var target = e.target;
             // If target contains label class
-            if (target.classList.contains('silk-accordion__label')) {
+            if (target.classList.contains('silc-accordion__label')) {
                 e.preventDefault();
                 var content = _this.getContent(target);
                 _this.showContent(content);
@@ -67,11 +67,11 @@ var SilkAccordion = (function () {
     /**
      * Event listener for tabs navigation
      */
-    SilkAccordion.prototype.navEventListener = function () {
+    SilcAccordion.prototype.navEventListener = function () {
         var _this = this;
         this.nav.addEventListener('click', function (e) {
             var target = e.target;
-            if (target.classList.contains('silk-accordion__nav-link')) {
+            if (target.classList.contains('silc-accordion__nav-link')) {
                 e.preventDefault();
                 _this.toggleTab(target);
             }
@@ -82,59 +82,59 @@ var SilkAccordion = (function () {
      * Gets content element from clicked label
      * @param {Element} label
      */
-    SilkAccordion.prototype.getContent = function (label) {
+    SilcAccordion.prototype.getContent = function (label) {
         return label.parentNode.nextElementSibling;
     };
     /**
      * Gets content based on id
      * @param {String} id - id of content to get
      */
-    SilkAccordion.prototype.getContentById = function (id) {
-        return this.element.querySelector(id + ' .silk-accordion__content');
+    SilcAccordion.prototype.getContentById = function (id) {
+        return this.element.querySelector(id + ' .silc-accordion__content');
     };
     /**
      * Toggle tab from clicked nav link
      * @param {Element} link - link element clicked
      */
-    SilkAccordion.prototype.toggleTab = function (link) {
+    SilcAccordion.prototype.toggleTab = function (link) {
         var targetId = link.getAttribute('href');
         var content = this.getContentById(targetId);
         this.hideAllPersitentVisible();
         this.showContent(content);
         // Ensure that one tab is always open
-        content.classList.add('silk-accordion__content--visible-persist');
+        content.classList.add('silc-accordion__content--visible-persist');
     };
     /**
      * Show content
      * @param {Element} el
      */
-    SilkAccordion.prototype.showContent = function (el) {
+    SilcAccordion.prototype.showContent = function (el) {
         if (!this.settings.openMultiple) {
             this.hideAllVisible();
-            el.classList.add('silk-accordion__content--visible');
+            el.classList.add('silc-accordion__content--visible');
         }
         else {
-            el.classList.toggle('silk-accordion__content--visible');
+            el.classList.toggle('silc-accordion__content--visible');
         }
     };
     /**
      * Hide all visible content
      */
-    SilkAccordion.prototype.hideAllVisible = function () {
-        [].forEach.call(this.element.querySelectorAll('.silk-accordion__content--visible'), function (el) {
-            el.classList.remove('silk-accordion__content--visible');
+    SilcAccordion.prototype.hideAllVisible = function () {
+        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible'), function (el) {
+            el.classList.remove('silc-accordion__content--visible');
         });
     };
     /**
      * Hide all persistent visible content
      * Persistent visible class is used for accordions that transform to tabs
      */
-    SilkAccordion.prototype.hideAllPersitentVisible = function () {
+    SilcAccordion.prototype.hideAllPersitentVisible = function () {
         // Hide all persitent visible content
-        [].forEach.call(this.element.querySelectorAll('.silk-accordion__content--visible-persist'), function (el) {
-            el.classList.remove('silk-accordion__content--visible-persist');
+        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible-persist'), function (el) {
+            el.classList.remove('silc-accordion__content--visible-persist');
         });
     };
-    return SilkAccordion;
+    return SilcAccordion;
 }());
-exports.SilkAccordion = SilkAccordion;
+exports.SilcAccordion = SilcAccordion;

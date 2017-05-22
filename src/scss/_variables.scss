@@ -3,9 +3,9 @@
  *
  */
 
- $silk-accordion-margin: 0 !default;
- $silk-accordion-padding: 0 !default;
- $silk-accordion--become-tabs: 800px !default;
+$silc-accordion-margin: 0 !default;
+$silc-accordion-padding: 0 !default;
+$silc-accordion--become-tabs: 800px !default;
 
 
  /*
@@ -13,26 +13,26 @@
  *
  */
  
-$silk-accordion__nav-items-display: flex !default;
-$silk-accordion__nav-items-margin: 0 !default;
-$silk-accordion__nav-items-padding: 0 !default;
+$silc-accordion__nav-items-display: flex !default;
+$silc-accordion__nav-items-margin: 0 !default;
+$silc-accordion__nav-items-padding: 0 !default;
 
 /*
  * Header
  *
  */
 
-$silk-accordion__label-display: block !default;
-$silk-accordion__label-border: none !default;
-$silk-accordion__label-padding: 0 !default;
-$silk-accordion__label-margin: 0 !default;
-$silk-accordion__label-background: none !default;
-$silk-accordion__label-color: inherit !default;
-$silk-accordion__label-text-decoration: none !default;
-$silk-accordion__label-text-transform: none !default;
-$silk-accordion__label-transform: none !default;
-$silk-accordion__label--hover-color: $silk-accordion__label-color !default;
-$silk-accordion__label--hover-background: $silk-accordion__label-background !default;
+$silc-accordion__label-display: block !default;
+$silc-accordion__label-border: none !default;
+$silc-accordion__label-padding: 0 !default;
+$silc-accordion__label-margin: 0 !default;
+$silc-accordion__label-background: none !default;
+$silc-accordion__label-color: inherit !default;
+$silc-accordion__label-text-decoration: none !default;
+$silc-accordion__label-text-transform: none !default;
+$silc-accordion__label-transform: none !default;
+$silc-accordion__label--hover-color:$silc-accordion__label-color !default;
+$silc-accordion__label--hover-background:$silc-accordion__label-background !default;
 
 
 /*
@@ -40,6 +40,6 @@ $silk-accordion__label--hover-background: $silk-accordion__label-background !def
  *
  */
 
- $silk-accordion__content-padding: 0 !default;
- $silk-accordion__content-border: none !default;
- $silk-accordion__content-background: none !default;
+$silc-accordion__content-padding: 0 !default;
+$silc-accordion__content-border: none !default;
+$silc-accordion__content-background: none !default;

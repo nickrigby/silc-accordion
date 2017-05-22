@@ -1,13 +1,13 @@
-interface SilkAccordionSettings {
+interface SilcAccordionSettings {
     openMultiple: boolean;
     openFirst: boolean;
     tabs: boolean;
 }
 
-export class SilkAccordion {
+export class SilcAccordion {
 
     protected element: HTMLElement;
-    protected settings: SilkAccordionSettings;
+    protected settings: SilcAccordionSettings;
     protected labels: NodeList;
     protected nav: Element;
 
@@ -19,8 +19,8 @@ export class SilkAccordion {
 
         // Set class properties
         this.element = element;
-        this.labels = this.element.querySelectorAll('.silk-accordion__label');
-        this.nav = this.element.querySelector('.silk-accordion__nav-items');
+        this.labels = this.element.querySelectorAll('.silc-accordion__label');
+        this.nav = this.element.querySelector('.silc-accordion__nav-items');
         this.settings = this.applySettings();
 
         // Label event listener
@@ -31,37 +31,37 @@ export class SilkAccordion {
         // Nav event listener
         if (this.settings.tabs && this.nav !== undefined) {
             this.navEventListener();
-            this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible-persist');
+            this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible-persist');
         }
 
         // Open first element
         if (this.settings.openFirst) {
-            this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible');
+            this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
         }
     }
 
     /**
      * Apply accordion settings
      */
-    protected applySettings(): SilkAccordionSettings {
+    protected applySettings(): SilcAccordionSettings {
 
         // Defaults
-        let settings = <SilkAccordionSettings>{
+        let settings = <SilcAccordionSettings>{
             tabs: false,
             openMultiple: false,
             openFirst: false
         };
 
-        if (this.element.classList.contains('silk-accordion--become-tabs') ||
-            this.element.classList.contains('silk-accordion--tabs')) {
+        if (this.element.classList.contains('silc-accordion--become-tabs') ||
+            this.element.classList.contains('silc-accordion--tabs')) {
             settings.tabs = true;
         }
 
-        if (this.element.dataset.silkAccordionOpenMultiple !== undefined) {
+        if (this.element.dataset.silcAccordionOpenMultiple !== undefined) {
             settings.openMultiple = true;
         }
 
-        if (this.element.dataset.silkAccordionOpenFirst !== undefined) {
+        if (this.element.dataset.silcAccordionOpenFirst !== undefined) {
             settings.openFirst = true;
         }
 
@@ -79,7 +79,7 @@ export class SilkAccordion {
             let target = <HTMLElement>e.target;
 
             // If target contains label class
-            if (target.classList.contains('silk-accordion__label')) {
+            if (target.classList.contains('silc-accordion__label')) {
 
                 e.preventDefault();
 
@@ -99,7 +99,7 @@ export class SilkAccordion {
 
             let target = <HTMLElement>e.target;
 
-            if (target.classList.contains('silk-accordion__nav-link')) {
+            if (target.classList.contains('silc-accordion__nav-link')) {
                 e.preventDefault();
                 this.toggleTab(target);
             }
@@ -121,7 +121,7 @@ export class SilkAccordion {
      * @param {String} id - id of content to get
      */
     protected getContentById(id: String): Element {
-        return <Element>this.element.querySelector(id + ' .silk-accordion__content');
+        return <Element>this.element.querySelector(id + ' .silc-accordion__content');
     }
 
     /**
@@ -137,7 +137,7 @@ export class SilkAccordion {
         this.showContent(content);
 
         // Ensure that one tab is always open
-        content.classList.add('silk-accordion__content--visible-persist');
+        content.classList.add('silc-accordion__content--visible-persist');
     }
 
     /**
@@ -148,9 +148,9 @@ export class SilkAccordion {
 
         if (!this.settings.openMultiple) {
             this.hideAllVisible();
-            el.classList.add('silk-accordion__content--visible');
+            el.classList.add('silc-accordion__content--visible');
         } else {
-            el.classList.toggle('silk-accordion__content--visible');
+            el.classList.toggle('silc-accordion__content--visible');
         }
     }
 
@@ -159,8 +159,8 @@ export class SilkAccordion {
      */
     protected hideAllVisible() {
 
-        [].forEach.call(this.element.querySelectorAll('.silk-accordion__content--visible'), (el) => {
-            el.classList.remove('silk-accordion__content--visible');
+        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible'), (el) => {
+            el.classList.remove('silc-accordion__content--visible');
         });
     }
 
@@ -171,8 +171,8 @@ export class SilkAccordion {
     protected hideAllPersitentVisible() {
 
         // Hide all persitent visible content
-        [].forEach.call(this.element.querySelectorAll('.silk-accordion__content--visible-persist'), (el) => {
-            el.classList.remove('silk-accordion__content--visible-persist');
+        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible-persist'), (el) => {
+            el.classList.remove('silc-accordion__content--visible-persist');
         });
     }
 }

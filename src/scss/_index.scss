@@ -1,40 +1,40 @@
 @import "variables";
 
-.silk-accordion {
-	padding: $silk-accordion-padding;
-	margin: $silk-accordion-margin;
+.silc-accordion {
+	padding: $silc-accordion-padding;
+	margin: $silc-accordion-margin;
 }
 
-.silk-accordion__nav {
+.silc-accordion__nav {
 
 	.js & {
 		display: none;
 	}
 }
 
-.silk-accordion__nav-items {
+.silc-accordion__nav-items {
 	
 	.js & {
-		display: $silk-accordion__nav-items-display;
-		margin: $silk-accordion__nav-items-margin;
-		padding: $silk-accordion__nav-items-padding;
+		display: $silc-accordion__nav-items-display;
+		margin: $silc-accordion__nav-items-margin;
+		padding: $silc-accordion__nav-items-padding;
 		list-style: none;
 	}
 }
 
-.silk-accordion__label {
-	display: $silk-accordion__label-display;
-	margin: $silk-accordion__label-margin;
-	padding: $silk-accordion__label-padding;
-	border: $silk-accordion__label-border;
-	background: $silk-accordion__label-background;
-	color: $silk-accordion__label-color;
-	text-decoration: $silk-accordion__label-text-decoration;
-	text-transform: $silk-accordion__label-text-transform;
+.silc-accordion__label {
+	display: $silc-accordion__label-display;
+	margin: $silc-accordion__label-margin;
+	padding: $silc-accordion__label-padding;
+	border: $silc-accordion__label-border;
+	background: $silc-accordion__label-background;
+	color: $silc-accordion__label-color;
+	text-decoration: $silc-accordion__label-text-decoration;
+	text-transform: $silc-accordion__label-text-transform;
 
 	&:hover {
-		background: $silk-accordion__label--hover-background;
-		color: $silk-accordion__label--hover-color;
+		background: $silc-accordion__label--hover-background;
+		color: $silc-accordion__label--hover-color;
 	}
 
 	.js & {
@@ -42,10 +42,10 @@
 	}
 }
 
-.silk-accordion__content {
-	border: $silk-accordion__content-border;
-	padding: $silk-accordion__content-padding;  
-	background: $silk-accordion__content-background;
+.silc-accordion__content {
+	border: $silc-accordion__content-border;
+	padding: $silc-accordion__content-padding;  
+	background: $silc-accordion__content-background;
 
 	.js & {
 		display: none;
@@ -61,20 +61,20 @@
  * Tabs
  *
  */
-.silk-accordion--tabs {
+.silc-accordion--tabs {
 	
-	.silk-accordion__nav {
+	.silc-accordion__nav {
 		display: block;
 	}
 
-	.silk-accordion__header {
+	.silc-accordion__header {
 
 		.js & {
 			display: none;
 		}
 	}
 
-	.silk-accordion__content--visible-persist {
+	.silc-accordion__content--visible-persist {
 		display: block;
 	}
 }
@@ -85,23 +85,23 @@
  *
  */
 
-@media (min-width:$silk-accordion--become-tabs) {
+@media (min-width:$silc-accordion--become-tabs) {
 
-	.silk-accordion--become-tabs {
+	.silc-accordion--become-tabs {
 
-		.silk-accordion__nav {
+		.silc-accordion__nav {
 			display: block;
 		}
 
-		.silk-accordion__content--visible {
+		.silc-accordion__content--visible {
 			display: none;
 		}
 
-		.silk-accordion__content--visible-persist {
+		.silc-accordion__content--visible-persist {
 			display: block;
 		}
 
-		.silk-accordion__header {
+		.silc-accordion__header {
 
 			.js & {
 				display: none;

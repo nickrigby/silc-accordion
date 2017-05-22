@@ -4,7 +4,7 @@ var assert = require('assert'),
 
 var By = webdriver.By;
 
-describe('silk accordion', function () {
+describe('silc accordion', function () {
     var driver;
     this.timeout(15000);
 
