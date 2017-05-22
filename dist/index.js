@@ -1,62 +1,115 @@
 "use strict";
 exports.__esModule = true;
 var SilkAccordion = (function () {
+    /**
+     * Constructor
+     * @param {HTMLElement} element
+     */
     function SilkAccordion(element) {
-        var _this = this;
-        // Save element
+        // Set class properties
         this.element = element;
-        // Class attributes
-        this.tabs = (this.element.classList.contains('silk-accordion--become-tabs') ||
-            this.element.classList.contains('silk-accordion--tabs')) ? true : false;
-        this.openMultiple = (this.element.dataset.silkAccordionOpenMultiple !== undefined) ? true : false;
-        this.openFirst = (this.element.dataset.silkAccordionOpenFirst !== undefined) ? true : false;
         this.labels = this.element.querySelectorAll('.silk-accordion__label');
-        this.navItems = this.element.querySelectorAll('.silk-accordion__nav-items');
+        this.nav = this.element.querySelector('.silk-accordion__nav-items');
+        this.settings = this.applySettings();
         // Label event listener
         if (this.labels.length) {
-            [].forEach.call(this.labels, function (el) {
-                el.addEventListener('click', function (event) {
-                    _this.toggleLabel(event);
-                });
-            });
+            this.labelEventListener();
         }
-        // Nav item event listener
-        if (this.tabs && this.navItems.length) {
-            [].forEach.call(this.navItems, function (el) {
-                el.addEventListener('click', function (event) {
-                    _this.toggleTab(event);
-                });
-            });
-            // Show first tab
+        // Nav event listener
+        if (this.settings.tabs && this.nav !== undefined) {
+            this.navEventListener();
             this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible-persist');
         }
         // Open first element
-        if (this.openFirst) {
+        if (this.settings.openFirst) {
             this.element.querySelector('.silk-accordion__content').classList.add('silk-accordion__content--visible');
         }
     }
-    SilkAccordion.prototype.toggleLabel = function (event) {
-        event.preventDefault();
-        // Get content element to show
-        var content = event.target.parentNode.nextElementSibling;
-        // Show the content
-        this.showContent(content);
+    /**
+     * Apply accordion settings
+     */
+    SilkAccordion.prototype.applySettings = function () {
+        // Defaults
+        var settings = {
+            tabs: false,
+            openMultiple: false,
+            openFirst: false
+        };
+        if (this.element.classList.contains('silk-accordion--become-tabs') ||
+            this.element.classList.contains('silk-accordion--tabs')) {
+            settings.tabs = true;
+        }
+        if (this.element.dataset.silkAccordionOpenMultiple !== undefined) {
+            settings.openMultiple = true;
+        }
+        if (this.element.dataset.silkAccordionOpenFirst !== undefined) {
+            settings.openFirst = true;
+        }
+        return settings;
     };
-    SilkAccordion.prototype.toggleTab = function (event) {
-        event.preventDefault();
-        // Get target id
-        var targetId = event.target.getAttribute('href');
-        // Get content element
-        var content = this.element.querySelector(targetId + ' .silk-accordion__content');
-        // Hide all persitent visible content
+    /**
+     * Event listener for accordion labels
+     */
+    SilkAccordion.prototype.labelEventListener = function () {
+        var _this = this;
+        this.element.addEventListener('click', function (e) {
+            // Get target from event
+            var target = e.target;
+            // If target contains label class
+            if (target.classList.contains('silk-accordion__label')) {
+                e.preventDefault();
+                var content = _this.getContent(target);
+                _this.showContent(content);
+            }
+            e.stopPropagation();
+        });
+    };
+    /**
+     * Event listener for tabs navigation
+     */
+    SilkAccordion.prototype.navEventListener = function () {
+        var _this = this;
+        this.nav.addEventListener('click', function (e) {
+            var target = e.target;
+            if (target.classList.contains('silk-accordion__nav-link')) {
+                e.preventDefault();
+                _this.toggleTab(target);
+            }
+            e.stopPropagation();
+        });
+    };
+    /**
+     * Gets content element from clicked label
+     * @param {Element} label
+     */
+    SilkAccordion.prototype.getContent = function (label) {
+        return label.parentNode.nextElementSibling;
+    };
+    /**
+     * Gets content based on id
+     * @param {String} id - id of content to get
+     */
+    SilkAccordion.prototype.getContentById = function (id) {
+        return this.element.querySelector(id + ' .silk-accordion__content');
+    };
+    /**
+     * Toggle tab from clicked nav link
+     * @param {Element} link - link element clicked
+     */
+    SilkAccordion.prototype.toggleTab = function (link) {
+        var targetId = link.getAttribute('href');
+        var content = this.getContentById(targetId);
         this.hideAllPersitentVisible();
-        // Show content
         this.showContent(content);
-        // Ensures that one tab is always open
+        // Ensure that one tab is always open
         content.classList.add('silk-accordion__content--visible-persist');
     };
+    /**
+     * Show content
+     * @param {Element} el
+     */
     SilkAccordion.prototype.showContent = function (el) {
-        if (!this.openMultiple) {
+        if (!this.settings.openMultiple) {
             this.hideAllVisible();
             el.classList.add('silk-accordion__content--visible');
         }
@@ -64,12 +117,18 @@ var SilkAccordion = (function () {
             el.classList.toggle('silk-accordion__content--visible');
         }
     };
+    /**
+     * Hide all visible content
+     */
     SilkAccordion.prototype.hideAllVisible = function () {
-        // Remove all visible content
         [].forEach.call(this.element.querySelectorAll('.silk-accordion__content--visible'), function (el) {
             el.classList.remove('silk-accordion__content--visible');
         });
     };
+    /**
+     * Hide all persistent visible content
+     * Persistent visible class is used for accordions that transform to tabs
+     */
     SilkAccordion.prototype.hideAllPersitentVisible = function () {
         // Hide all persitent visible content
         [].forEach.call(this.element.querySelectorAll('.silk-accordion__content--visible-persist'), function (el) {
