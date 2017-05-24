@@ -31,6 +31,7 @@ export class SilcAccordion {
         // Nav event listener
         if (this.settings.tabs && this.nav !== undefined) {
             this.navEventListener();
+            this.nav.querySelector('.silc-accordion__nav-link').classList.add('silc-accordion__nav-link--active');
             this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible-persist');
         }
 
@@ -135,6 +136,10 @@ export class SilcAccordion {
 
         this.hideAllPersitentVisible();
         this.showContent(content);
+
+        // Add active class
+        this.nav.querySelector('.silc-accordion__nav-link--active').classList.remove('silc-accordion__nav-link--active');
+        link.classList.add('silc-accordion__nav-link--active');
 
         // Ensure that one tab is always open
         content.classList.add('silc-accordion__content--visible-persist');
