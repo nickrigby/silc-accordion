@@ -27,7 +27,7 @@
     "node-sass": "^4.5.2",
     "sass-loader": "^6.0.3",
     "selenium-webdriver": "^3.4.0",
-    "silc-core": "nickrigby/silc-core",
+    "silc-core": "^0.2.0",
     "style-loader": "^0.17.0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.2",
