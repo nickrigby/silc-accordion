@@ -22,6 +22,16 @@
 	}
 }
 
+.silc-accordion__nav-item {
+
+	.silc-accordion__nav-items--stretch & {
+
+		.js & {
+			flex: 1 auto;
+		}
+	}
+}
+
 .silc-accordion__nav-link {
 	
 	&--active {
