@@ -22,6 +22,14 @@
 	}
 }
 
+.silc-accordion__nav-link {
+	
+	&--active {
+		color: $silc-accordion__nav-link--active-color;
+		background: $silc-accordion__nav-link--active-background;
+	}
+}
+
 .silc-accordion__label {
 	display: $silc-accordion__label-display;
 	margin: $silc-accordion__label-margin;
@@ -39,6 +47,16 @@
 
 	.js & {
 		cursor: pointer;
+	}
+
+	&--active {
+		color: $silc-accordion__label--active-color;
+		background: $silc-accordion__label--active-background;
+
+		&:hover {
+			color: $silc-accordion__label--active-color;
+			background: $silc-accordion__label--active-background;
+		}
 	}
 }
 

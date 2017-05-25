@@ -17,6 +17,9 @@ $silc-accordion__nav-items-display: flex !default;
 $silc-accordion__nav-items-margin: 0 !default;
 $silc-accordion__nav-items-padding: 0 !default;
 
+$silc-accordion__nav-link--active-color: inherit !default;
+$silc-accordion__nav-link--active-background: inherit !default;
+
 /*
  * Header
  *
@@ -33,6 +36,8 @@ $silc-accordion__label-text-transform: none !default;
 $silc-accordion__label-transform: none !default;
 $silc-accordion__label--hover-color:$silc-accordion__label-color !default;
 $silc-accordion__label--hover-background:$silc-accordion__label-background !default;
+$silc-accordion__label--active-background: inherit !default;
+$silc-accordion__label--active-color: inherit !default;
 
 
 /*

@@ -37,6 +37,7 @@ export class SilcAccordion {
 
         // Open first element
         if (this.settings.openFirst) {
+            this.element.querySelector('.silc-accordion__label').classList.add('silc-accordion__label--active');
             this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
         }
     }
@@ -86,6 +87,7 @@ export class SilcAccordion {
 
                 let content = this.getContent(target);
                 this.showContent(content);
+                this.setActiveElement(target, 'silc-accordion__label--active');
             }
 
             e.stopPropagation();
@@ -136,10 +138,7 @@ export class SilcAccordion {
 
         this.hideAllPersitentVisible();
         this.showContent(content);
-
-        // Add active class
-        this.nav.querySelector('.silc-accordion__nav-link--active').classList.remove('silc-accordion__nav-link--active');
-        link.classList.add('silc-accordion__nav-link--active');
+        this.setActiveElement(link, 'silc-accordion__nav-link--active');
 
         // Ensure that one tab is always open
         content.classList.add('silc-accordion__content--visible-persist');
@@ -179,5 +178,25 @@ export class SilcAccordion {
         [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible-persist'), (el) => {
             el.classList.remove('silc-accordion__content--visible-persist');
         });
+    }
+
+    /**
+     * Set active element
+     * @param el 
+     * @param className 
+     */
+    protected setActiveElement(el: Element, className: string) {
+        // Remove active class from currently active label
+
+        if (this.settings.openMultiple) {
+            el.classList.toggle(className);
+        } else {
+            let currentActive = this.element.querySelector('.' + className);
+            if (currentActive !== null) {
+                currentActive.classList.remove(className);
+            }
+
+            el.classList.add(className);
+        }
     }
 }

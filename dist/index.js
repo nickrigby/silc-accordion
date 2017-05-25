@@ -23,6 +23,7 @@ var SilcAccordion = (function () {
         }
         // Open first element
         if (this.settings.openFirst) {
+            this.element.querySelector('.silc-accordion__label').classList.add('silc-accordion__label--active');
             this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
         }
     }
@@ -61,6 +62,7 @@ var SilcAccordion = (function () {
                 e.preventDefault();
                 var content = _this.getContent(target);
                 _this.showContent(content);
+                _this.setActiveElement(target, 'silc-accordion__label--active');
             }
             e.stopPropagation();
         });
@@ -102,9 +104,7 @@ var SilcAccordion = (function () {
         var content = this.getContentById(targetId);
         this.hideAllPersitentVisible();
         this.showContent(content);
-        // Add active class
-        this.nav.querySelector('.silc-accordion__nav-link--active').classList.remove('silc-accordion__nav-link--active');
-        link.classList.add('silc-accordion__nav-link--active');
+        this.setActiveElement(link, 'silc-accordion__nav-link--active');
         // Ensure that one tab is always open
         content.classList.add('silc-accordion__content--visible-persist');
     };
@@ -138,6 +138,24 @@ var SilcAccordion = (function () {
         [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible-persist'), function (el) {
             el.classList.remove('silc-accordion__content--visible-persist');
         });
+    };
+    /**
+     * Set active element
+     * @param el
+     * @param className
+     */
+    SilcAccordion.prototype.setActiveElement = function (el, className) {
+        // Remove active class from currently active label
+        if (this.settings.openMultiple) {
+            el.classList.toggle(className);
+        }
+        else {
+            var currentActive = this.element.querySelector('.' + className);
+            if (currentActive !== null) {
+                currentActive.classList.remove(className);
+            }
+            el.classList.add(className);
+        }
     };
     return SilcAccordion;
 }());
