@@ -54,17 +54,17 @@ var SilcAccordion = (function () {
      */
     SilcAccordion.prototype.labelEventListener = function () {
         var _this = this;
-        this.element.addEventListener('click', function (e) {
+        this.element.addEventListener('click', function (event) {
             // Get target from event
-            var target = e.target;
+            var target = event.target;
             // If target contains label class
             if (target.classList.contains('silc-accordion__label')) {
-                e.preventDefault();
+                event.preventDefault();
                 var content = _this.getContent(target);
                 _this.showContent(content);
                 _this.setActiveElement(target, 'silc-accordion__label--active');
             }
-            e.stopPropagation();
+            event.stopPropagation();
         });
     };
     /**
@@ -72,13 +72,13 @@ var SilcAccordion = (function () {
      */
     SilcAccordion.prototype.navEventListener = function () {
         var _this = this;
-        this.nav.addEventListener('click', function (e) {
-            var target = e.target;
+        this.nav.addEventListener('click', function (event) {
+            var target = event.target;
             if (target.classList.contains('silc-accordion__nav-link')) {
-                e.preventDefault();
+                event.preventDefault();
                 _this.toggleTab(target);
             }
-            e.stopPropagation();
+            event.stopPropagation();
         });
     };
     /**
@@ -125,18 +125,23 @@ var SilcAccordion = (function () {
      * Hide all visible content
      */
     SilcAccordion.prototype.hideAllVisible = function () {
-        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible'), function (el) {
-            el.classList.remove('silc-accordion__content--visible');
-        });
+        this.removeCssClass('silc-accordion__content--visible');
     };
     /**
      * Hide all persistent visible content
      * Persistent visible class is used for accordions that transform to tabs
      */
     SilcAccordion.prototype.hideAllPersitentVisible = function () {
+        this.removeCssClass('silc-accordion__content--visible-persist');
+    };
+    /**
+     * Remove CSS class from all matching elements
+     * @param className
+     */
+    SilcAccordion.prototype.removeCssClass = function (className) {
         // Hide all persitent visible content
-        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible-persist'), function (el) {
-            el.classList.remove('silc-accordion__content--visible-persist');
+        [].forEach.call(this.element.querySelectorAll('.' + className), function (el) {
+            el.classList.remove(className);
         });
     };
     /**
@@ -145,7 +150,6 @@ var SilcAccordion = (function () {
      * @param className
      */
     SilcAccordion.prototype.setActiveElement = function (el, className) {
-        // Remove active class from currently active label
         if (this.settings.openMultiple) {
             el.classList.toggle(className);
         }

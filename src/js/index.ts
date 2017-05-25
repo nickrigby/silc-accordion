@@ -162,10 +162,7 @@ export class SilcAccordion {
      * Hide all visible content
      */
     protected hideAllVisible() {
-
-        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible'), el => {
-            el.classList.remove('silc-accordion__content--visible');
-        });
+        this.removeCssClass('silc-accordion__content--visible');
     }
 
     /**
@@ -173,10 +170,17 @@ export class SilcAccordion {
      * Persistent visible class is used for accordions that transform to tabs
      */
     protected hideAllPersitentVisible() {
+        this.removeCssClass('silc-accordion__content--visible-persist');
+    }
 
+    /**
+     * Remove CSS class from all matching elements
+     * @param className 
+     */
+    protected removeCssClass(className: string) {
         // Hide all persitent visible content
-        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible-persist'), el => {
-            el.classList.remove('silc-accordion__content--visible-persist');
+        [].forEach.call(this.element.querySelectorAll('.' + className), el => {
+            el.classList.remove(className);
         });
     }
 
@@ -186,8 +190,6 @@ export class SilcAccordion {
      * @param className 
      */
     protected setActiveElement(el: Element, className: string) {
-        // Remove active class from currently active label
-
         if (this.settings.openMultiple) {
             el.classList.toggle(className);
         } else {
