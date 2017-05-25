@@ -75,22 +75,22 @@ export class SilcAccordion {
      */
     protected labelEventListener() {
 
-        this.element.addEventListener('click', (e) => {
+        this.element.addEventListener('click', event => {
 
             // Get target from event
-            let target = <HTMLElement>e.target;
+            let target = <HTMLElement>event.target;
 
             // If target contains label class
             if (target.classList.contains('silc-accordion__label')) {
 
-                e.preventDefault();
+                event.preventDefault();
 
                 let content = this.getContent(target);
                 this.showContent(content);
                 this.setActiveElement(target, 'silc-accordion__label--active');
             }
 
-            e.stopPropagation();
+            event.stopPropagation();
         });
     }
 
@@ -98,16 +98,16 @@ export class SilcAccordion {
      * Event listener for tabs navigation
      */
     protected navEventListener() {
-        this.nav.addEventListener('click', (e) => {
+        this.nav.addEventListener('click', event => {
 
-            let target = <HTMLElement>e.target;
+            let target = <HTMLElement>event.target;
 
             if (target.classList.contains('silc-accordion__nav-link')) {
-                e.preventDefault();
+                event.preventDefault();
                 this.toggleTab(target);
             }
 
-            e.stopPropagation();
+            event.stopPropagation();
         });
     }
 
@@ -163,7 +163,7 @@ export class SilcAccordion {
      */
     protected hideAllVisible() {
 
-        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible'), (el) => {
+        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible'), el => {
             el.classList.remove('silc-accordion__content--visible');
         });
     }
@@ -175,7 +175,7 @@ export class SilcAccordion {
     protected hideAllPersitentVisible() {
 
         // Hide all persitent visible content
-        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible-persist'), (el) => {
+        [].forEach.call(this.element.querySelectorAll('.silc-accordion__content--visible-persist'), el => {
             el.classList.remove('silc-accordion__content--visible-persist');
         });
     }
