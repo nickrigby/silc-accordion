@@ -59,13 +59,12 @@ export class SilcAccordion {
             settings.tabs = true;
         }
 
-        if (this.element.dataset !== undefined) {
-            if (this.element.dataset.silcAccordionOpenMultiple !== undefined) {
-                settings.openMultiple = true;
-            }
-            if (this.element.dataset.silcAccordionOpenFirst !== undefined) {
-                settings.openFirst = true;
-            }
+        if (this.element.getAttribute('data-silc-accordion-open-multiple') !== null) {
+            settings.openMultiple = true;
+        }
+
+        if (this.element.getAttribute('data-silc-accordion-open-first') !== null) {
+            settings.openFirst = true;
         }
 
         return settings;
