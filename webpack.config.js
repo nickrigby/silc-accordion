@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const WebpackShellPlugin = require("webpack-shell-plugin");
 const extractSass = new ExtractTextPlugin({
     filename: "index.css"
 });
@@ -55,17 +54,6 @@ if (process.env.NODE_ENV !== 'production') {
 
     config.plugins.push(
         new webpack.HotModuleReplacementPlugin()
-    );
-
-}
-
-if (process.env.NODE_ENV === 'test') {
-
-    config.plugins.push(
-        new WebpackShellPlugin({
-            onBuildStart: ['echo "Starting webpack server for testing"'],
-            onBuildEnd: ['mocha --timeout 15000']
-        })
     );
 
 }

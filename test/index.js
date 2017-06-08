@@ -1,36 +1,39 @@
-var assert = require('assert'),
-    test = require('selenium-webdriver/testing'),
-    webdriver = require('selenium-webdriver');
+const server = require('node-http-server');
+const Browser = require('zombie');
 
-var By = webdriver.By;
+describe('User visits demo page', function () {
 
-describe('silc accordion', function () {
-    var driver;
-    this.timeout(15000);
+    const browser = new Browser();
 
     before(function () {
-        driver = new webdriver.Builder().
-            withCapabilities(webdriver.Capabilities.chrome()).
-            build();
+
+        server.deploy({
+            port: 9001
+        });
+
+        return browser.visit('http://localhost:9001/index.html');
     });
 
-    test.it('accordion', function () {
+    describe('accordions that are tabs', function () {
 
-        driver.get('http://localhost:9001');
+        before(function (done) {
+            browser
+                .clickLink('#accordion-4 .silc-accordion__nav-link', done);
+        });
+
+        it('should exist', function () {
+            browser.assert.element('#accordion-4');
+        });
+
+        it('should show only one active tab link', function () {
+            browser.assert.elements('#accordion-4 .silc-accordion__nav-link--active', { exactly: 1 });
+        });
+
+        it('should show only one active tab content', function () {
+            browser.assert.elements('#accordion-4 .silc-accordion__content--visible', { exactly: 1 });
+            browser.assert.elements('#accordion-4 .silc-accordion__content--visible-persist', { exactly: 1 });
+        });
+
     });
 
-    test.it('accordion with first item open', function () {
-
-        driver.get('http://localhost:9001');
-    });
-
-    test.it('accordion that transforms to tabs', function () {
-
-        driver.get('http://localhost:9001');
-    });
-
-    test.it('accordion that are tabs', function () {
-
-        driver.get('http://localhost:9001');
-    });
 });

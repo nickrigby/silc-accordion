@@ -41,11 +41,13 @@ var SilcAccordion = (function () {
             this.element.classList.contains('silc-accordion--tabs')) {
             settings.tabs = true;
         }
-        if (this.element.dataset.silcAccordionOpenMultiple !== undefined) {
-            settings.openMultiple = true;
-        }
-        if (this.element.dataset.silcAccordionOpenFirst !== undefined) {
-            settings.openFirst = true;
+        if (this.element.dataset !== undefined) {
+            if (this.element.dataset.silcAccordionOpenMultiple !== undefined) {
+                settings.openMultiple = true;
+            }
+            if (this.element.dataset.silcAccordionOpenFirst !== undefined) {
+                settings.openFirst = true;
+            }
         }
         return settings;
     };
