@@ -1,4 +1,4 @@
-# silc Accordion [![Build Status](https://travis-ci.org/nickrigby/silc-accordion.svg?branch=master)](https://travis-ci.org/nickrigby/silc-accordion)
+# silc Accordion [![Build Status](https://travis-ci.org/nickrigby/silc-accordion.svg?branch=master)](https://travis-ci.org/nickrigby/silc-accordion) [![npm version](https://badge.fury.io/js/silc-accordion.svg)](https://badge.fury.io/js/silc-accordion)
 The accordion module is an ultra-lightweight web component for the [silc framework](https://github.com/nickrigby/silc). The accordion module is capable of pure accordions, accordions that become tabs, or pure tabs.
 
 ## HTML
