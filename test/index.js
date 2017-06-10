@@ -18,7 +18,7 @@ describe('User visits accordion demo page', function () {
 
         before(function () {
             return browser
-                .clickLink('#accordion-0 .silc-accordion__label');
+                .fire('#accordion-0 .silc-accordion__label', 'click');
         });
 
         it('should exist', function () {
@@ -55,9 +55,9 @@ describe('User visits accordion demo page', function () {
 
         before(function () {
             return browser
-                .clickLink('#accordion-2 .silc-accordion__section:nth-child(1) .silc-accordion__label', function () {
+                .fire('#accordion-2 .silc-accordion__section:nth-child(1) .silc-accordion__label', 'click', function () {
                     browser
-                        .clickLink('#accordion-2 .silc-accordion__section:nth-child(2) .silc-accordion__label');
+                        .fire('#accordion-2 .silc-accordion__section:nth-child(2) .silc-accordion__label', 'click');
                 });
         });
 
