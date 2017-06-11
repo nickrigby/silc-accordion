@@ -1,7 +1,7 @@
 const server = require('node-http-server');
 const Browser = require('zombie');
 
-describe('User visits accordion demo page', function () {
+describe('silc accordion module', function () {
 
     const browser = new Browser();
 
@@ -14,44 +14,36 @@ describe('User visits accordion demo page', function () {
         return browser.visit('http://localhost:9001/index.html');
     });
 
-    describe('accordions', function () {
+    describe('accordion', function () {
 
         before(function () {
             return browser
                 .fire('#accordion-0 .silc-accordion__label', 'click');
         });
 
-        it('should exist', function () {
-            browser.assert.element('#accordion-0');
-        });
-
-        it('should show only one active label', function () {
+        it('should show exactly one active label element', function () {
             browser.assert.elements('#accordion-0 .silc-accordion__label--active', { exactly: 1 });
         });
 
-        it('should show only one active accordion', function () {
+        it('should show exactly one visible content element', function () {
             browser.assert.elements('#accordion-0 .silc-accordion__content--visible', { exactly: 1 });
         });
 
     });
 
-    describe('accordions with first accordion open', function () {
+    describe('accordion with first section open', function () {
 
-        it('should exist', function () {
-            browser.assert.element('#accordion-1');
-        });
-
-        it('should show exactly one active label on load', function () {
+        it('should have exactly one active label element on load', function () {
             browser.assert.elements('#accordion-1 .silc-accordion__label--active', { exactly: 1 });
         });
 
-        it('should show exactly one active accordion on load', function () {
+        it('should have exactly one visible content element on load', function () {
             browser.assert.elements('#accordion-1 .silc-accordion__content--visible', { exactly: 1 });
         });
 
     });
 
-    describe('accordions with ability to open multiple accordions at once', function () {
+    describe('accordion with option to open multiple sections at once', function () {
 
         before(function () {
             return browser
@@ -61,65 +53,53 @@ describe('User visits accordion demo page', function () {
                 });
         });
 
-        it('should exist', function () {
-            browser.assert.element('#accordion-2');
-        });
-
-        it('should show two active accordion labels', function () {
+        it('should have exactly two active label elements', function () {
             browser.assert.elements('#accordion-2 .silc-accordion__label--active', { exactly: 2 });
         });
 
-        it('should show exactly two visible accordions', function () {
+        it('should have exactly two visible content elements', function () {
             browser.assert.elements('#accordion-2 .silc-accordion__content--visible', { exactly: 2 });
         });
 
     });
 
-    describe('accordions that become tabs', function () {
+    describe('accordion that becomes tabs', function () {
 
         before(function () {
             return browser
-                .clickLink('#accordion-3 .silc-accordion__nav-link');
+                .fire('#accordion-3 .silc-accordion__nav-link', 'click');
         });
 
-        it('should exist', function () {
-            browser.assert.element('#accordion-3');
-        });
-
-        it('should show exactly one active tab link', function () {
+        it('should have exactly one active tab link element', function () {
             browser.assert.elements('#accordion-3 .silc-accordion__nav-link--active', { exactly: 1 });
         });
 
-        it('should show exactly one active tab content', function () {
+        it('should have exactly one visible tab content element', function () {
             browser.assert.elements('#accordion-3 .silc-accordion__content--visible', { exactly: 1 });
         });
 
-        it('should show exactly one visible tab content', function () {
+        it('should have exactly one persitent visible tab content element', function () {
             browser.assert.elements('#accordion-3 .silc-accordion__content--visible-persist', { exactly: 1 });
         });
 
     });
 
-    describe('accordions that are tabs', function () {
+    describe('tabs', function () {
 
         before(function () {
             return browser
-                .clickLink('#accordion-4 .silc-accordion__nav-link');
+                .fire('#accordion-4 .silc-accordion__nav-link', 'click');
         });
 
-        it('should exist', function () {
-            browser.assert.element('#accordion-4');
-        });
-
-        it('should show exactly one active tab link', function () {
+        it('should have exactly one active tab link element', function () {
             browser.assert.elements('#accordion-4 .silc-accordion__nav-link--active', { exactly: 1 });
         });
 
-        it('should show exactly one visible tab content', function () {
+        it('should have exactly one visible tab content element', function () {
             browser.assert.elements('#accordion-4 .silc-accordion__content--visible', { exactly: 1 });
         });
 
-        it('should show exactly one persitent visible tab content', function () {
+        it('should have exactly one persitent visible tab content element', function () {
             browser.assert.elements('#accordion-4 .silc-accordion__content--visible-persist', { exactly: 1 });
         });
 
