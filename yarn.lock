@@ -2918,9 +2918,9 @@ signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-silc-core@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/silc-core/-/silc-core-0.3.1.tgz#eaa5023554768d1be7f35a2fc746074cb2ae9d71"
+silc-core@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/silc-core/-/silc-core-0.5.0.tgz#14d3fe1119c86f2104878c93e7457bf3fbdbca83"
 
 sntp@1.x.x:
   version "1.0.9"
