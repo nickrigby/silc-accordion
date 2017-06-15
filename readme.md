@@ -79,6 +79,17 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
 </div>
 ```
 
+## Class modifiers
+
+### Tabs navigation width
+Tabs can be set to "stretch" to the entire length of the tabs container by adding the modifier `silc-accordion__nav-items--stretch`
+
+```html
+<ul class="silc-accordion__nav-items silc-accordion__nav-items--stretch">
+...
+</ul>
+```
+
 ## Options
 The functionality of the accordion can be modified by adding JavaScript data attributes.
 
