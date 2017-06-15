@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --outDir ./dist ./src/js/index.ts",
     "serve": "webpack-dev-server --open",
-    "test": "webpack && mocha"
+    "test": "NODE_ENV=production webpack -p && mocha"
   },
   "author": {
     "name": "Nick Rigby",

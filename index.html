@@ -8,9 +8,46 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./build/index.css" />
+    <style>
+    body {
+        font-family: sans-serif;
+    }
+
+    code {
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .silc-accordion__label {
+        padding: 1em;
+        background: #f1f1f1;
+    }
+
+    .silc-accordion__label:hover {
+        background: #ddd;
+    }
+
+    .silc-accordion__content {
+        padding: 1em;
+        border: 1px solid #eee;
+    }
+
+    .silc-accordion__nav-link {
+        display: block;
+        padding: 1em;
+        background: #f1f1f1;
+        text-decoration: none;
+        color: #000;
+    }
+
+    .silc-accordion__nav-link--active {
+        background: #ddd;
+    }
+    </style>
 </head>
 
 <body>
+
+    <h1>silc accordion demo</h1>
 
     <h2>Basic</h2>
     <div class="silc-accordion" id="accordion-0">
@@ -42,7 +79,7 @@
     <div class="silc-accordion" id="accordion-1" data-silc-accordion-open-first>
         <section class="silc-accordion__section">
             <header class="silc-accordion__header">
-                <h2 class="silc-accordion__label">Accordion 1</h2>
+                <h3 class="silc-accordion__label">Accordion 1</h3>
             </header>
             <div class="silc-accordion__content">
                 <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
@@ -53,7 +90,7 @@
         </section>
         <section class="silc-accordion__section">
             <header class="silc-accordion__header">
-                <h2 class="silc-accordion__label">Accordion 2</h2>
+                <h3 class="silc-accordion__label">Accordion 2</h3>
             </header>
             <div class="silc-accordion__content">
                 <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
@@ -91,6 +128,7 @@
     </div>
 
     <h2>Accordion that becomes tabs</h2>
+    <p>Also has the optional <code>silc-accordion__nav-items--stretch</code> modifier on nav items.</p>
     <div class="silc-accordion silc-accordion--become-tabs" id="accordion-3">
         <nav class="silc-accordion__nav">
             <ul class="silc-accordion__nav-items silc-accordion__nav-items--stretch">
@@ -101,7 +139,7 @@
         </nav>
         <section class="silc-accordion__section" id="silc-accordion-3-1">
             <header class="silc-accordion__header">
-                <h2 class="silc-accordion__label">Tab 1</h2>
+                <h3 class="silc-accordion__label">Tab 1</h3>
             </header>
             <div class="silc-accordion__content">
                 <p>Tab 1 content.</p>
@@ -109,7 +147,7 @@
         </section>
         <section class="silc-accordion__section" id="silc-accordion-3-2">
             <header class="silc-accordion__header">
-                <h2 class="silc-accordion__label">Tab 2</h2>
+                <h3 class="silc-accordion__label">Tab 2</h3>
             </header>
             <div class="silc-accordion__content">
                 <p>Tab 2 content.</p>
@@ -117,7 +155,7 @@
         </section>
         <section class="silc-accordion__section" id="silc-accordion-3-3">
             <header class="silc-accordion__header">
-                <h2 class="silc-accordion__label">Tab 3</h2>
+                <h3 class="silc-accordion__label">Tab 3</h3>
             </header>
             <div class="silc-accordion__content">
                 <p>Tab 3 content.</p>
@@ -135,7 +173,7 @@
         </nav>
         <section class="silc-accordion__section" id="silc-accordion-4-1">
             <header class="silc-accordion__header">
-                <h2 class="silc-accordion__label">Tab 1</h2>
+                <h3 class="silc-accordion__label">Tab 1</h3>
             </header>
             <div class="silc-accordion__content">
                 <p>Tab 1 content.</p>
@@ -143,7 +181,7 @@
         </section>
         <section class="silc-accordion__section" id="silc-accordion-4-2">
             <header class="silc-accordion__header">
-                <h2 class="silc-accordion__label">Tab 2</h2>
+                <h3 class="silc-accordion__label">Tab 2</h3>
             </header>
             <div class="silc-accordion__content">
                 <p>Tab 2 content.</p>
