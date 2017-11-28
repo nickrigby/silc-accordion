@@ -85,9 +85,14 @@ export default class {
 
                 event.preventDefault();
 
+                // Get clicked labels associated content element
                 let content = this.getContent(target);
-                this.showContent(content);
-                this.setActiveElement(target, 'silc-accordion__label--active');
+
+                // Toggle the content
+                this.toggleContent(content);
+
+                // Toggle active element
+                this.toggleActiveElement(target, 'silc-accordion__label--active');
             }
 
             event.stopPropagation();
@@ -137,8 +142,8 @@ export default class {
         let content = this.getContentById(targetId);
 
         this.hideAllPersitentVisible();
-        this.showContent(content);
-        this.setActiveElement(link, 'silc-accordion__nav-link--active');
+        this.toggleContent(content);
+        this.toggleActiveElement(link, 'silc-accordion__nav-link--active');
 
         // Ensure that one tab is always open
         content.classList.add('silc-accordion__content--visible-persist');
@@ -148,21 +153,14 @@ export default class {
      * Show content
      * @param {Element} el
      */
-    protected showContent(el: Element) {
+    protected toggleContent(el: Element) {
 
         if (!this.settings.openMultiple) {
-            this.hideAllVisible();
-            el.classList.add('silc-accordion__content--visible');
+            this.removeCssClass('silc-accordion__content--visible', el);
+            el.classList.toggle('silc-accordion__content--visible');
         } else {
             el.classList.toggle('silc-accordion__content--visible');
         }
-    }
-
-    /**
-     * Hide all visible content
-     */
-    protected hideAllVisible() {
-        this.removeCssClass('silc-accordion__content--visible');
     }
 
     /**
@@ -177,10 +175,12 @@ export default class {
      * Remove CSS class from all matching elements
      * @param className 
      */
-    protected removeCssClass(className: string) {
+    protected removeCssClass(className: string, excludeEl?) {
         // Hide all persitent visible content
         [].forEach.call(this.element.querySelectorAll('.' + className), el => {
-            el.classList.remove(className);
+            if (el !== excludeEl) {
+                el.classList.remove(className);
+            }
         });
     }
 
@@ -189,16 +189,24 @@ export default class {
      * @param el 
      * @param className 
      */
-    protected setActiveElement(el: Element, className: string) {
-        if (this.settings.openMultiple) {
-            el.classList.toggle(className);
-        } else {
+    protected toggleActiveElement(el: Element, className: string) {
+
+        if (!this.settings.openMultiple) {
             let currentActive = this.element.querySelector('.' + className);
+
             if (currentActive !== null) {
                 currentActive.classList.remove(className);
+            } else {
+                el.classList.add(className);
             }
 
-            el.classList.add(className);
+            if (this.settings.tabs) {
+                el.classList.add(className);
+            }            
+            
+        } else {
+            el.classList.toggle(className);
         }
+
     }
 }

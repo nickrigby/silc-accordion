@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var default_1 = (function () {
+var default_1 = /** @class */ (function () {
     /**
      * Constructor
      * @param {HTMLElement} element
@@ -60,9 +60,12 @@ var default_1 = (function () {
             // If target contains label class
             if (target.classList.contains('silc-accordion__label')) {
                 event.preventDefault();
+                // Get clicked labels associated content element
                 var content = _this.getContent(target);
-                _this.showContent(content);
-                _this.setActiveElement(target, 'silc-accordion__label--active');
+                // Toggle the content
+                _this.toggleContent(content);
+                // Toggle active element
+                _this.toggleActiveElement(target, 'silc-accordion__label--active');
             }
             event.stopPropagation();
         });
@@ -103,8 +106,8 @@ var default_1 = (function () {
         var targetId = link.getAttribute('href');
         var content = this.getContentById(targetId);
         this.hideAllPersitentVisible();
-        this.showContent(content);
-        this.setActiveElement(link, 'silc-accordion__nav-link--active');
+        this.toggleContent(content);
+        this.toggleActiveElement(link, 'silc-accordion__nav-link--active');
         // Ensure that one tab is always open
         content.classList.add('silc-accordion__content--visible-persist');
     };
@@ -112,20 +115,14 @@ var default_1 = (function () {
      * Show content
      * @param {Element} el
      */
-    default_1.prototype.showContent = function (el) {
+    default_1.prototype.toggleContent = function (el) {
         if (!this.settings.openMultiple) {
-            this.hideAllVisible();
-            el.classList.add('silc-accordion__content--visible');
+            this.removeCssClass('silc-accordion__content--visible', el);
+            el.classList.toggle('silc-accordion__content--visible');
         }
         else {
             el.classList.toggle('silc-accordion__content--visible');
         }
-    };
-    /**
-     * Hide all visible content
-     */
-    default_1.prototype.hideAllVisible = function () {
-        this.removeCssClass('silc-accordion__content--visible');
     };
     /**
      * Hide all persistent visible content
@@ -138,10 +135,12 @@ var default_1 = (function () {
      * Remove CSS class from all matching elements
      * @param className
      */
-    default_1.prototype.removeCssClass = function (className) {
+    default_1.prototype.removeCssClass = function (className, excludeEl) {
         // Hide all persitent visible content
         [].forEach.call(this.element.querySelectorAll('.' + className), function (el) {
-            el.classList.remove(className);
+            if (el !== excludeEl) {
+                el.classList.remove(className);
+            }
         });
     };
     /**
@@ -149,16 +148,21 @@ var default_1 = (function () {
      * @param el
      * @param className
      */
-    default_1.prototype.setActiveElement = function (el, className) {
-        if (this.settings.openMultiple) {
-            el.classList.toggle(className);
-        }
-        else {
+    default_1.prototype.toggleActiveElement = function (el, className) {
+        if (!this.settings.openMultiple) {
             var currentActive = this.element.querySelector('.' + className);
             if (currentActive !== null) {
                 currentActive.classList.remove(className);
             }
-            el.classList.add(className);
+            else {
+                el.classList.add(className);
+            }
+            if (this.settings.tabs) {
+                el.classList.add(className);
+            }
+        }
+        else {
+            el.classList.toggle(className);
         }
     };
     return default_1;
