@@ -92,7 +92,7 @@ export default class {
                 this.toggleContent(content);
 
                 // Toggle active element
-                this.toggleActiveElement(target, 'silc-accordion__label--active');
+                this.toggleActiveLabel(target, 'silc-accordion__label--active');
             }
 
             event.stopPropagation();
@@ -125,11 +125,14 @@ export default class {
     }
 
     /**
-     * Gets content based on id
+     * Gets accordion based on id
      * @param {String} id - id of content to get
      */
-    protected getContentById(id: String): Element {
-        return <Element>this.element.querySelector(id + ' .silc-accordion__content');
+    protected getById(id: String) {
+        return {
+            'content': <Element>this.element.querySelector(id + ' .silc-accordion__content'),
+            'label': <Element>this.element.querySelector(id + ' .silc-accordion__label')
+        };
     }
 
     /**
@@ -139,14 +142,15 @@ export default class {
     protected toggleTab(link: Element) {
 
         let targetId = link.getAttribute('href');
-        let content = this.getContentById(targetId);
+        let accordion = this.getById(targetId);
 
         this.hideAllPersitentVisible();
-        this.toggleContent(content);
-        this.toggleActiveElement(link, 'silc-accordion__nav-link--active');
+        this.toggleContent(accordion.content);
+        this.toggleActiveTab(link, 'silc-accordion__nav-link--active');
+        this.toggleActiveLabel(accordion.label, 'silc-accordion__label--active');
 
         // Ensure that one tab is always open
-        content.classList.add('silc-accordion__content--visible-persist');
+        accordion.content.classList.add('silc-accordion__content--visible-persist');
     }
 
     /**
@@ -156,11 +160,10 @@ export default class {
     protected toggleContent(el: Element) {
 
         if (!this.settings.openMultiple) {
-            this.removeCssClass('silc-accordion__content--visible', el);
-            el.classList.toggle('silc-accordion__content--visible');
-        } else {
-            el.classList.toggle('silc-accordion__content--visible');
+            this.removeCssClass('silc-accordion__content--visible', el); 
         }
+
+        el.classList.toggle('silc-accordion__content--visible');
     }
 
     /**
@@ -185,28 +188,38 @@ export default class {
     }
 
     /**
-     * Set active element
+     * Set active label
      * @param el 
      * @param className 
      */
-    protected toggleActiveElement(el: Element, className: string) {
+    protected toggleActiveLabel(el: Element, className: string) {
 
         if (!this.settings.openMultiple) {
+
             let currentActive = this.element.querySelector('.' + className);
 
-            if (currentActive !== null) {
+            if (currentActive && currentActive !== el) {
                 currentActive.classList.remove(className);
-            } else {
-                el.classList.add(className);
             }
-
-            if (this.settings.tabs) {
-                el.classList.add(className);
-            }            
-            
-        } else {
-            el.classList.toggle(className);
         }
 
+        el.classList.toggle(className);
+    }
+
+    /**
+     * Set active tab
+     * @param el
+     * @param className 
+     */
+    protected toggleActiveTab(el: Element, className: string) {
+
+        // Get current active tab
+        let currentActive = this.element.querySelector('.' + className);
+
+        // Remove active class
+        currentActive.classList.remove(className);
+
+        // Add active class to clicked tab
+        el.classList.add(className);
     }
 }
