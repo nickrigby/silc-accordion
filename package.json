@@ -1,6 +1,6 @@
 {
   "name": "silc-accordion",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Accordion component for the silc framework",
   "main": "./dist/index.js",
   "scripts": {
