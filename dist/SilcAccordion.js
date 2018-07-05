@@ -1,5 +1,8 @@
 "use strict";
 exports.__esModule = true;
+// .closest() pollyfill
+var elementClosest = require("element-closest");
+elementClosest;
 var default_1 = /** @class */ (function () {
     /**
      * Constructor
@@ -137,9 +140,10 @@ var default_1 = /** @class */ (function () {
      * @param className
      */
     default_1.prototype.removeCssClass = function (className, excludeEl) {
+        var _this = this;
         // Hide all persitent visible content
         [].forEach.call(this.element.querySelectorAll('.' + className), function (el) {
-            if (el !== excludeEl) {
+            if (el !== excludeEl && _this.element === el.closest('.silc-accordion')) {
                 el.classList.remove(className);
             }
         });
@@ -152,7 +156,7 @@ var default_1 = /** @class */ (function () {
     default_1.prototype.toggleActiveLabel = function (el, className) {
         if (!this.settings.openMultiple) {
             var currentActive = this.element.querySelector('.' + className);
-            if (currentActive && currentActive !== el) {
+            if (currentActive && currentActive !== el && this.element === currentActive.closest('.silc-accordion')) {
                 currentActive.classList.remove(className);
             }
         }
