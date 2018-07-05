@@ -193,6 +193,55 @@
         </section>
     </div>
 
+    <h2>Accordions within Tabs</h2>
+    <div class="silc-accordion silc-accordion--tabs" id="accordion-5">
+      <nav class="silc-accordion__nav">
+          <ul class="silc-accordion__nav-items">
+              <li class="silc-accordion__nav-item"><a class="silc-accordion__nav-link" href="#silc-accordion-5-1">Tab 1</a></li>
+              <li class="silc-accordion__nav-item"><a class="silc-accordion__nav-link" href="#silc-accordion-5-2">Tab 2</a></li>
+          </ul>
+      </nav>
+      <section class="silc-accordion__section" id="silc-accordion-5-1">
+          <header class="silc-accordion__header">
+              <h3 class="silc-accordion__label">Tab 1</h3>
+          </header>
+          <div class="silc-accordion__content">
+              <p>Tab 1 content.</p>
+          </div>
+      </section>
+      <section class="silc-accordion__section" id="silc-accordion-5-2">
+          <header class="silc-accordion__header">
+              <h3 class="silc-accordion__label">Tab 2</h3>
+          </header>
+          <div class="silc-accordion__content">
+            <div class="silc-accordion" id="accordion-6" data-silc-accordion-open-multiple data-silc-accordion-open-first>
+              <section class="silc-accordion__section">
+                  <header class="silc-accordion__header">
+                      <h3 class="silc-accordion__label">Accordion 1</h3>
+                  </header>
+                  <div class="silc-accordion__content">
+                      <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                          justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                          lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                          mollis ornare vel eu leo.</p>
+                  </div>
+              </section>
+              <section class="silc-accordion__section">
+                  <header class="silc-accordion__header">
+                      <h3 class="silc-accordion__label">Accordion 2</h3>
+                  </header>
+                  <div class="silc-accordion__content">
+                      <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                          justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                          lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                          mollis ornare vel eu leo.</p>
+                  </div>
+              </section>
+            </div>
+          </div>
+      </section>
+  </div>
+
 
     <script src="./build/bundle.js"></script>
 

@@ -105,7 +105,18 @@
 
 	.silc-accordion__content--visible-persist {
 		display: block;
-	}
+  }
+  
+  // Accordion within tabs
+  .silc-accordion {
+
+    .silc-accordion__header {
+
+      .js & {
+        display: block;
+      }
+    }
+  }
 }
 
 
@@ -135,6 +146,21 @@
 			.js & {
 				display: none;
 			}
-		}
+    }
+    
+    // Accordion within tabs
+    .silc-accordion {
+
+      .silc-accordion__header {
+
+        .js & {
+          display: block;
+        }
+      }
+
+      .silc-accordion__content--visible {
+        display: block;
+      }
+    }
 	}
 }
