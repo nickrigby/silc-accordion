@@ -1,3 +1,7 @@
+// .closest() pollyfill
+import * as elementClosest from 'element-closest';
+elementClosest;
+
 interface SilcAccordionSettings {
     openMultiple: boolean;
     openFirst: boolean;
@@ -179,9 +183,10 @@ export default class {
      * @param className 
      */
     protected removeCssClass(className: string, excludeEl?) {
+      
         // Hide all persitent visible content
         [].forEach.call(this.element.querySelectorAll('.' + className), el => {
-            if (el !== excludeEl) {
+            if (el !== excludeEl && this.element === el.closest('.silc-accordion')) {
                 el.classList.remove(className);
             }
         });
@@ -198,7 +203,7 @@ export default class {
 
             let currentActive = this.element.querySelector('.' + className);
 
-            if (currentActive && currentActive !== el) {
+            if (currentActive && currentActive !== el && this.element === currentActive.closest('.silc-accordion')) {
                 currentActive.classList.remove(className);
             }
         }
