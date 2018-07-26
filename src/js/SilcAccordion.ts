@@ -185,11 +185,15 @@ export default class {
     protected removeCssClass(className: string, excludeEl?) {
       
         // Hide all persitent visible content
-        [].forEach.call(this.element.querySelectorAll('.' + className), el => {
+        let children = <NodeList>this.element.querySelectorAll('.' + className);
+        if (children.length > 0) {
+          for (let i = 0; i < children.length; i++) {
+            let el = <HTMLElement>children[i];
             if (el !== excludeEl && this.element === el.closest('.silc-accordion')) {
-                el.classList.remove(className);
+              el.classList.remove(className);
             }
-        });
+          }
+        }
     }
 
     /**

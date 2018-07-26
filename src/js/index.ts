@@ -1,9 +1,12 @@
 import SilcAccordion from './SilcAccordion';
 
 function silcAccordionInit() {
-    [].forEach.call(document.querySelectorAll('.silc-accordion'), (el) => {
-        new SilcAccordion(el);
-    });
+  let accordions = <NodeList>document.querySelectorAll('.silc-accordion');
+  if (accordions.length > 0) {
+    for (let i = 0; i < accordions.length; i++) {
+      new SilcAccordion(<HTMLElement>accordions[i]);
+    }
+  }
 }
 
 export { SilcAccordion, silcAccordionInit }
