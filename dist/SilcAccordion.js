@@ -140,13 +140,16 @@ var default_1 = /** @class */ (function () {
      * @param className
      */
     default_1.prototype.removeCssClass = function (className, excludeEl) {
-        var _this = this;
         // Hide all persitent visible content
-        [].forEach.call(this.element.querySelectorAll('.' + className), function (el) {
-            if (el !== excludeEl && _this.element === el.closest('.silc-accordion')) {
-                el.classList.remove(className);
+        var children = this.element.querySelectorAll('.' + className);
+        if (children.length > 0) {
+            for (var i = 0; i < children.length; i++) {
+                var el = children[i];
+                if (el !== excludeEl && this.element === el.closest('.silc-accordion')) {
+                    el.classList.remove(className);
+                }
             }
-        });
+        }
     };
     /**
      * Set active label
