@@ -15,11 +15,13 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^9.3.1",
     "css-loader": "^0.28.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "mocha": "^5.0.0",
     "node-http-server": "^6.2.1",
     "node-sass": "^4.9.1",
+    "postcss-loader": "^3.0.0",
     "sass-loader": "^6.0.3",
     "silc-core": "^0.6.0",
     "style-loader": "^0.17.0",

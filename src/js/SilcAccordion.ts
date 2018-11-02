@@ -1,3 +1,5 @@
+const debounce = require('lodash.debounce');
+
 // .closest() pollyfill
 import * as elementClosest from 'element-closest';
 elementClosest;
@@ -14,6 +16,7 @@ export default class {
   protected settings: SilcAccordionSettings;
   protected labels: NodeList;
   protected nav: Element;
+  protected activeAccordionIds: String[];
 
   /**
    * Constructor
@@ -26,6 +29,9 @@ export default class {
     this.labels = this.element.querySelectorAll('.silc-accordion__label');
     this.nav = this.element.querySelector('.silc-accordion__nav-items');
     this.settings = this.applySettings();
+    this.activeAccordionIds = [];
+
+    this.switchBetweenTabsAndAccordion = this.switchBetweenTabsAndAccordion.bind(this);
 
     // Label event listener
     if (this.labels.length) {
@@ -35,14 +41,30 @@ export default class {
     // Nav event listener
     if (this.settings.tabs && this.nav !== undefined) {
       this.navEventListener();
-      this.nav.querySelector('.silc-accordion__nav-link').classList.add('silc-accordion__nav-link--active');
-      this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible-persist');
+
+      const accordionId = this.nav.querySelector('.silc-accordion__nav-button').getAttribute('aria-controls');
+      const accordion = this.getById(accordionId);
+
+      // Set initial state of component
+      accordion.tab.setAttribute('aria-expanded', 'true');
+      accordion.label.setAttribute('aria-expanded', 'true');
+      accordion.content.setAttribute('aria-expanded', 'true');
+
+      if (this.element.classList.contains('silc-accordion--become-tabs')) {
+        // Listen on window resize to trigger the change between states
+        const resizeListener = debounce(this.switchBetweenTabsAndAccordion, 150);
+        window.addEventListener('resize', resizeListener);
+      }
     }
 
     // Open first element
     if (this.settings.openFirst) {
-      this.element.querySelector('.silc-accordion__label').classList.add('silc-accordion__label--active');
-      this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
+      const firstId = this.element.querySelector('.silc-accordion__label').getAttribute('aria-controls');
+      const accordion = this.getById(firstId);
+
+      this.activeAccordionIds.push(firstId);
+      accordion.label.setAttribute('aria-expanded', 'true');
+      accordion.content.setAttribute('aria-expanded', 'true');
     }
   }
 
@@ -78,25 +100,28 @@ export default class {
    * Event listener for accordion labels
    */
   protected labelEventListener() {
-
     this.element.addEventListener('click', event => {
 
       // Get target from event
-      let target = <HTMLElement>event.target;
+      const target = <HTMLElement>event.target;
 
       // If target contains label class
       if (target.classList.contains('silc-accordion__label')) {
-
         event.preventDefault();
 
-        // Get clicked labels associated content element
-        let content = this.getContent(target);
+        const accordionId = target.getAttribute('aria-controls');
+        const accordion = this.getById(accordionId);
 
-        // Toggle the content
-        this.toggleContent(content);
+        this.toggleActiveContent(accordion.content);
+        this.toggleActiveLabel(target);
 
-        // Toggle active element
-        this.toggleActiveLabel(target, 'silc-accordion__label--active');
+        // If the component also contains tabs,
+        // toggle the state of the corresponding tab
+        if (this.settings.tabs) {
+          this.toggleActiveTab(accordion.tab);
+        }
+
+        this.updateAccordionIds(accordionId);
       }
 
       event.stopPropagation();
@@ -109,23 +134,26 @@ export default class {
   protected navEventListener() {
     this.nav.addEventListener('click', event => {
 
-      let target = <HTMLElement>event.target;
+      const target = <HTMLElement>event.target;
 
-      if (target.classList.contains('silc-accordion__nav-link')) {
+      if (target.classList.contains('silc-accordion__nav-button')) {
         event.preventDefault();
-        this.toggleTab(target);
+        const expanded = JSON.parse(target.getAttribute('aria-expanded'));
+
+        if (!expanded) {
+          const accordionId = target.getAttribute('aria-controls');
+          const accordion = this.getById(accordionId);
+          
+          this.toggleActiveContent(accordion.content);
+          this.toggleActiveLabel(accordion.label);
+          this.toggleActiveTab(target);
+
+          this.updateAccordionIds(accordionId);
+        }
       }
 
       event.stopPropagation();
     });
-  }
-
-  /**
-   * Gets content element from clicked label
-   * @param {Element} label
-   */
-  protected getContent(label): Element {
-    return <Element>label.parentNode.nextElementSibling;
   }
 
   /**
@@ -134,101 +162,127 @@ export default class {
    */
   protected getById(id: String) {
     return {
-      'content': <Element>this.element.querySelector(id + ' .silc-accordion__content'),
-      'label': <Element>this.element.querySelector(id + ' .silc-accordion__label')
+      'tab': <Element>this.element.querySelector('.silc-accordion__nav-button[aria-controls="' + id + '"]'),
+      'label': <Element>this.element.querySelector('.silc-accordion__label[aria-controls="' + id + '"]'),
+      'content': <Element>this.element.querySelector('#' + id)
     };
-  }
-
-  /**
-   * Toggle tab from clicked nav link
-   * @param {Element} link - link element clicked
-   */
-  protected toggleTab(link: Element) {
-
-    let targetId = link.getAttribute('href');
-    let accordion = this.getById(targetId);
-
-    this.hideAllPersitentVisible();
-    this.toggleContent(accordion.content);
-    this.toggleActiveTab(link, 'silc-accordion__nav-link--active');
-    this.toggleActiveLabel(accordion.label, 'silc-accordion__label--active');
-
-    // Ensure that one tab is always open
-    accordion.content.classList.add('silc-accordion__content--visible-persist');
   }
 
   /**
    * Show content
    * @param {Element} el
    */
-  protected toggleContent(el: Element) {
+  protected toggleActiveContent(el: Element) {
+    const expanded = JSON.parse(el.getAttribute('aria-expanded'));
 
+    // Hide any other open content sections
     if (!this.settings.openMultiple) {
-      this.removeCssClass('silc-accordion__content--visible', el);
+      this.hideAriaExpanded('silc-accordion__content', el);
     }
 
-    el.classList.toggle('silc-accordion__content--visible');
-  }
-
-  /**
-   * Hide all persistent visible content
-   * Persistent visible class is used for accordions that transform to tabs
-   */
-  protected hideAllPersitentVisible() {
-    this.removeCssClass('silc-accordion__content--visible-persist');
-  }
-
-  /**
-   * Remove CSS class from all matching elements
-   * @param className 
-   */
-  protected removeCssClass(className: string, excludeEl?) {
-
-    // Hide all persitent visible content
-    let children = <NodeList>this.element.querySelectorAll('.' + className);
-    if (children.length > 0) {
-      for (let i = 0; i < children.length; i++) {
-        let el = <HTMLElement>children[i];
-        if (el !== excludeEl && this.element === el.closest('.silc-accordion')) {
-          el.classList.remove(className);
-        }
-      }
-    }
+    // Toggle the aria-expanded value for the current content
+    el.setAttribute('aria-expanded', String(!expanded));
   }
 
   /**
    * Set active label
    * @param el 
-   * @param className 
    */
-  protected toggleActiveLabel(el: Element, className: string) {
+  protected toggleActiveLabel(el: Element) {
+    const expanded = JSON.parse(el.getAttribute('aria-expanded'));
 
+    // Remove active state from any other labels
     if (!this.settings.openMultiple) {
-
-      let currentActive = this.element.querySelector('.' + className);
-
-      if (currentActive && currentActive !== el && this.element === currentActive.closest('.silc-accordion')) {
-        currentActive.classList.remove(className);
-      }
+      this.hideAriaExpanded('silc-accordion__label', el);
     }
 
-    el.classList.toggle(className);
+    // Toggle the aria-expanded value for the current label
+    el.setAttribute('aria-expanded', String(!expanded));
   }
 
   /**
    * Set active tab
-   * @param el
-   * @param className 
+   * @param {Element} el
    */
-  protected toggleActiveTab(el: Element, className: string) {
+  protected toggleActiveTab(el: Element) {
+    // Remove active state from any other labels
+    if (!this.settings.openMultiple) {
+      this.hideAriaExpanded('silc-accordion__nav-button', el);
+    }
 
-    // Get current active tab
-    let currentActive = this.element.querySelector('.' + className);
+    // For tabs we need to always have one selected so
+    // clicking the same tab shouldn't toggle its own state
+    el.setAttribute('aria-expanded', 'true');
+  }
 
-    // Remove active class
-    currentActive.classList.remove(className);
+  /**
+   * Update the activeAccordionIds array
+   * to reflect the current state change
+   * @param {String} id
+   */
+  protected updateAccordionIds(id: String) {
+    const index = this.activeAccordionIds.indexOf(id);
+    
+    if (index === -1) {
+      // Add it if it wasn't in the array
+      this.activeAccordionIds.push(id);
+    } else {
+      // Remove it if it was
+      this.activeAccordionIds.splice(index, 1);
+    }
+  }
 
-    // Add active class to clicked tab
-    el.classList.add(className);
+  /**
+   * Set aria-expanded to false for all
+   * visible nodes with the provided class
+   * @param {Element} className
+   */
+  protected hideAriaExpanded(className: string, excludeEl?) {
+    const nodes = <NodeList>this.element.querySelectorAll('.' + className + '[aria-expanded="true"]');
+
+    for (let i = 0; i < nodes.length; i++) {
+      const node = <HTMLElement>nodes[i];
+      if (node !== excludeEl) {
+        node.setAttribute('aria-expanded', 'false');
+      }
+    }
+  }
+
+  protected switchBetweenTabsAndAccordion() {
+    const styles = window.getComputedStyle(this.element, ':after');
+    const isTabs = styles.content === '"tabs"';
+
+    if (isTabs) {
+      /*
+        Force the first tab to be open if none are active
+        (we don't track the id in the activeAccordionIds prop because
+        this state wasn't triggered by user interaction).
+      */
+      if (this.activeAccordionIds.length === 0) {
+        const accordionId = this.nav.querySelector('.silc-accordion__nav-button').getAttribute('aria-controls');
+        const accordion = this.getById(accordionId);
+
+        accordion.tab.setAttribute('aria-expanded', 'true');
+        accordion.label.setAttribute('aria-expanded', 'true');
+        accordion.content.setAttribute('aria-expanded', 'true');
+      }
+    } else {
+      /*
+        If changing back to accordion, restore state to
+        cached version using activeAccordionIds.
+      */
+      const labels = <NodeList>this.element.querySelectorAll('.silc-accordion__label');
+
+      for (let i = 0; i < labels.length; i++) {
+        const label = <HTMLElement>labels[i];
+        const accordionId = label.getAttribute('aria-controls');
+        const accordion = this.getById(accordionId);
+        const expanded = this.activeAccordionIds.indexOf(accordionId) !== -1;
+
+        accordion.tab.setAttribute('aria-expanded', String(expanded));
+        accordion.label.setAttribute('aria-expanded', String(expanded));
+        accordion.content.setAttribute('aria-expanded', String(expanded));
+      }
+    }
   }
 }

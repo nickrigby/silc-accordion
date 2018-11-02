@@ -28,19 +28,34 @@
 
 		.js & {
 			flex: 1 auto;
+
+			& .silc-accordion__nav-button {
+				width: 100%;
+			}
 		}
 	}
 }
 
-.silc-accordion__nav-link {
-	
-	&--active {
-		color: $silc-accordion__nav-link--active-color;
-		background: $silc-accordion__nav-link--active-background;
+.silc-accordion__nav-button {
+	appearance: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1em;
+	outline: none;
+	&[aria-expanded="true"] {
+		color: $silc-accordion__nav-button--active-color;
+		background: $silc-accordion__nav-button--active-background;
 	}
 }
 
 .silc-accordion__label {
+	appearance: none;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	text-align: left;
+	font-size: $silc-accordion__label-font-size;
+	font-weight: $silc-accordion__label-font-weight;
 	display: $silc-accordion__label-display;
 	margin: $silc-accordion__label-margin;
 	padding: $silc-accordion__label-padding;
@@ -78,7 +93,7 @@
 	.js & {
 		display: none;
 
-		&--visible {
+		&[aria-expanded="true"] {
 			display: block;
 		}
 	}
@@ -102,10 +117,6 @@
 			display: none;
 		}
 	}
-
-	.silc-accordion__content--visible-persist {
-		display: block;
-  }
   
   // Accordion within tabs
   .silc-accordion {
@@ -125,20 +136,26 @@
  *
  */
 
+ .silc-accordion--become-tabs {
+	 &:after {
+		 content: 'accordion';
+		 display: none;
+	 }
+ }
+
 @media (min-width:$silc-accordion--become-tabs) {
 
 	.silc-accordion--become-tabs {
+		&:after {
+			content: 'tabs';
+		}
 
 		.silc-accordion__nav {
 			display: block;
 		}
 
-		.silc-accordion__content--visible {
+		.silc-accordion__content {
 			display: none;
-		}
-
-		.silc-accordion__content--visible-persist {
-			display: block;
 		}
 
 		.silc-accordion__header {
@@ -158,7 +175,7 @@
         }
       }
 
-      .silc-accordion__content--visible {
+      .silc-accordion__content[aria-expanded="true"] {
         display: block;
       }
     }
