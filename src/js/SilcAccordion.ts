@@ -35,14 +35,18 @@ export default class {
     // Nav event listener
     if (this.settings.tabs && this.nav !== undefined) {
       this.navEventListener();
-      this.nav.querySelector('.silc-accordion__nav-link').classList.add('silc-accordion__nav-link--active');
-      this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible-persist');
+      if (!this.nav.querySelector('.silc-accordion__nav-link--active')) {
+        this.nav.querySelector('.silc-accordion__nav-link').classList.add('silc-accordion__nav-link--active');
+        this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible-persist');
+      }
     }
 
     // Open first element
     if (this.settings.openFirst) {
-      this.element.querySelector('.silc-accordion__label').classList.add('silc-accordion__label--active');
-      this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
+      if (!this.element.querySelector('.silc-accordion__label--active')) {
+        this.element.querySelector('.silc-accordion__label').classList.add('silc-accordion__label--active');
+        this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
+      }
     }
   }
 
