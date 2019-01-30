@@ -48,6 +48,9 @@ export default class {
         this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
       }
     }
+
+    // Add initialized class
+    this.element.classList.add('silc-accordion--initialized');
   }
 
   /**
