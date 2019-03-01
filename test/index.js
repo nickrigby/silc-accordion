@@ -35,17 +35,21 @@ describe('silc accordion module', function () {
 
   });
 
-  // describe('accordion with first section open', function () {
+  describe('accordion with first section open', function () {
 
-  //   it('should have exactly one active label element on load', function () {
-  //     browser.assert.elements('#accordion-1 .silc-accordion__label--active', { exactly: 1 });
-  //   });
+    it('should have exactly one active section', function () {
+      browser.assert.elements('#accordion-1 .silc-accordion__section--active', { exactly: 1 });
+    });
 
-  //   it('should have exactly one visible content element on load', function () {
-  //     browser.assert.elements('#accordion-1 .silc-accordion__content--visible', { exactly: 1 });
-  //   });
+    it('should show exactly one active label element', function () {
+      browser.assert.elements('#accordion-1 .silc-accordion__label[aria-expanded="true"]', { exactly: 1 });
+    });
 
-  // });
+    it('should show exactly one visible content element', function () {
+      browser.assert.elements('#accordion-1 .silc-accordion__content[aria-hidden="false"]', { exactly: 1 });
+    });
+
+  });
 
   // describe('accordion with option to open multiple sections at once', function () {
 
