@@ -71,17 +71,28 @@
 }
 
 .silc-accordion__content {
-	border: $silc-accordion__content-border;
-	padding: $silc-accordion__content-padding;  
-	background: $silc-accordion__content-background;
-
-	.js & {
+	body:not(.js) & {
 		display: none;
-
-		&--visible {
+		&:target {
 			display: block;
 		}
 	}
+
+	.js & {
+		height: 0;
+		overflow: hidden;
+		transition: height $silc-accordion__content-slide-duration $silc-accordion__content-slide-easing;
+
+		&[aria-hidden="false"] {
+			height: auto;
+		}
+	}
+}
+
+.silc-accordion__content-compartment {
+	border: $silc-accordion__content-border;
+	padding: $silc-accordion__content-padding;
+	background: $silc-accordion__content-background;
 }
 	
 

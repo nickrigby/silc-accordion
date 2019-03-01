@@ -12,8 +12,23 @@ export default class {
 
   protected element: HTMLElement;
   protected settings: SilcAccordionSettings;
-  protected labels: NodeList;
-  protected nav: Element;
+  protected sections: NodeListOf<HTMLElement>;
+  protected _activeSection: HTMLElement;
+  
+  /**
+   * Toggle the active section when the activeSection property is updated
+   * @param {HTMLElement} el
+   */
+  set activeSection(el: HTMLElement) {
+    if (el) {
+      this.toggleSection(el);
+      this.toggleLabel(el);
+      this.toggleContent(el);
+    }
+    
+    // Store a reference to the current active section
+    this._activeSection = el;
+  }
 
   /**
    * Constructor
@@ -21,36 +36,29 @@ export default class {
    */
   public constructor(element: HTMLElement) {
 
-    // Set class properties
-    this.element = element;
-    this.labels = this.element.querySelectorAll('.silc-accordion__label');
-    this.nav = this.element.querySelector('.silc-accordion__nav-items');
-    this.settings = this.applySettings();
+    if (element) {
+      // Set class properties
+      this.element = element;
+      this.sections = this.element.querySelectorAll('.silc-accordion__section');
+      this.settings = this.applySettings();
+      this.activeSection = null;
 
-    // Label event listener
-    if (this.labels.length) {
-      this.labelEventListener();
-    }
+      this.initiallyHideSections();
 
-    // Nav event listener
-    if (this.settings.tabs && this.nav !== undefined) {
-      this.navEventListener();
-      if (!this.nav.querySelector('.silc-accordion__nav-link--active')) {
-        this.nav.querySelector('.silc-accordion__nav-link').classList.add('silc-accordion__nav-link--active');
-        this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible-persist');
+      // Label event listener
+      if (this.sections.length) {
+        this.labelEventListener();
       }
-    }
 
-    // Open first element
-    if (this.settings.openFirst) {
-      if (!this.element.querySelector('.silc-accordion__label--active')) {
-        this.element.querySelector('.silc-accordion__label').classList.add('silc-accordion__label--active');
-        this.element.querySelector('.silc-accordion__content').classList.add('silc-accordion__content--visible');
+      // Open first element
+      if (this.settings.openFirst) {
+        const firstSection = this.element.querySelector('.silc-accordion__section') as HTMLElement;
+        this.activeSection = firstSection;
       }
-    }
 
-    // Add initialized class
-    this.element.classList.add('silc-accordion--initialized');
+      // Add initialized class
+      this.element.classList.add('silc-accordion--initialized');
+    }
   }
 
   /**
@@ -58,27 +66,23 @@ export default class {
    */
   protected applySettings(): SilcAccordionSettings {
 
-    // Defaults
-    let settings = <SilcAccordionSettings>{
-      tabs: false,
-      openMultiple: false,
-      openFirst: false
-    };
-
-    if (this.element.classList.contains('silc-accordion--become-tabs') ||
-      this.element.classList.contains('silc-accordion--tabs')) {
-      settings.tabs = true;
-    }
-
-    if (this.element.getAttribute('data-silc-accordion-open-multiple') !== null) {
-      settings.openMultiple = true;
-    }
-
-    if (this.element.getAttribute('data-silc-accordion-open-first') !== null) {
-      settings.openFirst = true;
-    }
+    const settings = {
+      tabs: this.element.classList.contains('silc-accordion--become-tabs') || this.element.classList.contains('silc-accordion--tabs'),
+      openMultiple: this.element.hasAttribute('data-silc-accordion-open-multiple'),
+      openFirst: this.element.hasAttribute('data-silc-accordion-open-first')
+    } as SilcAccordionSettings;
 
     return settings;
+  }
+
+  /**
+   * Hide the content when the component is instantiated
+   */
+  protected initiallyHideSections() {
+    for (let i = 0; i < this.sections.length; i++) {
+      this.toggleLabel(this.sections[i]);
+      this.toggleContent(this.sections[i]);
+    }
   }
 
   /**
@@ -86,53 +90,27 @@ export default class {
    */
   protected labelEventListener() {
 
-    this.element.addEventListener('click', event => {
+    const listener = (event) => {
 
       // Get target from event
-      let target = <HTMLElement>event.target;
+      const target = event.target as HTMLElement;
 
-      // If target contains label class
+      // If target contains label class update the active section
       if (target.classList.contains('silc-accordion__label')) {
-
         event.preventDefault();
-
-        // Get clicked labels associated content element
-        let content = this.getContent(target);
-
-        // Toggle the content
-        this.toggleContent(content);
-
-        // Toggle active element
-        this.toggleActiveLabel(target, 'silc-accordion__label--active');
+        this.activeSection = target.closest('.silc-accordion__section') as HTMLElement;
       }
 
       event.stopPropagation();
-    });
-  }
+    };
 
-  /**
-   * Event listener for tabs navigation
-   */
-  protected navEventListener() {
-    this.nav.addEventListener('click', event => {
-
-      let target = <HTMLElement>event.target;
-
-      if (target.classList.contains('silc-accordion__nav-link')) {
-        event.preventDefault();
-        this.toggleTab(target);
+    this.element.addEventListener('click', listener);
+    // Add support for space and enter key presses (since we use an anchor tag instead of a button this is necessary)
+    this.element.addEventListener('keyup', (event) => {
+      if ([13, 32].indexOf(event.keyCode) !== -1) {
+        listener(event);
       }
-
-      event.stopPropagation();
     });
-  }
-
-  /**
-   * Gets content element from clicked label
-   * @param {Element} label
-   */
-  protected getContent(label): Element {
-    return <Element>label.parentNode.nextElementSibling;
   }
 
   /**
@@ -141,40 +119,76 @@ export default class {
    */
   protected getById(id: String) {
     return {
-      'content': <Element>this.element.querySelector(id + ' .silc-accordion__content'),
-      'label': <Element>this.element.querySelector(id + ' .silc-accordion__label')
+      'content': this.element.querySelector(id + ' .silc-accordion__content') as HTMLElement,
+      'label': this.element.querySelector(id + ' .silc-accordion__label') as HTMLElement
     };
   }
 
   /**
-   * Toggle tab from clicked nav link
-   * @param {Element} link - link element clicked
+   * Toggle the current section
+   * @param {HTMLElement} el
    */
-  protected toggleTab(link: Element) {
+  protected toggleSection(el: HTMLElement) {
+    // Toggle currently active section if only one should be open
+    if (!this.settings.openMultiple) {
+      // Avoid toggling the current section before doing so below
+      if (this._activeSection && this._activeSection !== el) {
+        this._activeSection.classList.remove('silc-accordion__section--active');
+      }
 
-    let targetId = link.getAttribute('href');
-    let accordion = this.getById(targetId);
-
-    this.hideAllPersitentVisible();
-    this.toggleContent(accordion.content);
-    this.toggleActiveTab(link, 'silc-accordion__nav-link--active');
-    this.toggleActiveLabel(accordion.label, 'silc-accordion__label--active');
-
-    // Ensure that one tab is always open
-    accordion.content.classList.add('silc-accordion__content--visible-persist');
+      // Toggle the current element's active class
+      el.classList.toggle('silc-accordion__section--active');
+    }
   }
 
   /**
-   * Show content
-   * @param {Element} el
+   * Toggle active label
+   * @param {HTMLElement} section
    */
-  protected toggleContent(el: Element) {
+  protected toggleLabel(section: HTMLElement) {
+    const label = section.querySelector('.silc-accordion__label') as HTMLElement;
+    const expanded = !!JSON.parse(label.getAttribute('aria-expanded')) as boolean;
 
+    // Toggle currently active label if only one section should be open
     if (!this.settings.openMultiple) {
-      this.removeCssClass('silc-accordion__content--visible', el);
+      // Avoid toggling the current label before doing so below
+      if (this._activeSection && this._activeSection !== section) {
+        const activeLabel = this._activeSection.querySelector('.silc-accordion__label');
+        activeLabel.setAttribute('aria-expanded', 'false');
+      }
+    }
+    
+    // Toggle label if its aria-expanded attr has been set, otherwise initially hide it
+    if (label.hasAttribute('aria-expanded')) {
+      label.setAttribute('aria-expanded', String(!expanded));
+    } else {
+      label.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  /**
+   * Toggle active content
+   * @param {HTMLElement} section
+   */
+  protected toggleContent(section: HTMLElement) {
+    const content = section.querySelector('.silc-accordion__content') as HTMLElement;
+    const hidden = !!JSON.parse(content.getAttribute('aria-hidden')) as boolean;
+
+    // Toggle currently active content if only one section should be open
+    if (!this.settings.openMultiple) {
+      // Avoid toggling the current content before doing so below
+      if (this._activeSection && this._activeSection !== section) {
+        const activeContent = this._activeSection.querySelector('.silc-accordion__content');
+        activeContent.setAttribute('aria-hidden', 'true');
+      }
     }
 
-    el.classList.toggle('silc-accordion__content--visible');
+    // Toggle content if its aria-hidden attr has been set, otherwise initially hide it
+    if (content.hasAttribute('aria-hidden')) {
+      content.setAttribute('aria-hidden', String(!hidden));
+    } else {
+      content.setAttribute('aria-hidden', 'true');
+    }
   }
 
   /**
