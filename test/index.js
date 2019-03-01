@@ -21,7 +21,7 @@ describe('silc accordion module', function () {
         .fire('#accordion-0 .silc-accordion__label', 'click');
     });
 
-    it('should have exactly one active section', function () {
+    it('should have exactly one active section element', function () {
       browser.assert.elements('#accordion-0 .silc-accordion__section--active', { exactly: 1 });
     });
 
@@ -37,7 +37,7 @@ describe('silc accordion module', function () {
 
   describe('accordion with first section open', function () {
 
-    it('should have exactly one active section', function () {
+    it('should have exactly one active section element', function () {
       browser.assert.elements('#accordion-1 .silc-accordion__section--active', { exactly: 1 });
     });
 
@@ -51,25 +51,29 @@ describe('silc accordion module', function () {
 
   });
 
-  // describe('accordion with option to open multiple sections at once', function () {
+  describe('accordion with option to open multiple sections at once', function () {
 
-  //   before(function () {
-  //     return browser
-  //       .fire('#accordion-2 .silc-accordion__section:nth-child(1) .silc-accordion__label', 'click', function () {
-  //         browser
-  //           .fire('#accordion-2 .silc-accordion__section:nth-child(2) .silc-accordion__label', 'click');
-  //       });
-  //   });
+    before(function () {
+      return browser
+        .fire('#accordion-2 .silc-accordion__section:nth-child(1) .silc-accordion__label', 'click', function () {
+          browser
+            .fire('#accordion-2 .silc-accordion__section:nth-child(2) .silc-accordion__label', 'click');
+        });
+    });
 
-  //   it('should have exactly two active label elements', function () {
-  //     browser.assert.elements('#accordion-2 .silc-accordion__label--active', { exactly: 2 });
-  //   });
+    it('should have exactly two active section elements', function () {
+      browser.assert.elements('#accordion-2 .silc-accordion__section--active', { exactly: 2 });
+    });
 
-  //   it('should have exactly two visible content elements', function () {
-  //     browser.assert.elements('#accordion-2 .silc-accordion__content--visible', { exactly: 2 });
-  //   });
+    it('should show exactly two active label elements', function () {
+      browser.assert.elements('#accordion-2 .silc-accordion__label[aria-expanded="true"]', { exactly: 2 });
+    });
 
-  // });
+    it('should show exactly two visible content element', function () {
+      browser.assert.elements('#accordion-2 .silc-accordion__content[aria-hidden="false"]', { exactly: 2 });
+    });
+
+  });
 
   // describe('accordion that becomes tabs', function () {
 

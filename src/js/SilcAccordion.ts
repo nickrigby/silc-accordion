@@ -13,22 +13,7 @@ export default class {
   protected element: HTMLElement;
   protected settings: SilcAccordionSettings;
   protected sections: NodeListOf<HTMLElement>;
-  protected _activeSection: HTMLElement;
-  
-  /**
-   * Toggle the active section when the activeSection property is updated
-   * @param {HTMLElement} el
-   */
-  set activeSection(el: HTMLElement) {
-    if (el) {
-      this.toggleSection(el);
-      this.toggleLabel(el);
-      this.toggleContent(el);
-    }
-    
-    // Store a reference to the current active section
-    this._activeSection = el;
-  }
+  protected activeSections: HTMLElement[] = [];
 
   /**
    * Constructor
@@ -41,7 +26,6 @@ export default class {
       this.element = element;
       this.sections = this.element.querySelectorAll('.silc-accordion__section');
       this.settings = this.applySettings();
-      this.activeSection = null;
 
       this.initiallyHideSections();
 
@@ -53,11 +37,38 @@ export default class {
       // Open first element
       if (this.settings.openFirst) {
         const firstSection = this.element.querySelector('.silc-accordion__section') as HTMLElement;
-        this.activeSection = firstSection;
+        this.updateActiveSections(firstSection);
       }
 
       // Add initialized class
       this.element.classList.add('silc-accordion--initialized');
+    }
+  }
+
+  /**
+   * Toggle the active section when the activeSection property is updated
+   * @param {HTMLElement} el
+   */
+  protected updateActiveSections(el: HTMLElement) {
+    if (el) {
+      this.toggleSection(el);
+      this.toggleLabel(el);
+      this.toggleContent(el);
+      // Store a reference to the current active section(s)
+      const activeSectionIndex = this.activeSections.indexOf(el);
+
+      // Make sure that we only store one active section unless set to open multiple
+      if (!this.settings.openMultiple) {
+        this.activeSections = [];
+      }
+
+      if (activeSectionIndex !== -1) {
+        // If it's in there already, remove it
+        delete this.activeSections[activeSectionIndex];
+      } else {
+        // If not add it
+        this.activeSections.push(el);
+      }
     }
   }
 
@@ -98,7 +109,7 @@ export default class {
       // If target contains label class update the active section
       if (target.classList.contains('silc-accordion__label')) {
         event.preventDefault();
-        this.activeSection = target.closest('.silc-accordion__section') as HTMLElement;
+        this.updateActiveSections(target.closest('.silc-accordion__section') as HTMLElement);
       }
 
       event.stopPropagation();
@@ -114,17 +125,6 @@ export default class {
   }
 
   /**
-   * Gets accordion based on id
-   * @param {String} id - id of content to get
-   */
-  protected getById(id: String) {
-    return {
-      'content': this.element.querySelector(id + ' .silc-accordion__content') as HTMLElement,
-      'label': this.element.querySelector(id + ' .silc-accordion__label') as HTMLElement
-    };
-  }
-
-  /**
    * Toggle the current section
    * @param {HTMLElement} el
    */
@@ -132,13 +132,13 @@ export default class {
     // Toggle currently active section if only one should be open
     if (!this.settings.openMultiple) {
       // Avoid toggling the current section before doing so below
-      if (this._activeSection && this._activeSection !== el) {
-        this._activeSection.classList.remove('silc-accordion__section--active');
+      if (this.activeSections[0] && this.activeSections[0] !== el) {
+        this.activeSections[0].classList.remove('silc-accordion__section--active');
       }
-
-      // Toggle the current element's active class
-      el.classList.toggle('silc-accordion__section--active');
     }
+
+    // Toggle the current element's active class
+    el.classList.toggle('silc-accordion__section--active');
   }
 
   /**
@@ -152,8 +152,8 @@ export default class {
     // Toggle currently active label if only one section should be open
     if (!this.settings.openMultiple) {
       // Avoid toggling the current label before doing so below
-      if (this._activeSection && this._activeSection !== section) {
-        const activeLabel = this._activeSection.querySelector('.silc-accordion__label');
+      if (this.activeSections[0] && this.activeSections[0] !== section) {
+        const activeLabel = this.activeSections[0].querySelector('.silc-accordion__label');
         activeLabel.setAttribute('aria-expanded', 'false');
       }
     }
@@ -177,8 +177,8 @@ export default class {
     // Toggle currently active content if only one section should be open
     if (!this.settings.openMultiple) {
       // Avoid toggling the current content before doing so below
-      if (this._activeSection && this._activeSection !== section) {
-        const activeContent = this._activeSection.querySelector('.silc-accordion__content');
+      if (this.activeSections[0] && this.activeSections[0] !== section) {
+        const activeContent = this.activeSections[0].querySelector('.silc-accordion__content');
         activeContent.setAttribute('aria-hidden', 'true');
       }
     }
