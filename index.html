@@ -24,12 +24,12 @@
             font-weight: bold;
         }
     
-        .silc-accordion__label--active {
+        .silc-accordion__label[aria-expanded="true"] {
             background: #ccc;
         }
     
         .silc-accordion__label:hover {
-            background: #f1f1f1;
+            background: #ddd !important;
         }
     
         .silc-accordion__content-compartment {
@@ -37,15 +37,16 @@
             border: 1px solid #eee;
         }
     
-        .silc-accordion__nav-link {
+        .silc-accordion__label[role="tab"] {
             display: block;
             padding: 1em;
             background: #f1f1f1;
             text-decoration: none;
             color: #000;
+            font-weight: normal;
         }
     
-        .silc-accordion__nav-link--active {
+        .silc-accordion__label[role="tab"][aria-selected="true"] {
             background: #ccc;
         }
     </style>
@@ -154,7 +155,7 @@
             </a>
             <div class="silc-accordion__content" id="accordion-3-section-1-content" aria-labelled-by="accordion-3-section-1-label">
                 <div class="silc-accordion__content-compartment">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde dignissimos fugiat vero blanditiis architecto nemo eius delectus aspernatur facilis soluta, similique illum tempora quaerat velit consectetur id nam tempore ducimus?</p>
+                    <p>Tab 1 content</p>
                 </div>
             </div>
         </div>
@@ -164,7 +165,7 @@
             </a>
             <div class="silc-accordion__content" id="accordion-3-section-2-content" aria-labelled-by="accordion-3-section-2-label">
                 <div class="silc-accordion__content-compartment">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quam, dolorum dolore, sequi ex fugit ullam quo cum nesciunt aliquam cupiditate minus eveniet delectus, alias nam earum aperiam eius inventore.</p>
+                    <p>Tab 2 content</p>
                 </div>
             </div>
         </div>
@@ -174,86 +175,96 @@
             </a>
             <div class="silc-accordion__content" id="accordion-3-section-3-content" aria-labelled-by="accordion-3-section-3-label">
                 <div class="silc-accordion__content-compartment">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sed esse reiciendis voluptates suscipit atque, iusto maxime architecto quo ipsam. Vel facilis nulla soluta quibusdam voluptate doloribus eveniet, ullam totam?</p>
+                    <p>Tab 3 Content</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- <h2>Tabs</h2>
+    <h2>Tabs</h2>
     <div class="silc-accordion silc-accordion--tabs" id="accordion-4">
-        <nav class="silc-accordion__nav">
-            <ul class="silc-accordion__nav-items">
-                <li class="silc-accordion__nav-item"><a class="silc-accordion__nav-link" href="#silc-accordion-4-1">Tab 1</a></li>
-                <li class="silc-accordion__nav-item"><a class="silc-accordion__nav-link" href="#silc-accordion-4-2">Tab 2</a></li>
-            </ul>
-        </nav>
-        <div class="silc-accordion__section" id="silc-accordion-4-1">
-            <div class="silc-accordion__header">
-                <h3 class="silc-accordion__label">Tab 1</h3>
-            </div>
-            <div class="silc-accordion__content">
-                <p>Tab 1 content.</p>
+        <div class="silc-accordion__section">
+            <a id="accordion-4-section-1-label" href="#accordion-4-section-1-content" class="silc-accordion__label" role="button" aria-controls="accordion-4-section-1-content">
+                Tab 1
+            </a>
+            <div class="silc-accordion__content" id="accordion-4-section-1-content" aria-labelled-by="accordion-4-section-1-label">
+                <div class="silc-accordion__content-compartment">
+                    <p>Tab 1 Content</p>
+                </div>
             </div>
         </div>
-        <div class="silc-accordion__section" id="silc-accordion-4-2">
-            <div class="silc-accordion__header">
-                <h3 class="silc-accordion__label">Tab 2</h3>
+        <div class="silc-accordion__section">
+            <a id="accordion-4-section-2-label" href="#accordion-4-section-2-content" class="silc-accordion__label" role="button" aria-controls="accordion-4-section-2-content">
+                Tab 2
+            </a>
+            <div class="silc-accordion__content" id="accordion-4-section-2-content" aria-labelled-by="accordion-4-section-2-label">
+                <div class="silc-accordion__content-compartment">
+                    <p>Tab 2 Content</p>
+                </div>
             </div>
-            <div class="silc-accordion__content">
-                <p>Tab 2 content.</p>
+        </div>
+        <div class="silc-accordion__section">
+            <a href="#accordion-4-section-3-content" class="silc-accordion__label" role="button" aria-controls="accordion-4-section-3-content">
+                Tab 3
+            </a>
+            <div class="silc-accordion__content" id="accordion-4-section-3-content" aria-labelled-by="accordion-4-section-3-label">
+                <div class="silc-accordion__content-compartment">
+                    <p>Tab 3 Content</p>
+                </div>
             </div>
         </div>
     </div>
 
     <h2>Accordions within Tabs</h2>
     <div class="silc-accordion silc-accordion--tabs" id="accordion-5">
-      <nav class="silc-accordion__nav">
-          <ul class="silc-accordion__nav-items">
-              <li class="silc-accordion__nav-item"><a class="silc-accordion__nav-link" href="#silc-accordion-5-1">Tab 1</a></li>
-              <li class="silc-accordion__nav-item"><a class="silc-accordion__nav-link" href="#silc-accordion-5-2">Tab 2</a></li>
-          </ul>
-      </nav>
-      <div class="silc-accordion__section" id="silc-accordion-5-1">
-          <div class="silc-accordion__header">
-              <h3 class="silc-accordion__label">Tab 1</h3>
-          </div>
-          <div class="silc-accordion__content">
-              <p>Tab 1 content.</p>
-          </div>
-        </div>
-      <div class="silc-accordion__section" id="silc-accordion-5-2">
-          <div class="silc-accordion__header">
-              <h3 class="silc-accordion__label">Tab 2</h3>
-          </div>
-          <div class="silc-accordion__content">
-            <div class="silc-accordion" id="accordion-6" data-silc-accordion-open-multiple data-silc-accordion-open-first>
-              <div class="silc-accordion__section">
-                  <div class="silc-accordion__header">
-                      <h3 class="silc-accordion__label">Accordion 1</h3>
-                  </div>
-                  <div class="silc-accordion__content">
-                      <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-                          justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
-                          lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
-                          mollis ornare vel eu leo.</p>
-                  </div>
-                </div>
-              <div class="silc-accordion__section">
-                  <div class="silc-accordion__header">
-                      <h3 class="silc-accordion__label">Accordion 2</h3>
-                  </div>
-                  <div class="silc-accordion__content">
-                      <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-                          justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
-                          lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
-                          mollis ornare vel eu leo.</p>
-                  </div>
+        <div class="silc-accordion__section">
+            <a id="accordion-5-section-1-label" href="#accordion-5-section-1-content" class="silc-accordion__label" role="button" aria-controls="accordion-5-section-1-content">
+                Tab 1
+            </a>
+            <div class="silc-accordion__content" id="accordion-5-section-1-content" aria-labelled-by="accordion-5-section-1-label">
+                <div class="silc-accordion__content-compartment">
+                    <p>Tab 1 Content</p>
                 </div>
             </div>
-          </div>
         </div>
-    </div>-->
+        <div class="silc-accordion__section">
+            <a id="accordion-5-section-2-label" href="#accordion-5-section-2-content" class="silc-accordion__label" role="button" aria-controls="accordion-5-section-2-content">
+                Tab 2
+            </a>
+            <div class="silc-accordion__content" id="accordion-5-section-2-content" aria-labelled-by="accordion-5-section-2-label">
+                <div class="silc-accordion__content-compartment">
+                    <div class="silc-accordion" id="accordion-6" data-silc-accordion-open-multiple data-silc-accordion-open-first>
+                        <div class="silc-accordion__section">
+                            <a id="accordion-6-section-1-label" href="#accordion-6-section-1-content" class="silc-accordion__label" role="button" aria-controls="accordion-6-section-1-content">
+                                Accordion 1
+                            </a>
+                            <div class="silc-accordion__content" id="accordion-6-section-1-content" aria-labelled-by="accordion-6-section-1-label">
+                                <div class="silc-accordion__content-compartment">
+                                    <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                                        justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                                        lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                                        mollis ornare vel eu leo.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="silc-accordion__section">
+                            <a id="accordion-6-section-2-label" href="#accordion-6-section-2-content" class="silc-accordion__label" role="button" aria-controls="accordion-6-section-2-content">
+                                Accordion 2
+                            </a>
+                            <div class="silc-accordion__content" id="accordion-6-section-2-content" aria-labelled-by="accordion-6-section-2-label">
+                                <div class="silc-accordion__content-compartment">
+                                    <p>Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                                        justo odio, dapibus ac facilisis in, egestas eget quam. Curabitur blandit tempus porttitor. Vivamus sagittis
+                                        lacus vel augue laoreet rutrum faucibus dolor auctor. Donec sed odio dui. Nullam quis risus eget urna
+                                        mollis ornare vel eu leo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="./build/bundle.js"></script>
 </body>
 

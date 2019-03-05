@@ -5,41 +5,6 @@
 	margin: $silc-accordion-margin;
 }
 
-.silc-accordion__nav {
-
-	.js & {
-		display: block;
-	}
-}
-
-.silc-accordion__nav-items {
-	
-	.js & {
-		display: $silc-accordion__nav-items-display;
-		margin: $silc-accordion__nav-items-margin;
-		padding: $silc-accordion__nav-items-padding;
-		list-style: none;
-	}
-}
-
-.silc-accordion__nav-item {
-
-	.silc-accordion__nav-items--stretch & {
-
-		.js & {
-			flex: 1 auto;
-		}
-	}
-}
-
-.silc-accordion__nav-link {
-	
-	&--active {
-		color: $silc-accordion__nav-link--active-color;
-		background: $silc-accordion__nav-link--active-background;
-	}
-}
-
 .silc-accordion__label {
 	display: $silc-accordion__label-display;
 	margin: $silc-accordion__label-margin;
@@ -55,17 +20,20 @@
 		color: $silc-accordion__label--hover-color;
 	}
 
-	.js & {
-		cursor: pointer;
-	}
-
-	&--active {
+	&[aria-expanded="true"] {
 		color: $silc-accordion__label--active-color;
 		background: $silc-accordion__label--active-background;
 
 		&:hover {
 			color: $silc-accordion__label--active-color;
 			background: $silc-accordion__label--active-background;
+		}
+	}
+
+	&[role="tab"] {
+		&[aria-selected="true"] {
+			color: $silc-accordion__tab--active-color;
+			background: $silc-accordion__tab--active-background;
 		}
 	}
 }
@@ -101,7 +69,8 @@
  *
  */
  
-.silc-accordion--tabs {
+.silc-accordion--tabs,
+.silc-accordion--become-tabs {
   
   // Accordion within tabs
   .silc-accordion {
@@ -116,9 +85,17 @@
 }
 
 .silc-accordion__tablist {
-	display: flex;
+	display: $silc-accordion__tablist-display;
+	margin: $silc-accordion__tablist-margin;
+	padding: $silc-accordion__tablist-padding;
+	.silc-accordion--stretch-tabs & {
+		.silc-accordion__label {
+			flex-basis: 100%;
+			flex: 1;
+			flex: 1;
+		}
+	}
 }
-
 
 /*
  * Become Tabs

@@ -15,7 +15,9 @@ export default class {
 
   protected element: HTMLElement;
   protected settings: SilcAccordionSettings;
-  protected sections: NodeListOf<HTMLElement>;
+  protected labels: HTMLElement[] = [];
+  protected contentAreas: HTMLElement[] = [];
+  protected sections: HTMLElement[] = [];
   protected activeSections: number[] = [];
   protected displayingAsTabs: boolean = false;
 
@@ -28,7 +30,9 @@ export default class {
     if (element) {
       // Set class properties
       this.element = element;
-      this.sections = this.element.querySelectorAll('.silc-accordion__section');
+      this.sections = this.getChildNodesByClassName('silc-accordion__section');
+      this.labels = this.getChildNodesByClassName('silc-accordion__label');
+      this.contentAreas = this.getChildNodesByClassName('silc-accordion__content');
       this.settings = this.applySettings();
 
       this.initiallyHideSections();
@@ -60,6 +64,22 @@ export default class {
         this.element.classList.add('silc-accordion--initialized');
       }
     }
+  }
+
+  /**
+   * Get all nodes of specified className that belong to this accordion
+   */
+  getChildNodesByClassName(className: string) : HTMLElement[] {
+    const allNodes = this.element.querySelectorAll(`.${className}`) as NodeListOf<HTMLElement>;
+    const childNodes = [];
+
+    for (let i = 0; i < allNodes.length; i++) {
+      if (allNodes[i].closest('.silc-accordion') === this.element) {
+        childNodes.push(allNodes[i]);
+      }
+    }
+
+    return childNodes;
   }
 
   /**
@@ -164,9 +184,10 @@ export default class {
     };
 
     this.element.addEventListener('click', listener);
-    // Add support for space and enter key presses (since we use an anchor tag instead of a button this is necessary)
-    this.element.addEventListener('keyup', (event) => {
-      if ([13, 32].indexOf(event.keyCode) !== -1) {
+    // Add support for space key presses (since we use an anchor tag instead of a button this is necessary)
+    this.element.addEventListener('keydown', (event) => {
+      if (event.keyCode === 32) {
+        event.preventDefault();
         listener(event);
       }
     });
@@ -221,29 +242,30 @@ export default class {
    * @param {number} sectionIndex
    */
   protected toggleLabel(sectionIndex: number) {
-    const labels = this.element.querySelectorAll('.silc-accordion__label') as NodeListOf<HTMLAnchorElement>;
+    const selectedLabel = this.labels[sectionIndex];
     const ariaAttr = this.displayingAsTabs ? 'aria-selected' : 'aria-expanded';
-    const active = !!JSON.parse(labels[sectionIndex].getAttribute(ariaAttr)) as boolean;
+
+    const active = !!JSON.parse(selectedLabel.getAttribute(ariaAttr)) as boolean;
 
     // Toggle currently active label if only one section should be open
     if (!this.settings.openMultiple) {
       // Avoid toggling the current label before doing so below
       if (typeof this.activeSections[0] !== 'undefined' && this.activeSections[0] !== sectionIndex) {
-        labels[this.activeSections[0]].setAttribute(ariaAttr, 'false');
-        labels[this.activeSections[0]].removeAttribute('aria-disabled');
+        this.labels[this.activeSections[0]].setAttribute(ariaAttr, 'false');
+        this.labels[this.activeSections[0]].removeAttribute('aria-disabled');
       }
     }
 
     if (this.displayingAsTabs) {
       // Prevent active tab from toggling itself
-      labels[sectionIndex].setAttribute('aria-disabled', 'true');
+      selectedLabel.setAttribute('aria-disabled', 'true');
     }
     
     // Toggle label if its aria-expanded attr has been set, otherwise initially hide it
-    if (labels[sectionIndex].hasAttribute(ariaAttr)) {
-      labels[sectionIndex].setAttribute(ariaAttr, String(!active));
+    if (selectedLabel.hasAttribute(ariaAttr)) {
+      selectedLabel.setAttribute(ariaAttr, String(!active));
     } else {
-      labels[sectionIndex].setAttribute(ariaAttr, 'false');
+      selectedLabel.setAttribute(ariaAttr, 'false');
     }
   }
 
@@ -252,22 +274,46 @@ export default class {
    * @param {number} sectionIndex
    */
   protected toggleContent(sectionIndex: number) {
-    const contents = this.element.querySelectorAll('.silc-accordion__content') as NodeListOf<HTMLElement>;
-    const hidden = !!JSON.parse(contents[sectionIndex].getAttribute('aria-hidden')) as boolean;
+    const selectedContent = this.contentAreas[sectionIndex];
+    const childLabels = selectedContent.querySelectorAll('.silc-accordion__label') as NodeListOf<HTMLElement>;
+    const hidden = !!JSON.parse(selectedContent.getAttribute('aria-hidden')) as boolean;
 
     // Toggle currently active content if only one section should be open
     if (!this.settings.openMultiple) {
       // Avoid toggling the current content before doing so below
       if (typeof this.activeSections[0] !== 'undefined' && this.activeSections[0] !== sectionIndex) {
-        contents[this.activeSections[0]].setAttribute('aria-hidden', 'true');
+        this.contentAreas[this.activeSections[0]].setAttribute('aria-hidden', 'true');
+        const previousSectionChildLabels = this.contentAreas[this.activeSections[0]].querySelectorAll('.silc-accordion__label') as NodeListOf<HTMLElement>;
+        // Disable tabbing for child accordions
+        for (let i = 0; i < previousSectionChildLabels.length; i++) {
+          previousSectionChildLabels[i].setAttribute('tabindex', '-1');
+        }
       }
     }
 
     // Toggle content if its aria-hidden attr has been set, otherwise initially hide it
-    if (contents[sectionIndex].hasAttribute('aria-hidden')) {
-      contents[sectionIndex].setAttribute('aria-hidden', String(!hidden));
+    if (selectedContent.hasAttribute('aria-hidden')) {
+      selectedContent.setAttribute('aria-hidden', String(!hidden));
+
+      // Toggle tabbing for child accordions
+      for (let i = 0; i < childLabels.length; i++) {
+        if (!hidden) {
+          // If the content area is being hidden, turn off tabbing for all descendant accordions
+          childLabels[i].setAttribute('tabindex', '-1');
+        } else {
+          // If the content area is visible, restore default tabbing to direct child accordions
+          if (childLabels[i].closest('.silc-accordion__content') === selectedContent) {
+            childLabels[i].removeAttribute('tabindex');
+          }
+        }
+      }
     } else {
-      contents[sectionIndex].setAttribute('aria-hidden', 'true');
+      selectedContent.setAttribute('aria-hidden', 'true');
+
+      // Turn off tabbing for child accordions
+      for (let i = 0; i < childLabels.length; i++) {
+        childLabels[i].setAttribute('tabindex', '-1');
+      }
     }
   }
 
@@ -276,10 +322,9 @@ export default class {
    */
   protected convertToAccordions() {
     const newSections = [];
-    const labels = this.element.querySelectorAll('.silc-accordion__label') as NodeListOf<HTMLAnchorElement>;
 
-    for (let i = 0; i < labels.length; i++) {
-      const label = labels[i];
+    for (let i = 0; i < this.labels.length; i++) {
+      const label = this.labels[i];
       const content = document.getElementById(label.getAttribute('aria-controls'));
       const section = document.createElement('DIV');
 
@@ -308,7 +353,6 @@ export default class {
   }
 
   protected convertToTabs() {
-    const labels = this.element.querySelectorAll('.silc-accordion__label') as NodeListOf<HTMLAnchorElement>;
     const tabList = document.createElement('DIV');
     const tabPanels = document.createElement('DIV');
 
@@ -316,16 +360,19 @@ export default class {
     tabList.setAttribute('role', 'tablist');
     tabPanels.className = 'silc-accordion__tabpanels';
 
-    for (let i = 0; i < labels.length; i++) {
-      const label = labels[i];
-      const content = document.getElementById(label.getAttribute('aria-controls'));
+    for (let i = 0; i < this.labels.length; i++) {
+      // Prevent child accordions from being affected
+      if (this.labels[i].closest('.silc-accordion') === this.element) {
+        const label = this.labels[i];
+        const content = document.getElementById(label.getAttribute('aria-controls'));
 
-      label.setAttribute('role', 'tab');
-      label.setAttribute('aria-selected', label.getAttribute('aria-expanded'));
-      label.removeAttribute('aria-expanded');
-      content.setAttribute('role', 'tabpanel');
-      tabList.appendChild(label);
-      tabPanels.appendChild(content);
+        label.setAttribute('role', 'tab');
+        label.setAttribute('aria-selected', label.getAttribute('aria-expanded'));
+        label.removeAttribute('aria-expanded');
+        content.setAttribute('role', 'tabpanel');
+        tabList.appendChild(label);
+        tabPanels.appendChild(content);
+      }
     }
 
     this.element.innerHTML = '';
