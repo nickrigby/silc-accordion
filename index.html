@@ -57,7 +57,8 @@
     <h1>silc accordion demo</h1>
 
     <h2>Basic</h2>
-    <div class="silc-accordion" id="accordion-0">
+    <p>Also has the optional <code>data-silc-accordion-animated</code> attribute to trigger slide animations</p>
+    <div class="silc-accordion" id="accordion-0" data-silc-accordion-animated>
         <div class="silc-accordion__section">
             <button id="accordion-0-section-1-label" class="silc-accordion__label" aria-controls="accordion-0-section-1-content">
                 Accordion 1
@@ -147,8 +148,8 @@
     </div>
 
     <h2>Accordion that becomes tabs</h2>
-    <p>Also has the optional <code>silc-accordion__nav-items--stretch</code> modifier on nav items.</p>
-    <div class="silc-accordion silc-accordion--become-tabs silc-accordion--stretch-tabs" id="accordion-3">
+    <p>Also has the optional <code>silc-accordion--stretch-tabs</code> modifier to stretch tabs as well as the <code>data-silc-accordion-animtated</code> attribute to animate when displaying as an accordion.</p>
+    <div class="silc-accordion silc-accordion--become-tabs silc-accordion--stretch-tabs" id="accordion-3" data-silc-accordion-animated>
         <div class="silc-accordion__section">
             <button id="accordion-3-section-1-label" class="silc-accordion__label" aria-controls="accordion-3-section-1-content">
                 Tab 1

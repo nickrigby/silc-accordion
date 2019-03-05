@@ -9,6 +9,7 @@ interface SilcAccordionSettings {
   openFirst: boolean;
   tabs: boolean;
   becomeTabsBreakpoint: number;
+  shouldAnimate: boolean;
 }
 
 export default class {
@@ -58,6 +59,11 @@ export default class {
             // Add resize listener to switch between tabs and accordions
             this.becomeTabsResizeListener();
           }
+        }
+
+        // Add support for slide transitions
+        if (this.settings.shouldAnimate) {
+          this.contentTransitionListener();
         }
 
         // Add initialized class
@@ -132,7 +138,8 @@ export default class {
     const settings = {
       tabs: this.element.classList.contains('silc-accordion--become-tabs') || this.element.classList.contains('silc-accordion--tabs'),
       openMultiple: this.element.hasAttribute('data-silc-accordion-open-multiple'),
-      openFirst: this.element.hasAttribute('data-silc-accordion-open-first')
+      openFirst: this.element.hasAttribute('data-silc-accordion-open-first'),
+      shouldAnimate: this.element.hasAttribute('data-silc-accordion-animated')
     } as SilcAccordionSettings;
 
     if (this.element.classList.contains('silc-accordion--become-tabs')) {
@@ -180,6 +187,22 @@ export default class {
       }
 
       event.stopPropagation();
+    });
+  }
+
+  /**
+   * Listen for transitionend event of accordion content areas to set height to auto
+   */
+  protected contentTransitionListener() {
+    this.element.addEventListener('transitionend', (event: TransitionEvent) => {
+      // Get target from event
+      const target = event.target as HTMLElement;
+
+      if (target.classList.contains('silc-accordion__content') && event.propertyName === 'height') {
+        // Remove inline height style used to transition
+        target.style.height = null;
+        target.classList.remove('transitioning');
+      }
     });
   }
 
@@ -283,6 +306,19 @@ export default class {
 
     // Toggle content if its aria-hidden attr has been set, otherwise initially hide it
     if (selectedContent.hasAttribute('aria-hidden')) {
+
+      // Inline height style to trigger transition
+      if (this.settings.shouldAnimate && !this.displayingAsTabs) {
+        selectedContent.classList.add('transitioning');
+        selectedContent.style.height = `${selectedContent.scrollHeight}px`;
+        // If we're hiding the content set the height in the next frame to trigger slide up transition
+        if (!hidden) {
+          setTimeout(() => {
+            selectedContent.style.height = '0px';
+          }, 1);
+        }
+      }
+
       selectedContent.setAttribute('aria-hidden', String(!hidden));
 
       // Toggle tabbing for child accordions

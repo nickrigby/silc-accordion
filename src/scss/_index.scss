@@ -55,12 +55,15 @@
 
 .silc-accordion__content {
 	.js & {
-		height: 0;
 		overflow: hidden;
 		transition: height $silc-accordion__content-slide-duration $silc-accordion__content-slide-easing;
 
-		&[aria-hidden="false"] {
-			height: auto;
+		&:not([data-silc-accordion-animated]),
+		&[data-silc-accordion-animated]:not(.transitioning) {
+			height: 0;
+			&[aria-hidden="false"] {
+				height: auto;
+			}
 		}
 	}
 }
