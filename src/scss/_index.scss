@@ -8,7 +8,7 @@
 .silc-accordion__nav {
 
 	.js & {
-		display: none;
+		display: block;
 	}
 }
 
@@ -102,21 +102,6 @@
  */
  
 .silc-accordion--tabs {
-	
-	.silc-accordion__nav {
-		display: block;
-	}
-
-	.silc-accordion__header {
-
-		.js & {
-			display: none;
-		}
-	}
-
-	.silc-accordion__content--visible-persist {
-		display: block;
-  }
   
   // Accordion within tabs
   .silc-accordion {
@@ -130,48 +115,59 @@
   }
 }
 
+.silc-accordion__tablist {
+	display: flex;
+}
+
 
 /*
  * Become Tabs
  *
  */
 
-@media (min-width:$silc-accordion--become-tabs) {
-
-	.silc-accordion--become-tabs {
-
-		.silc-accordion__nav {
-			display: block;
-		}
-
-		.silc-accordion__content--visible {
-			display: none;
-		}
-
-		.silc-accordion__content--visible-persist {
-			display: block;
-		}
-
-		.silc-accordion__header {
-
-			.js & {
-				display: none;
-			}
-    }
-    
-    // Accordion within tabs
-    .silc-accordion {
-
-      .silc-accordion__header {
-
-        .js & {
-          display: block;
-        }
-      }
-
-      .silc-accordion__content--visible {
-        display: block;
-      }
-    }
+.silc-accordion--become-tabs {
+	// Hidden visually and from screenreaders, only used by JS to determine when tabs should be activated
+	&:before {
+		content: '{"tabsBreakpoint":"' + $silc-accordion--become-tabs + '"}';
+		display: none;
 	}
 }
+
+// @media (min-width:$silc-accordion--become-tabs) {
+
+// 	.silc-accordion--become-tabs {
+// 		.silc-accordion__nav {
+// 			display: block;
+// 		}
+
+// 		.silc-accordion__content--visible {
+// 			display: none;
+// 		}
+
+// 		.silc-accordion__content--visible-persist {
+// 			display: block;
+// 		}
+
+// 		.silc-accordion__header {
+
+// 			.js & {
+// 				display: none;
+// 			}
+//     }
+    
+//     // Accordion within tabs
+//     .silc-accordion {
+
+//       .silc-accordion__header {
+
+//         .js & {
+//           display: block;
+//         }
+//       }
+
+//       .silc-accordion__content--visible {
+//         display: block;
+//       }
+//     }
+// 	}
+// }
