@@ -4,7 +4,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
 ## HTML
 ```html
 <div class="silc-accordion">
-    <section class="silc-accordion__section" id="accordion-0">
+    <div class="silc-accordion__section" id="accordion-0">
         <div class="silc-accordion__section">
             <button id="accordion-0-section-1-label" class="silc-accordion__label" aria-controls="accordion-0-section-1-content">
                 Accordion 1
@@ -15,8 +15,8 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
                 </div>
             </div>
         </div>
-    </section>
-    <section class="silc-accordion__section">
+    </div>
+    <div class="silc-accordion__section">
         <button id="accordion-0-section-1-label" class="silc-accordion__label" aria-controls="accordion-0-section-1-content">
                 Accordion 2
             </button>
@@ -25,7 +25,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, id inventore! Labore vel, mollitia quae cum quibusdam, dolore harum doloribus dicta adipisci iusto eligendi consectetur nam, impedit quia atque in.</p>
                 </div>
             </div>
-    </section>
+    </div>
 </div>
 ```
 
