@@ -75,30 +75,38 @@ describe('silc accordion module', function () {
 
   });
 
-  // describe('accordion that becomes tabs', function () {
+  describe('accordion that becomes tabs initial state', function () {
 
-  //   before(function () {
-  //     return browser
-  //       .fire('#accordion-3 .silc-accordion__nav-link', 'click');
-  //   });
+    it('the first tab should be active and disabled', function () {
+      browser.assert.elements('#accordion-3 .silc-accordion__label:first-child[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 1 });
+      browser.assert.elements('#accordion-3 .silc-accordion__label:not(:first-child)[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 0 });
+    });
 
-  //   it('should have exactly one active tab link element', function () {
-  //     browser.assert.elements('#accordion-3 .silc-accordion__nav-link--active', { exactly: 1 });
-  //   });
+    it('the first tab panel should be the only visible panel', function () {
+      browser.assert.elements('#accordion-3 .silc-accordion__content:first-child[aria-hidden="false"]', { exactly: 1 });
+      browser.assert.elements('#accordion-3 .silc-accordion__content:not(:first-child)[aria-hidden="false"]', { exactly: 0 });
+    });
 
-  //   it('should have exactly one visible tab content element', function () {
-  //     browser.assert.elements('#accordion-3 .silc-accordion__content--visible', { exactly: 1 });
-  //   });
+  });
 
-  //   it('should have exactly one persitent visible tab content element', function () {
-  //     browser.assert.elements('#accordion-3 .silc-accordion__content--visible-persist', { exactly: 1 });
-  //   });
+  describe('accordion that becomes tabs state after clicking second tab', function () {
 
-  //   it('should have exactly one active label element', function () {
-  //     browser.assert.elements('#accordion-3 .silc-accordion__label--active', { exactly: 1 });
-  //   });
+    before(function () {
+      return browser
+        .fire('#accordion-3 .silc-accordion__label:nth-child(2)', 'click');
+    });
 
-  // });
+    it('the second tab should be active and disabled', function () {
+      browser.assert.elements('#accordion-3 .silc-accordion__label:nth-child(2)[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 1 });
+      browser.assert.elements('#accordion-3 .silc-accordion__label:not(:nth-child(2))[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 0 });
+    });
+
+    it('the second tab panel should be the only visible panel', function () {
+      browser.assert.elements('#accordion-3 .silc-accordion__content:nth-child(2)[aria-hidden="false"]', { exactly: 1 });
+      browser.assert.elements('#accordion-3 .silc-accordion__content:not(:nth-child(2))[aria-hidden="false"]', { exactly: 0 });
+    });
+
+  });
 
   // describe('tabs', function () {
 

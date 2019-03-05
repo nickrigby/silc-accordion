@@ -128,7 +128,7 @@
 .silc-accordion--become-tabs {
 	// Hidden visually and from screenreaders, only used by JS to determine when tabs should be activated
 	&:before {
-		content: '{"tabsBreakpoint":"' + $silc-accordion--become-tabs + '"}';
+		content: '#{$silc-accordion--become-tabs}';
 		display: none;
 	}
 }

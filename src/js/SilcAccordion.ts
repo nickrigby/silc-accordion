@@ -1,5 +1,6 @@
 import * as debounce from 'lodash.debounce';
-// .closest() pollyfill
+
+// .closest() polyfill
 import * as elementClosest from 'element-closest';
 elementClosest;
 
@@ -7,7 +8,7 @@ interface SilcAccordionSettings {
   openMultiple: boolean;
   openFirst: boolean;
   tabs: boolean;
-  becomeTabsMq: string;
+  becomeTabsBreakpoint: number;
 }
 
 export default class {
@@ -46,7 +47,7 @@ export default class {
 
         if (this.settings.tabs) {
           // If this should always be a tab component, convert the accordion markup to that
-          if (!this.settings.becomeTabsMq) {
+          if (!this.settings.becomeTabsBreakpoint) {
             this.convertToTabs();
             this.openFirstSection();
           } else {
@@ -70,7 +71,7 @@ export default class {
       const sectionIndex = parseInt(label.getAttribute('data-index'));
 
       // Don't do this for tabs since they don't have a .silc-accordion__section element
-      if (!this.displayingAsTabs && !(this.settings.tabs && !this.settings.becomeTabsMq)) {
+      if (!this.displayingAsTabs && !(this.settings.tabs && !this.settings.becomeTabsBreakpoint)) {
         this.toggleSection(sectionIndex);
       }
       this.toggleLabel(sectionIndex);
@@ -116,8 +117,7 @@ export default class {
 
     if (this.element.classList.contains('silc-accordion--become-tabs')) {
       const beforeContent = window.getComputedStyle(this.element, ":before").content;
-      const { tabsBreakpoint } = JSON.parse(JSON.parse(beforeContent));
-      settings.becomeTabsMq = `(min-width: ${tabsBreakpoint})`;
+      settings.becomeTabsBreakpoint = parseInt(beforeContent.replace(/"*/g, ''));
     }
 
     return settings;
@@ -177,14 +177,15 @@ export default class {
    */
   protected becomeTabsResizeListener() {
     const resizeHandler = () => {
-      if (window.matchMedia(this.settings.becomeTabsMq).matches) {
+      // Not using matchMedia due to Zombie not supporting it for unit tests, even when using a polyfill
+      if (window.innerWidth >= this.settings.becomeTabsBreakpoint) {
         // Switch to tabs
         if (!this.displayingAsTabs) {
+          this.convertToTabs();
           // Force first section open if none are selected
           if (!this.activeSections.length) {
             this.openFirstSection();
           }
-          this.convertToTabs();
         }
       } else {
         // Switch to accordion
@@ -268,68 +269,6 @@ export default class {
     } else {
       contents[sectionIndex].setAttribute('aria-hidden', 'true');
     }
-  }
-
-  /**
-   * Hide all persistent visible content
-   * Persistent visible class is used for accordions that transform to tabs
-   */
-  protected hideAllPersitentVisible() {
-    this.removeCssClass('silc-accordion__content--visible-persist');
-  }
-
-  /**
-   * Remove CSS class from all matching elements
-   * @param className 
-   */
-  protected removeCssClass(className: string, excludeEl?) {
-
-    // Hide all persitent visible content
-    let children = <NodeList>this.element.querySelectorAll('.' + className);
-    if (children.length > 0) {
-      for (let i = 0; i < children.length; i++) {
-        let el = <HTMLElement>children[i];
-        if (el !== excludeEl && this.element === el.closest('.silc-accordion')) {
-          el.classList.remove(className);
-        }
-      }
-    }
-  }
-
-  /**
-   * Set active label
-   * @param el 
-   * @param className 
-   */
-  protected toggleActiveLabel(el: Element, className: string) {
-
-    if (!this.settings.openMultiple) {
-
-      let currentActive = this.element.querySelector('.' + className);
-
-      if (currentActive && currentActive !== el && this.element === currentActive.closest('.silc-accordion')) {
-        currentActive.classList.remove(className);
-      }
-    }
-
-    el.classList.toggle(className);
-  }
-
-  /**
-   * Set active tab
-   * @param el
-   * @param className 
-   */
-  protected toggleActiveTab(el: Element, className: string) {
-
-    // Get current active tab
-    let currentActive = this.element.querySelector('.' + className);
-
-    // Remove active class
-    currentActive.classList.remove(className);
-
-    // Add active class to clicked tab
-    el.classList.add(className);
   }
 
   /**
