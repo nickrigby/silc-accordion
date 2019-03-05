@@ -166,14 +166,13 @@ export default class {
    */
   protected labelEventListener() {
 
-    const listener = (event) => {
+    this.element.addEventListener('click', (event) => {
 
       // Get target from event
       const target = event.target as HTMLElement;
 
       // If target contains label class update the active section
       if (target.classList.contains('silc-accordion__label')) {
-        event.preventDefault();
         // Stop tab from toggling itself
         if (!target.hasAttribute('aria-disabled')) {
           this.updateActiveSections(target);
@@ -181,15 +180,6 @@ export default class {
       }
 
       event.stopPropagation();
-    };
-
-    this.element.addEventListener('click', listener);
-    // Add support for space key presses (since we use an anchor tag instead of a button this is necessary)
-    this.element.addEventListener('keydown', (event) => {
-      if (event.keyCode === 32) {
-        event.preventDefault();
-        listener(event);
-      }
     });
   }
 

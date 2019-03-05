@@ -6,18 +6,29 @@
 }
 
 .silc-accordion__label {
+	appearance: none;
 	display: $silc-accordion__label-display;
 	margin: $silc-accordion__label-margin;
 	padding: $silc-accordion__label-padding;
 	border: $silc-accordion__label-border;
 	background: $silc-accordion__label-background;
 	color: $silc-accordion__label-color;
+	text-align: left;
 	text-decoration: $silc-accordion__label-text-decoration;
 	text-transform: $silc-accordion__label-text-transform;
+	font-size: $silc-accordion__label-font-size;
+	width: 100%;
 
-	&:hover {
-		background: $silc-accordion__label--hover-background;
-		color: $silc-accordion__label--hover-color;
+	body:not(.js) & {
+		outline: none;
+	}
+
+	.js & {
+		cursor: pointer;
+		&:hover {
+			background: $silc-accordion__label--hover-background;
+			color: $silc-accordion__label--hover-color;
+		}
 	}
 
 	&[aria-expanded="true"] {
@@ -31,21 +42,18 @@
 	}
 
 	&[role="tab"] {
+		width: auto;
 		&[aria-selected="true"] {
 			color: $silc-accordion__tab--active-color;
 			background: $silc-accordion__tab--active-background;
+		}
+		&[aria-disabled="true"] {
+			cursor: default;
 		}
 	}
 }
 
 .silc-accordion__content {
-	body:not(.js) & {
-		display: none;
-		&:target {
-			display: block;
-		}
-	}
-
 	.js & {
 		height: 0;
 		overflow: hidden;
@@ -97,11 +105,6 @@
 	}
 }
 
-/*
- * Become Tabs
- *
- */
-
 .silc-accordion--become-tabs {
 	// Hidden visually and from screenreaders, only used by JS to determine when tabs should be activated
 	&:before {
@@ -109,42 +112,3 @@
 		display: none;
 	}
 }
-
-// @media (min-width:$silc-accordion--become-tabs) {
-
-// 	.silc-accordion--become-tabs {
-// 		.silc-accordion__nav {
-// 			display: block;
-// 		}
-
-// 		.silc-accordion__content--visible {
-// 			display: none;
-// 		}
-
-// 		.silc-accordion__content--visible-persist {
-// 			display: block;
-// 		}
-
-// 		.silc-accordion__header {
-
-// 			.js & {
-// 				display: none;
-// 			}
-//     }
-    
-//     // Accordion within tabs
-//     .silc-accordion {
-
-//       .silc-accordion__header {
-
-//         .js & {
-//           display: block;
-//         }
-//       }
-
-//       .silc-accordion__content--visible {
-//         display: block;
-//       }
-//     }
-// 	}
-// }
