@@ -43,7 +43,8 @@ export default class {
         this.labelEventListener();
 
         // Add indices to each label to track active indices
-        this.addIndicesToLabels();
+        // and set type to button to prevent form submissions
+        this.addAttributesToLabels();
 
         if (this.settings.openFirst) {
           // Open first element
@@ -122,11 +123,13 @@ export default class {
 
   /**
    * Add a data-index attribute to each label to track the indices of active accordions
+   * and explicitly set the type attribute to button to prevent accidental form submissions
    */
-  protected addIndicesToLabels() {
+  protected addAttributesToLabels() {
     for (let i = 0; i < this.sections.length; i++) {
-      const label = this.sections[i].querySelector('.silc-accordion__label') as HTMLAnchorElement;
+      const label = this.sections[i].querySelector('.silc-accordion__label') as HTMLElement;
       label.setAttribute('data-index', String(i));
+      label.setAttribute('type', 'button');
     }
   }
 
@@ -164,7 +167,7 @@ export default class {
    * Open first section
    */
   protected openFirstSection() {
-    const firstLabel = this.element.querySelector('.silc-accordion__label') as HTMLAnchorElement;
+    const firstLabel = this.element.querySelector('.silc-accordion__label') as HTMLElement;
     this.updateActiveSections(firstLabel);
   }
 

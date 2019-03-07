@@ -96,11 +96,13 @@ var default_1 = /** @class */ (function () {
     };
     /**
      * Add a data-index attribute to each label to track the indices of active accordions
+     * and explicitly set the type attribute to button to prevent accidental form submissions
      */
     default_1.prototype.addIndicesToLabels = function () {
         for (var i = 0; i < this.sections.length; i++) {
             var label = this.sections[i].querySelector('.silc-accordion__label');
             label.setAttribute('data-index', String(i));
+            label.setAttribute('type', 'button');
         }
     };
     /**
