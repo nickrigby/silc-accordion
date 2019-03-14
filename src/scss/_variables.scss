@@ -13,12 +13,12 @@ $silc-accordion--become-tabs: 800px !default;
  *
  */
  
-$silc-accordion__nav-items-display: flex !default;
-$silc-accordion__nav-items-margin: 0 !default;
-$silc-accordion__nav-items-padding: 0 !default;
+$silc-accordion__tablist-display: flex !default;
+$silc-accordion__tablist-margin: 0 !default;
+$silc-accordion__tablist-padding: 0 !default;
 
-$silc-accordion__nav-link--active-color: inherit !default;
-$silc-accordion__nav-link--active-background: inherit !default;
+$silc-accordion__tab--active-color: inherit !default;
+$silc-accordion__tab--active-background: inherit !default;
 
 /*
  * Header
@@ -34,6 +34,7 @@ $silc-accordion__label-color: inherit !default;
 $silc-accordion__label-text-decoration: none !default;
 $silc-accordion__label-text-transform: none !default;
 $silc-accordion__label-transform: none !default;
+$silc-accordion__label-font-size: 1rem !default;
 $silc-accordion__label--hover-color:$silc-accordion__label-color !default;
 $silc-accordion__label--hover-background:$silc-accordion__label-background !default;
 $silc-accordion__label--active-background: inherit !default;
@@ -48,3 +49,5 @@ $silc-accordion__label--active-color: inherit !default;
 $silc-accordion__content-padding: 0 !default;
 $silc-accordion__content-border: none !default;
 $silc-accordion__content-background: none !default;
+$silc-accordion__content-slide-duration: .5s !default;
+$silc-accordion__content-slide-easing: ease-in-out !default;

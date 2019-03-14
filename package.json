@@ -34,6 +34,7 @@
     "url": "https://github.com/nickrigby/silc-accordion"
   },
   "dependencies": {
-    "element-closest": "^2.0.2"
+    "element-closest": "^2.0.2",
+    "lodash.debounce": "^4.0.8"
   }
 }
