@@ -18,13 +18,13 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
     </div>
     <div class="silc-accordion__section">
         <button id="accordion-0-section-1-label" class="silc-accordion__label" aria-controls="accordion-0-section-1-content">
-                Accordion 2
-            </button>
-            <div class="silc-accordion__content" id="accordion-0-section-1-content"  aria-labelled-by="accordion-0-section-1-label">
-                <div class="silc-accordion__content-compartment">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, id inventore! Labore vel, mollitia quae cum quibusdam, dolore harum doloribus dicta adipisci iusto eligendi consectetur nam, impedit quia atque in.</p>
-                </div>
+            Accordion 2
+        </button>
+        <div class="silc-accordion__content" id="accordion-0-section-1-content"  aria-labelled-by="accordion-0-section-1-label">
+            <div class="silc-accordion__content-compartment">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, id inventore! Labore vel, mollitia quae cum quibusdam, dolore harum doloribus dicta adipisci iusto eligendi consectetur nam, impedit quia atque in.</p>
             </div>
+        </div>
     </div>
 </div>
 ```
