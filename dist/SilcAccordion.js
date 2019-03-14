@@ -27,7 +27,8 @@ var default_1 = /** @class */ (function () {
                 // Label event listener
                 this.labelEventListener();
                 // Add indices to each label to track active indices
-                this.addIndicesToLabels();
+                // and set type to button to prevent form submissions
+                this.addAttributesToLabels();
                 if (this.settings.openFirst) {
                     // Open first element
                     this.openFirstSection();
@@ -98,7 +99,7 @@ var default_1 = /** @class */ (function () {
      * Add a data-index attribute to each label to track the indices of active accordions
      * and explicitly set the type attribute to button to prevent accidental form submissions
      */
-    default_1.prototype.addIndicesToLabels = function () {
+    default_1.prototype.addAttributesToLabels = function () {
         for (var i = 0; i < this.sections.length; i++) {
             var label = this.sections[i].querySelector('.silc-accordion__label');
             label.setAttribute('data-index', String(i));
