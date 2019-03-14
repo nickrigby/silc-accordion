@@ -5,61 +5,33 @@
 	margin: $silc-accordion-margin;
 }
 
-.silc-accordion__nav {
-
-	.js & {
-		display: none;
-	}
-}
-
-.silc-accordion__nav-items {
-	
-	.js & {
-		display: $silc-accordion__nav-items-display;
-		margin: $silc-accordion__nav-items-margin;
-		padding: $silc-accordion__nav-items-padding;
-		list-style: none;
-	}
-}
-
-.silc-accordion__nav-item {
-
-	.silc-accordion__nav-items--stretch & {
-
-		.js & {
-			flex: 1 auto;
-		}
-	}
-}
-
-.silc-accordion__nav-link {
-	
-	&--active {
-		color: $silc-accordion__nav-link--active-color;
-		background: $silc-accordion__nav-link--active-background;
-	}
-}
-
 .silc-accordion__label {
+	appearance: none;
 	display: $silc-accordion__label-display;
 	margin: $silc-accordion__label-margin;
 	padding: $silc-accordion__label-padding;
 	border: $silc-accordion__label-border;
 	background: $silc-accordion__label-background;
 	color: $silc-accordion__label-color;
+	text-align: left;
 	text-decoration: $silc-accordion__label-text-decoration;
 	text-transform: $silc-accordion__label-text-transform;
+	font-size: $silc-accordion__label-font-size;
+	width: 100%;
 
-	&:hover {
-		background: $silc-accordion__label--hover-background;
-		color: $silc-accordion__label--hover-color;
+	body:not(.js) & {
+		outline: none;
 	}
 
 	.js & {
 		cursor: pointer;
+		&:hover {
+			background: $silc-accordion__label--hover-background;
+			color: $silc-accordion__label--hover-color;
+		}
 	}
 
-	&--active {
+	&[aria-expanded="true"] {
 		color: $silc-accordion__label--active-color;
 		background: $silc-accordion__label--active-background;
 
@@ -68,20 +40,38 @@
 			background: $silc-accordion__label--active-background;
 		}
 	}
+
+	&[role="tab"] {
+		width: auto;
+		&[aria-selected="true"] {
+			color: $silc-accordion__tab--active-color;
+			background: $silc-accordion__tab--active-background;
+		}
+		&[aria-disabled="true"] {
+			cursor: default;
+		}
+	}
 }
 
 .silc-accordion__content {
-	border: $silc-accordion__content-border;
-	padding: $silc-accordion__content-padding;  
-	background: $silc-accordion__content-background;
-
 	.js & {
-		display: none;
+		overflow: hidden;
+		transition: height $silc-accordion__content-slide-duration $silc-accordion__content-slide-easing;
 
-		&--visible {
-			display: block;
+		&:not([data-silc-accordion-animated]),
+		&[data-silc-accordion-animated]:not(.transitioning) {
+			height: 0;
+			&[aria-hidden="false"] {
+				height: auto;
+			}
 		}
 	}
+}
+
+.silc-accordion__content-compartment {
+	border: $silc-accordion__content-border;
+	padding: $silc-accordion__content-padding;
+	background: $silc-accordion__content-background;
 }
 	
 
@@ -90,22 +80,8 @@
  *
  */
  
-.silc-accordion--tabs {
-	
-	.silc-accordion__nav {
-		display: block;
-	}
-
-	.silc-accordion__header {
-
-		.js & {
-			display: none;
-		}
-	}
-
-	.silc-accordion__content--visible-persist {
-		display: block;
-  }
+.silc-accordion--tabs,
+.silc-accordion--become-tabs {
   
   // Accordion within tabs
   .silc-accordion {
@@ -119,48 +95,23 @@
   }
 }
 
-
-/*
- * Become Tabs
- *
- */
-
-@media (min-width:$silc-accordion--become-tabs) {
-
-	.silc-accordion--become-tabs {
-
-		.silc-accordion__nav {
-			display: block;
+.silc-accordion__tablist {
+	display: $silc-accordion__tablist-display;
+	margin: $silc-accordion__tablist-margin;
+	padding: $silc-accordion__tablist-padding;
+	.silc-accordion--stretch-tabs & {
+		.silc-accordion__label {
+			flex-basis: 100%;
+			flex: 1;
+			flex: 1;
 		}
+	}
+}
 
-		.silc-accordion__content--visible {
-			display: none;
-		}
-
-		.silc-accordion__content--visible-persist {
-			display: block;
-		}
-
-		.silc-accordion__header {
-
-			.js & {
-				display: none;
-			}
-    }
-    
-    // Accordion within tabs
-    .silc-accordion {
-
-      .silc-accordion__header {
-
-        .js & {
-          display: block;
-        }
-      }
-
-      .silc-accordion__content--visible {
-        display: block;
-      }
-    }
+.silc-accordion--become-tabs {
+	// Hidden visually and from screenreaders, only used by JS to determine when tabs should be activated
+	&:before {
+		content: '#{$silc-accordion--become-tabs}';
+		display: none;
 	}
 }

@@ -21,24 +21,32 @@ describe('silc accordion module', function () {
         .fire('#accordion-0 .silc-accordion__label', 'click');
     });
 
+    it('should have exactly one active section element', function () {
+      browser.assert.elements('#accordion-0 .silc-accordion__section--active', { exactly: 1 });
+    });
+
     it('should show exactly one active label element', function () {
-      browser.assert.elements('#accordion-0 .silc-accordion__label--active', { exactly: 1 });
+      browser.assert.elements('#accordion-0 .silc-accordion__label[aria-expanded="true"]', { exactly: 1 });
     });
 
     it('should show exactly one visible content element', function () {
-      browser.assert.elements('#accordion-0 .silc-accordion__content--visible', { exactly: 1 });
+      browser.assert.elements('#accordion-0 .silc-accordion__content[aria-hidden="false"]', { exactly: 1 });
     });
 
   });
 
   describe('accordion with first section open', function () {
 
-    it('should have exactly one active label element on load', function () {
-      browser.assert.elements('#accordion-1 .silc-accordion__label--active', { exactly: 1 });
+    it('should have exactly one active section element', function () {
+      browser.assert.elements('#accordion-1 .silc-accordion__section--active', { exactly: 1 });
     });
 
-    it('should have exactly one visible content element on load', function () {
-      browser.assert.elements('#accordion-1 .silc-accordion__content--visible', { exactly: 1 });
+    it('should show exactly one active label element', function () {
+      browser.assert.elements('#accordion-1 .silc-accordion__label[aria-expanded="true"]', { exactly: 1 });
+    });
+
+    it('should show exactly one visible content element', function () {
+      browser.assert.elements('#accordion-1 .silc-accordion__content[aria-hidden="false"]', { exactly: 1 });
     });
 
   });
@@ -53,58 +61,82 @@ describe('silc accordion module', function () {
         });
     });
 
-    it('should have exactly two active label elements', function () {
-      browser.assert.elements('#accordion-2 .silc-accordion__label--active', { exactly: 2 });
+    it('should have exactly two active section elements', function () {
+      browser.assert.elements('#accordion-2 .silc-accordion__section--active', { exactly: 2 });
     });
 
-    it('should have exactly two visible content elements', function () {
-      browser.assert.elements('#accordion-2 .silc-accordion__content--visible', { exactly: 2 });
+    it('should show exactly two active label elements', function () {
+      browser.assert.elements('#accordion-2 .silc-accordion__label[aria-expanded="true"]', { exactly: 2 });
     });
 
-  });
-
-  describe('accordion that becomes tabs', function () {
-
-    before(function () {
-      return browser
-        .fire('#accordion-3 .silc-accordion__nav-link', 'click');
-    });
-
-    it('should have exactly one active tab link element', function () {
-      browser.assert.elements('#accordion-3 .silc-accordion__nav-link--active', { exactly: 1 });
-    });
-
-    it('should have exactly one visible tab content element', function () {
-      browser.assert.elements('#accordion-3 .silc-accordion__content--visible', { exactly: 1 });
-    });
-
-    it('should have exactly one persitent visible tab content element', function () {
-      browser.assert.elements('#accordion-3 .silc-accordion__content--visible-persist', { exactly: 1 });
-    });
-
-    it('should have exactly one active label element', function () {
-      browser.assert.elements('#accordion-3 .silc-accordion__label--active', { exactly: 1 });
+    it('should show exactly two visible content element', function () {
+      browser.assert.elements('#accordion-2 .silc-accordion__content[aria-hidden="false"]', { exactly: 2 });
     });
 
   });
 
-  describe('tabs', function () {
+  describe('accordion that becomes tabs initial state', function () {
+
+    it('the first tab should be active and disabled', function () {
+      browser.assert.elements('#accordion-3 .silc-accordion__label:first-child[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 1 });
+      browser.assert.elements('#accordion-3 .silc-accordion__label:not(:first-child)[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 0 });
+    });
+
+    it('the first tab panel should be the only visible panel', function () {
+      browser.assert.elements('#accordion-3 .silc-accordion__content:first-child[aria-hidden="false"]', { exactly: 1 });
+      browser.assert.elements('#accordion-3 .silc-accordion__content:not(:first-child)[aria-hidden="false"]', { exactly: 0 });
+    });
+
+  });
+
+  describe('accordion that becomes tabs state after clicking second tab', function () {
 
     before(function () {
       return browser
-        .fire('#accordion-4 .silc-accordion__nav-link', 'click');
+        .fire('#accordion-3 .silc-accordion__label:nth-child(2)', 'click');
     });
 
-    it('should have exactly one active tab link element', function () {
-      browser.assert.elements('#accordion-4 .silc-accordion__nav-link--active', { exactly: 1 });
+    it('the second tab should be active and disabled', function () {
+      browser.assert.elements('#accordion-3 .silc-accordion__label:nth-child(2)[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 1 });
+      browser.assert.elements('#accordion-3 .silc-accordion__label:not(:nth-child(2))[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 0 });
     });
 
-    it('should have exactly one visible tab content element', function () {
-      browser.assert.elements('#accordion-4 .silc-accordion__content--visible', { exactly: 1 });
+    it('the second tab panel should be the only visible panel', function () {
+      browser.assert.elements('#accordion-3 .silc-accordion__content:nth-child(2)[aria-hidden="false"]', { exactly: 1 });
+      browser.assert.elements('#accordion-3 .silc-accordion__content:not(:nth-child(2))[aria-hidden="false"]', { exactly: 0 });
     });
 
-    it('should have exactly one persitent visible tab content element', function () {
-      browser.assert.elements('#accordion-4 .silc-accordion__content--visible-persist', { exactly: 1 });
+  });
+
+  describe('tabs initial state', function () {
+
+    it('the first tab should be active and disabled', function () {
+      browser.assert.elements('#accordion-4 .silc-accordion__label:first-child[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 1 });
+      browser.assert.elements('#accordion-4 .silc-accordion__label:not(:first-child)[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 0 });
+    });
+
+    it('the first tab panel should be the only visible panel', function () {
+      browser.assert.elements('#accordion-4 .silc-accordion__content:first-child[aria-hidden="false"]', { exactly: 1 });
+      browser.assert.elements('#accordion-4 .silc-accordion__content:not(:first-child)[aria-hidden="false"]', { exactly: 0 });
+    });
+
+  });
+
+  describe('tabs state after clicking second tab', function () {
+
+    before(function () {
+      return browser
+        .fire('#accordion-4 .silc-accordion__label:nth-child(2)', 'click');
+    });
+
+    it('the second tab should be active and disabled', function () {
+      browser.assert.elements('#accordion-4 .silc-accordion__label:nth-child(2)[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 1 });
+      browser.assert.elements('#accordion-4 .silc-accordion__label:not(:nth-child(2))[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 0 });
+    });
+
+    it('the second tab panel should be the only visible panel', function () {
+      browser.assert.elements('#accordion-4 .silc-accordion__content:nth-child(2)[aria-hidden="false"]', { exactly: 1 });
+      browser.assert.elements('#accordion-4 .silc-accordion__content:not(:nth-child(2))[aria-hidden="false"]', { exactly: 0 });
     });
 
   });
@@ -113,27 +145,25 @@ describe('silc accordion module', function () {
 
     before(function () {
       return browser
-        .fire('#accordion-5 .silc-accordion__nav-link:nth-child(1)', 'click');
+        .fire('#accordion-5 .silc-accordion__label:nth-child(2)', 'click');
     });
 
-    it('should have exactly one active tab link element', function () {
-      browser.assert.elements('#accordion-5 .silc-accordion__nav-link--active', { exactly: 1 });
+    it('the second tab should be active and disabled', function () {
+      browser.assert.elements('#accordion-5 .silc-accordion__label:nth-child(2)[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 1 });
+      browser.assert.elements('#accordion-5 .silc-accordion__label:not(:nth-child(2))[role="tab"][aria-selected="true"][aria-disabled="true"]', { exactly: 0 });
     });
 
-    it('should have exactly one visible tab content element', function () {
-      browser.assert.elements('#accordion-5 .silc-accordion__content--visible', { exactly: 2 });
-    });
-
-    it('should have exactly one persitent visible tab content element', function () {
-      browser.assert.elements('#accordion-5 .silc-accordion__content--visible-persist', { exactly: 1 });
+    it('the second tab panel should be the only visible panel', function () {
+      browser.assert.elements('#accordion-5 .silc-accordion__content:nth-child(2)[role="tabpanel"][aria-hidden="false"]', { exactly: 1 });
+      browser.assert.elements('#accordion-5 .silc-accordion__content:not(:nth-child(2))[role="tabpanel"][aria-hidden="false"]', { exactly: 0 });
     });
 
     it('child accordion should have exactly one active label element on load', function () {
-      browser.assert.elements('#accordion-6 .silc-accordion__label--active', { exactly: 1 });
+      browser.assert.elements('#accordion-6 .silc-accordion__label[aria-expanded="true"]', { exactly: 1 });
     });
 
     it('child accordion should have exactly one visible content element on load', function () {
-      browser.assert.elements('#accordion-6 .silc-accordion__content--visible', { exactly: 1 });
+      browser.assert.elements('#accordion-6 .silc-accordion__content[aria-hidden="false"]', { exactly: 1 });
     });
 
   });
