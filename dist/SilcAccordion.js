@@ -117,7 +117,7 @@ var default_1 = /** @class */ (function () {
             shouldAnimate: this.element.hasAttribute('data-silc-accordion-animated')
         };
         if (this.element.classList.contains('silc-accordion--become-tabs')) {
-            var beforeContent = window.getComputedStyle(this.element, ":before").content;
+            var beforeContent = window.getComputedStyle(this.element, ':before').content;
             settings.becomeTabsBreakpoint = parseInt(beforeContent.replace(/"*/g, ''));
         }
         return settings;
@@ -246,54 +246,45 @@ var default_1 = /** @class */ (function () {
      */
     default_1.prototype.toggleContent = function (sectionIndex) {
         var selectedContent = this.contentAreas[sectionIndex];
-        var childLabels = selectedContent.querySelectorAll('.silc-accordion__label');
-        var hidden = !!JSON.parse(selectedContent.getAttribute('aria-hidden'));
+        var visible = !!JSON.parse(selectedContent.getAttribute('aria-hidden'));
         // Toggle currently active content if only one section should be open
         if (!this.settings.openMultiple) {
             // Avoid toggling the current content before doing so below
             if (typeof this.activeSections[0] !== 'undefined' && this.activeSections[0] !== sectionIndex) {
-                this.contentAreas[this.activeSections[0]].setAttribute('aria-hidden', 'true');
-                var previousSectionChildLabels = this.contentAreas[this.activeSections[0]].querySelectorAll('.silc-accordion__label');
-                // Disable tabbing for child accordions
-                for (var i = 0; i < previousSectionChildLabels.length; i++) {
-                    previousSectionChildLabels[i].setAttribute('tabindex', '-1');
-                }
+                var previousContent = this.contentAreas[this.activeSections[0]];
+                this.slideContent(previousContent, true);
+                this.toggleTabbingForChildElements(previousContent, false);
+                previousContent.setAttribute('aria-hidden', 'true');
             }
         }
         // Toggle content if its aria-hidden attr has been set, otherwise initially hide it
         if (selectedContent.hasAttribute('aria-hidden')) {
-            // Inline height style to trigger transition
-            if (this.settings.shouldAnimate && !this.displayingAsTabs) {
-                selectedContent.classList.add('transitioning');
-                selectedContent.style.height = selectedContent.scrollHeight + "px";
-                // If we're hiding the content set the height in the next frame to trigger slide up transition
-                if (!hidden) {
-                    setTimeout(function () {
-                        selectedContent.style.height = '0px';
-                    }, 1);
-                }
-            }
-            selectedContent.setAttribute('aria-hidden', String(!hidden));
-            // Toggle tabbing for child accordions
-            for (var i = 0; i < childLabels.length; i++) {
-                if (!hidden) {
-                    // If the content area is being hidden, turn off tabbing for all descendant accordions
-                    childLabels[i].setAttribute('tabindex', '-1');
-                }
-                else {
-                    // If the content area is visible, restore default tabbing to direct child accordions
-                    if (childLabels[i].closest('.silc-accordion__content') === selectedContent) {
-                        childLabels[i].removeAttribute('tabindex');
-                    }
-                }
-            }
+            this.slideContent(selectedContent, !visible);
+            this.toggleTabbingForChildElements(selectedContent, visible);
+            selectedContent.setAttribute('aria-hidden', String(!visible));
         }
         else {
+            this.toggleTabbingForChildElements(selectedContent, false);
             selectedContent.setAttribute('aria-hidden', 'true');
-            // Turn off tabbing for child accordions
-            for (var i = 0; i < childLabels.length; i++) {
-                childLabels[i].setAttribute('tabindex', '-1');
+        }
+    };
+    default_1.prototype.slideContent = function (content, hidden) {
+        // Inline height style to trigger transition
+        if (this.settings.shouldAnimate && !this.displayingAsTabs) {
+            content.classList.add('transitioning');
+            content.style.height = content.scrollHeight + "px";
+            // If we're hiding the content set the height in the next frame to trigger slide up transition
+            if (hidden) {
+                setTimeout(function () {
+                    content.style.height = '0px';
+                }, 1);
             }
+        }
+    };
+    default_1.prototype.toggleTabbingForChildElements = function (el, enabled) {
+        var tabbableChildren = el.querySelectorAll('a, input, button, textarea, select, object, area');
+        for (var i = 0; i < tabbableChildren.length; i++) {
+            tabbableChildren[i].setAttribute('tabindex', enabled ? '0' : '-1');
         }
     };
     /**
