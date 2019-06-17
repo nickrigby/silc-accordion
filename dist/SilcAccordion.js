@@ -254,14 +254,12 @@ var default_1 = /** @class */ (function () {
                 var previousContent = this.contentAreas[this.activeSections[0]];
                 this.slideContent(previousContent, true);
                 this.toggleTabbingForChildElements(previousContent, false);
-                previousContent.setAttribute('aria-hidden', 'true');
             }
         }
         // Toggle content if its aria-hidden attr has been set, otherwise initially hide it
         if (selectedContent.hasAttribute('aria-hidden')) {
             this.slideContent(selectedContent, !visible);
             this.toggleTabbingForChildElements(selectedContent, visible);
-            selectedContent.setAttribute('aria-hidden', String(!visible));
         }
         else {
             this.toggleTabbingForChildElements(selectedContent, false);
@@ -271,14 +269,21 @@ var default_1 = /** @class */ (function () {
     default_1.prototype.slideContent = function (content, hidden) {
         // Inline height style to trigger transition
         if (this.settings.shouldAnimate && !this.displayingAsTabs) {
-            content.classList.add('transitioning');
-            content.style.height = content.scrollHeight + "px";
             // If we're hiding the content set the height in the next frame to trigger slide up transition
             if (hidden) {
+                content.style.height = content.scrollHeight + "px";
                 setTimeout(function () {
-                    content.style.height = '0px';
-                }, 1);
+                    content.style.height = "0px";
+                    content.setAttribute("aria-hidden", "true");
+                }, 50);
             }
+            else {
+                content.style.height = content.scrollHeight + "px";
+                content.setAttribute("aria-hidden", "false");
+            }
+        }
+        else {
+            content.setAttribute("aria-hidden", "" + hidden);
         }
     };
     default_1.prototype.toggleTabbingForChildElements = function (el, enabled) {
