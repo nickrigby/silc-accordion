@@ -181,15 +181,16 @@ export default class {
       // Get target from event
       const target = event.target as HTMLElement;
 
-      // If target contains label class update the active section
-      if (target.classList.contains('silc-accordion__label')) {
-        // Stop tab from toggling itself
-        if (!target.hasAttribute('aria-disabled')) {
-          this.updateActiveSections(target);
+      // Only update the active section if this section belongs to the current accordion
+      if (target.closest('.silc-accordion') === this.element) {
+        // If target contains label class update the active section
+        if (target.classList.contains('silc-accordion__label')) {
+          // Stop tab from toggling itself
+          if (!target.hasAttribute('aria-disabled')) {
+            this.updateActiveSections(target);
+          }
         }
       }
-
-      event.stopPropagation();
     });
   }
 

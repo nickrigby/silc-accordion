@@ -146,14 +146,16 @@ var default_1 = /** @class */ (function () {
         this.element.addEventListener('click', function (event) {
             // Get target from event
             var target = event.target;
-            // If target contains label class update the active section
-            if (target.classList.contains('silc-accordion__label')) {
-                // Stop tab from toggling itself
-                if (!target.hasAttribute('aria-disabled')) {
-                    _this.updateActiveSections(target);
+            // Only update the active section if this section belongs to the current accordion
+            if (target.closest('.silc-accordion') === _this.element) {
+                // If target contains label class update the active section
+                if (target.classList.contains('silc-accordion__label')) {
+                    // Stop tab from toggling itself
+                    if (!target.hasAttribute('aria-disabled')) {
+                        _this.updateActiveSections(target);
+                    }
                 }
             }
-            event.stopPropagation();
         });
     };
     /**
