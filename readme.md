@@ -8,7 +8,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
          <button id="accordion-0-section-1-label" class="silc-accordion__label" aria-controls="accordion-0-section-1-content">
              Accordion 1
          </button>
-         <div class="silc-accordion__content" id="accordion-0-section-1-content"  aria-labelled-by="accordion-0-section-1-label">
+         <div class="silc-accordion__content" id="accordion-0-section-1-content"  aria-labelledby="accordion-0-section-1-label">
              <div class="silc-accordion__content-compartment">
                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod perferendis architecto deserunt, et libero culpa obcaecati ab possimus laborum quibusdam, eum harum accusamus. Quisquam, facere suscipit hic maiores voluptatibus perspiciatis?</p>
              </div>
@@ -18,7 +18,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
         <button id="accordion-0-section-2-label" class="silc-accordion__label" aria-controls="accordion-0-section-2-content">
             Accordion 2
         </button>
-        <div class="silc-accordion__content" id="accordion-0-section-2-content"  aria-labelled-by="accordion-0-section-2-label">
+        <div class="silc-accordion__content" id="accordion-0-section-2-content"  aria-labelledby="accordion-0-section-2-label">
             <div class="silc-accordion__content-compartment">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, id inventore! Labore vel, mollitia quae cum quibusdam, dolore harum doloribus dicta adipisci iusto eligendi consectetur nam, impedit quia atque in.</p>
             </div>
@@ -34,7 +34,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
         <button id="accordion-1-section-1-label" class="silc-accordion__label" aria-controls="accordion-1-section-1-content">
             Tab 1
         </button>
-        <div class="silc-accordion__content" id="accordion-1-section-1-content" aria-labelled-by="accordion-1-section-1-label">
+        <div class="silc-accordion__content" id="accordion-1-section-1-content" aria-labelledby="accordion-1-section-1-label">
             <div class="silc-accordion__content-compartment">
                 <p>Tab 1 content</p>
             </div>
@@ -44,7 +44,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
         <button id="accordion-1-section-2-label" class="silc-accordion__label" aria-controls="accordion-1-section-2-content">
             Tab 2
         </button>
-        <div class="silc-accordion__content" id="accordion-1-section-2-content" aria-labelled-by="accordion-1-section-2-label">
+        <div class="silc-accordion__content" id="accordion-1-section-2-content" aria-labelledby="accordion-1-section-2-label">
             <div class="silc-accordion__content-compartment">
                 <p>Tab 2 content</p>
             </div>
@@ -54,7 +54,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
         <button id="accordion-1-section-3-label" class="silc-accordion__label" aria-controls="accordion-1-section-3-content">
             Tab 3
         </button>
-        <div class="silc-accordion__content" id="accordion-1-section-3-content" aria-labelled-by="accordion-1-section-3-label">
+        <div class="silc-accordion__content" id="accordion-1-section-3-content" aria-labelledby="accordion-1-section-3-label">
             <div class="silc-accordion__content-compartment">
                 <p>Tab 3 Content</p>
             </div>
@@ -70,7 +70,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
         <button id="accordion-2-section-1-label" class="silc-accordion__label" aria-controls="accordion-2-section-1-content">
             Tab 1
         </button>
-        <div class="silc-accordion__content" id="accordion-2-section-1-content" aria-labelled-by="accordion-2-section-1-label">
+        <div class="silc-accordion__content" id="accordion-2-section-1-content" aria-labelledby="accordion-2-section-1-label">
             <div class="silc-accordion__content-compartment">
                 <p>Tab 1 Content</p>
             </div>
@@ -80,7 +80,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
         <button id="accordion-2-section-2-label" class="silc-accordion__label" aria-controls="accordion-2-section-2-content">
             Tab 2
         </button>
-        <div class="silc-accordion__content" id="accordion-2-section-2-content" aria-labelled-by="accordion-2-section-2-label">
+        <div class="silc-accordion__content" id="accordion-2-section-2-content" aria-labelledby="accordion-2-section-2-label">
             <div class="silc-accordion__content-compartment">
                 <p>Tab 2 Content</p>
             </div>
@@ -90,7 +90,7 @@ The accordion module is an ultra-lightweight web component for the [silc framewo
         <button id="accordion-2-section-3-label" class="silc-accordion__label" aria-controls="accordion-2-section-3-content">
             Tab 3
         </button>
-        <div class="silc-accordion__content" id="accordion-2-section-3-content" aria-labelled-by="accordion-2-section-3-label">
+        <div class="silc-accordion__content" id="accordion-2-section-3-content" aria-labelledby="accordion-2-section-3-label">
             <div class="silc-accordion__content-compartment">
                 <p>Tab 3 Content</p>
             </div>
