@@ -181,15 +181,16 @@ export default class {
       // Get target from event
       const target = event.target as HTMLElement;
 
-      // If target contains label class update the active section
-      if (target.classList.contains('silc-accordion__label')) {
-        // Stop tab from toggling itself
-        if (!target.hasAttribute('aria-disabled')) {
-          this.updateActiveSections(target);
+      // Only update the active section if this section belongs to the current accordion
+      if (target.closest('.silc-accordion') === this.element) {
+        // If target contains label class update the active section
+        if (target.classList.contains('silc-accordion__label')) {
+          // Stop tab from toggling itself
+          if (!target.hasAttribute('aria-disabled')) {
+            this.updateActiveSections(target);
+          }
         }
       }
-
-      event.stopPropagation();
     });
   }
 
@@ -300,7 +301,6 @@ export default class {
         const previousContent = this.contentAreas[this.activeSections[0]];
         this.slideContent(previousContent, true);
         this.toggleTabbingForChildElements(previousContent, false);
-        previousContent.setAttribute('aria-hidden', 'true');
       }
     }
 
@@ -308,7 +308,6 @@ export default class {
     if (selectedContent.hasAttribute('aria-hidden')) {
       this.slideContent(selectedContent, !visible);
       this.toggleTabbingForChildElements(selectedContent, visible);
-      selectedContent.setAttribute('aria-hidden', String(!visible));
     } else {
       this.toggleTabbingForChildElements(selectedContent, false);
       selectedContent.setAttribute('aria-hidden', 'true');
@@ -318,14 +317,19 @@ export default class {
   protected slideContent(content: HTMLElement, hidden: boolean) {
     // Inline height style to trigger transition
     if (this.settings.shouldAnimate && !this.displayingAsTabs) {
-      content.classList.add('transitioning');
-      content.style.height = `${content.scrollHeight}px`;
       // If we're hiding the content set the height in the next frame to trigger slide up transition
       if (hidden) {
+        content.style.height = `${content.scrollHeight}px`;
         setTimeout(() => {
-          content.style.height = '0px';
-        }, 1);
+          content.style.height = "0px";
+          content.setAttribute("aria-hidden", "true");
+        }, 50);
+      } else {
+        content.style.height = `${content.scrollHeight}px`;
+        content.setAttribute("aria-hidden", "false");
       }
+    } else {
+      content.setAttribute("aria-hidden", `${hidden}`);
     }
   }
 
